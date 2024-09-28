@@ -9,37 +9,57 @@ import java.util.Vector;
 
 public class ItemDB extends bo.Item {
 
-    public static Collection searchItems(String item_group) {
-        Vector<ItemDB> v = new Vector<>();
-        try {
-            Connection con = DBManager.getConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, name, type, colour, price, quantity, description FROM T_ITEM WHERE type = '" + item_group + "'");
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String desc = rs.getString("description");
-                ItemType type = ItemType.valueOf(rs.getString("type"));  // Assuming ItemType is an enum
-                ItemColour colour = ItemColour.valueOf(rs.getString("colour"));  // Assuming ItemColour is an enum
-                int price = rs.getInt("price");
-                int quantity = rs.getInt("quantity");
+    private ItemDB(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String desc) {
+        super(id, name, type, colour, price, quantity, desc);
+    }
 
-                // Create a new ItemDB object with all the retrieved fields
-                v.addElement(new ItemDB(id, name, type, colour, price, quantity, desc));
+    //  search items by type
+    public static Collection<ItemDB> searchItemsByType(ItemType type) {
+        return searchItemsBy("type = '" + type.name() + "'");
+    }
+
+    // search items with quantity > 0
+    public static Collection<ItemDB> searchItemsInStock() {
+        return searchItemsBy("quantity > 0");
+    }
+
+    // retrieves all items
+    public static Collection<ItemDB> getAllItems() {
+        return searchItemsBy("1=1");  // Always true, fetches all records
+    }
+
+    private static Collection<ItemDB> searchItemsBy(String condition) {
+        Vector<ItemDB> items = new Vector<>();
+        String query = "SELECT * FROM T_ITEM WHERE " + condition;
+
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                items.add(new ItemDB(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        ItemType.valueOf(resultSet.getString("type")),
+                        ItemColour.valueOf(resultSet.getString("colour")),
+                        resultSet.getInt("price"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getString("description")
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return v;
+        return items;
     }
 
-
     public static boolean createItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
-        try {
-            Connection con = DBManager.getConnection();  // Assuming DBManager handles the database connection
-            String query = "INSERT INTO T_ITEM (name, type, colour, price, quantity, description) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
+        String query = "INSERT INTO T_ITEM (name, type, colour, price, quantity, description) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
             ps.setString(1, name);
             ps.setString(2, type.toString());
             ps.setString(3, colour.toString());
@@ -47,19 +67,11 @@ public class ItemDB extends bo.Item {
             ps.setInt(5, quantity);
             ps.setString(6, description);
 
-            int result = ps.executeUpdate();  // Execute the query
-            ps.close();
-            con.close();
-
-            return result > 0;  // Return true if the insert was successful
+            int result = ps.executeUpdate();
+            return result > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-    }
-
-
-    private ItemDB(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String desc) {
-        super(id, name, type, colour, price, quantity, desc);
     }
 }
