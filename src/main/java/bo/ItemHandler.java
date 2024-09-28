@@ -15,7 +15,7 @@ public class ItemHandler {
         ArrayList<ItemInfo> items = new ArrayList<ItemInfo>();
         for (Iterator<Item> it = c.iterator(); it.hasNext();) {
             Item item = it.next();
-            items.add(new ItemInfo(item.getName(), item.getType(), item.getColour(), item.getPrice(), item.getQuantity(), item.getDescription()));
+            items.add(new ItemInfo(item.getId(), item.getName(), item.getType(), item.getColour(), item.getPrice(), item.getQuantity(), item.getDescription()));
         }
         return items;
     }
