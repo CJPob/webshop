@@ -3,7 +3,6 @@ package ui;
 import bo.ItemHandler;
 import bo.ItemType;
 import bo.ItemColour;
-import ui.ItemInfo;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,23 +13,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
+
 @WebServlet("/item")
 public class ItemServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String group = req.getParameter("group");
-        Collection<ItemInfo> items;
-
-        if (group != null && !group.isEmpty()) {
-            items = ItemHandler.getItemsWithGroup(group);
-        } else {
-            items = ItemHandler.getItemsWithGroup("default_group");
-        }
-
-        req.setAttribute("items", items);
-
-        req.getRequestDispatcher("/frontend/jsp/index.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Fetch items in stock by default (FOR NOW) will implement other later
+        Collection<ItemInfo> itemsInStock = ItemHandler.getItemsInStock();
+        request.setAttribute("items", itemsInStock);
+        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 
     @Override
@@ -39,19 +31,17 @@ public class ItemServlet extends HttpServlet {
         String description = req.getParameter("description");
         int price = Integer.parseInt(req.getParameter("price"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
-        ItemType type = ItemType.valueOf(req.getParameter("type").toUpperCase());
-        ItemColour colour = ItemColour.valueOf(req.getParameter("colour").toUpperCase());
+        String type = req.getParameter("type");
+        String colour = req.getParameter("colour");
 
-        boolean success = ItemHandler.createItem(name, type, colour, price, quantity, description);
+        boolean success = ItemHandler.createItem(name, ItemType.valueOf(type.toUpperCase()), ItemColour.valueOf(colour.toUpperCase()), price, quantity, description);
 
         if (success) {
             req.setAttribute("successMessage", "success!");
-            req.getRequestDispatcher("/frontend/jsp/additem.jsp").forward(req, resp);
-            //resp.sendRedirect(req.getContextPath() + "/frontend/jsp/additem.jsp");
+            req.getRequestDispatcher("additem.jsp").forward(req, resp);
         } else {
-            // If item creation fails, send an error message back to the form
             req.setAttribute("error", "Item creation failed.");
-            req.getRequestDispatcher("/frontend/jsp/additem.jsp").forward(req, resp);
+            req.getRequestDispatcher("additem.jsp").forward(req, resp);
         }
     }
 }

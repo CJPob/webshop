@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>surfboards</title>
@@ -15,7 +14,7 @@
         <h1>SURFBOARDS</h1>
         <nav>
             <ul>
-                <li><a href="../../index.jsp">home</a></li>
+                <li><a href="${pageContext.request.contextPath}/item">home</a></li>
                 <li><a href="login.jsp">log in</a></li>
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>

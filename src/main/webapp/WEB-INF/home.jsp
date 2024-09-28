@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ui.UserInfo" %>
+<%@ page import="ui.ItemInfo" %>
 <%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
@@ -21,41 +21,48 @@
         <li><a href="../frontend/jsp/login.jsp">log in</a></li>
         <li><a href="../frontend/jsp/cart.jsp">my cart</a></li>
         <%-- Check if the user is logged in and is an admin, display extra menu --%>
-        <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
+        <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
         <li><a href="../frontend/jsp/adminpage.jsp">admin</a></li>
-        <%-- } %>   --%>
+        <%--     <% } %>   --%>
       </ul>
     </nav>
   </header>
 
+
   <main>
     <%
-      Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
-      if (users != null && !users.isEmpty()) {
+      Collection<ItemInfo> items = (Collection<ItemInfo>) request.getAttribute("items");
+      if (items != null && !items.isEmpty()) {
     %>
-    <!-- Start of users list -->
-    <div class="users-list">
-      <ul>
-        <%
-          for (UserInfo user : users) {
-        %>
-        <li>
-          <strong>Username:</strong> <%= user.getUsername() %>,
-          <strong>Name:</strong> <%= user.getName() %>
-        </li>
-        <%
-          }
-        %>
-      </ul>
-    </div>  <!-- End of users list -->
+    <!-- Start of items grid -->
+    <div class="items-grid">
+      <%
+        for (ItemInfo item : items) {
+      %>
+      <div class="item">
+        <h3><%= item.getName() %></h3>
+        <p>Price: $<%= item.getPrice() %></p>
+        <p>Description: <%= item.getDescription() %></p>
+
+        <!-- add to cart button -->
+        <form>
+          <button type="submit">Add to Cart</button>
+        </form>
+      </div>
+      <%
+        }
+      %>
+    </div>  <!-- End of items grid -->
     <%
     } else {
     %>
-    <p>No users found.</p>
+    <p>No items available.</p>
     <%
       }
     %>
   </main>
+
+
 
   <footer>
     <ul>
@@ -65,6 +72,7 @@
     </ul>
   </footer>
 </div><!-- end of container -->
+
 
 <div id="copyright">
   <ul>

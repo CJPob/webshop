@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="ui.ItemInfo" %>
+<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
@@ -15,7 +17,7 @@
         <h1>SURFBOARDS</h1>
         <nav>
             <ul>
-                <li><a href="index.jsp">home</a></li>
+                <li><a href="${pageContext.request.contextPath}/item">home</a></li>
                 <li><a href="frontend/jsp/login.jsp">log in</a></li>
                 <li><a href="frontend/jsp/cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
@@ -28,15 +30,11 @@
 
 
     <main>
-        <h1> // body  //  items grid  //  </h1>
-        <h1> // main page  //  show items vars saldo in the itemdb > 0  //  </h1>
-        <%--  <a href="items-servlet">items servlet</a>
-              <c:forEach items="${items}" var="item">
-                  <div class="grid-item">
-                      <img src="${item.imageUrl}" alt="${item.name}">
-                      <p>${item.name} - ${item.price}</p>
-                  </div>
-              </c:forEach>   --%>
+        <div class="welcome-container">
+            <a href="${pageContext.request.contextPath}/item">
+                <button class="welcome-button">hi</button>
+            </a>
+        </div>
     </main>
 
 
