@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1> // body  //  items grid  //  </h1>
         <h1> // main page  //  show items vars saldo in the itemdb > 0  //  </h1>
         <%--  <a href="items-servlet">items servlet</a>

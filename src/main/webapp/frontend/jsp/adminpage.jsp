@@ -26,17 +26,14 @@
         </nav>
     </header>
 
-
-    <main id = "itemsGrid">
-        <h1>  ADMIN PAGE   //    </h1>
-        <h1>  SUBMENU / BUTTONS: //  </h1>
-        <h1>  //    SEE ORDERS AND THEIR STATUSES //     </h1>
-        <h1>  //    INVENTORY (CURRENT ITEMS SALDO)  //   </h1>
-        <h1>  //    ADD / REMOVE ITEM      //   </h1>
-
+    <main>
+        <div class="submenu">
+            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">See Orders and Their Statuses</button>
+            <button class="continue-btn admin-inventory-btn" onclick="window.location.href='inventory.jsp'">Inventory (Current Items Saldo)</button>
+            <button class="continue-btn admin-additem-btn" onclick="window.location.href='additem.jsp'">Add Item</button>
+            <button class="continue-btn admin-removeitem-btn" onclick="window.location.href='removeitem.jsp'">Remove Item</button>
+        </div>
     </main>
-
-
 
     <footer>
         <ul>

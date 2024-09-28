@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1> SINGLE ITEM DETAILS HERE   </h1>
 
 

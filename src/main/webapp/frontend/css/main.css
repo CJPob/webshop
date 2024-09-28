@@ -168,23 +168,87 @@ footer {
     align-items: center;
 }
 
-/* Form */
-input, select, textarea {
-    border: 1px solid #dfdbdb;
-    color: #212931;
-    font-size: 1.3rem;
+/**********************************************************************/
+/***     this needs cleanup *******************************************/
+#additemForm {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    margin: 20px auto;
 }
 
-input[type="submit"], input[type="reset"] {
-    background-color: #212931;
-    color: #fff;
+#additemForm p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#additemForm label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+    color: #025454;
+    font-family: "Dosis", sans-serif;
+    font-size: 1.2rem;
+}
+
+#additemForm input[type="text"],
+#additemForm input[type="number"],
+#additemForm select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid rgba(42, 157, 157, 0.5);
+    border-radius: 5px;
+}
+
+#additemForm input[type="submit"],
+#additemForm input[type="reset"] {
+    width: auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: "Dosis", sans-serif;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-left: 130px;
+}
+
+#additemForm input[type="submit"] {
+    background-color: rgba(42, 157, 157, 0.84);
+    color: white;
     border: none;
-    padding: 0.5rem 0.8rem;
 }
 
-input:focus, select:focus, textarea:focus {
+#additemForm input[type="submit"]:hover {
+    background-color: rgba(5, 100, 100, 0.89);
+}
+
+#additemForm input[type="reset"] {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(42, 157, 157, 0.84);
+    border: 2px solid rgba(42, 157, 157, 0.84);
+}
+
+#additemForm input[type="reset"]:hover {
+    background-color: rgba(42, 157, 157, 0.54);
+    color: white;
+}
+
+#additemForm input:focus,
+#additemForm select:focus {
     outline: none;
-    background-color: #18bfef;
+    border-color: rgba(42, 157, 157, 0.84);
+    background-color: #e6f7ff;
+}
+/********************************************************************/
+
+.admin-removeitem-btn {
+    margin-bottom: 40px;
+}
+
+.admin-orders-btn {
+    margin-top: 40px;
 }
 
 

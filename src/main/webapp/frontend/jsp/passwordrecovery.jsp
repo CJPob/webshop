@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1> PASSWORD RECOVERY?   </h1>
 
     </main>
