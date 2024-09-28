@@ -1,0 +1,201 @@
+
+@font-face {
+    font-family: "Dosis";
+    src: url(fonts/Dosis-ExtraLight.ttf);
+}
+
+@font-face {
+    font-family: "Nabla";
+    src: url(fonts/Nabla-Regular.ttf);
+}
+
+html {
+    font-size: 105%;
+    font-family: "Dosis", sans-serif;
+    background-color: #e6f7ff;
+    color: #004d4d;
+}
+
+body {
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    background-image: url('../images/boards.jpeg');
+    background-size: cover;
+    background-position: center;
+    padding: 2.5rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-family: "Nabla", sans-serif;
+    text-shadow: 6px 6px 6px #006699d2 ;
+}
+
+header h1 {
+    font-size: 4.5rem;
+    margin-bottom: 0.5rem;
+}
+
+nav ul li {
+    display: inline;
+    padding: 15px;
+    font-size: 2rem;
+}
+
+#container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex:1;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background-color: rgba(0, 77, 77, 0.93);
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+#copyright ul li, #authors ul li{
+    display: inline-block;
+    line-height: 1;
+    padding-left: 1rem;
+}
+
+.login-form, .signup-form {
+    background-color: white;
+    margin: 50px 40px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.login-form label, .signup-form label, .forgot-password, .register-prompt, .login-prompt {
+    display: block;
+    margin-bottom: 8px;
+    color: #025454;
+    font-family: sans-serif;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"],
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="password2"]  {
+    width: 94%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(42, 157, 157, 0.84);
+    border-radius: 5px;
+}
+
+.signup-form input[id="password2"]  {
+    margin-bottom: 50px;
+}
+
+.forgot-password {
+    display: block;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.continue-btn, .register-btn {
+    width: 100%;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.continue-btn {
+    background-color: rgba(42, 157, 157, 0.84);
+    color: white;
+    font-size: 20px;
+    border: none;
+    margin-top: 23px;
+}
+
+.continue-btn:hover {
+    background-color: rgba(5, 100, 100, 0.89);
+}
+
+.pwdrecovery-prompt {
+    text-align: center;
+}
+
+.login-prompt, .register-prompt {
+    font-size: 20px;
+    text-align: left;
+}
+
+.register-btn {
+    background-color: white;
+    border: 2px solid rgba(42, 157, 157, 0.84);
+    color: rgba(42, 157, 157, 0.84);
+    font-size: 18px;
+    margin-top: 14px;
+}
+
+.register-btn:hover {
+    background-color: rgba(42, 157, 157, 0.54);
+    color: rgba(2, 98, 98, 0.84);
+}
+
+#checkboxes {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#checkboxes label.checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+/* Form */
+input, select, textarea {
+    border: 1px solid #dfdbdb;
+    color: #212931;
+    font-size: 1.3rem;
+}
+
+input[type="submit"], input[type="reset"] {
+    background-color: #212931;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.8rem;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    background-color: #18bfef;
+}
+
+
+
+@media (min-width: 640px) and (max-width:1280px){
+}
+
+@media (max-width: 639px) {
+}
+
+
+
+
+

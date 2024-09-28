@@ -30,7 +30,7 @@ public class ItemServlet extends HttpServlet {
 
         req.setAttribute("items", items);
 
-        req.getRequestDispatcher("/items.jsp").forward(req, resp);
+        req.getRequestDispatcher("/frontend/jsp/index.jsp").forward(req, resp);
     }
 
     @Override
@@ -45,11 +45,13 @@ public class ItemServlet extends HttpServlet {
         boolean success = ItemHandler.createItem(name, type, colour, price, quantity, description);
 
         if (success) {
-            resp.sendRedirect(req.getContextPath() + "/item");
+            req.setAttribute("successMessage", "success!");
+            req.getRequestDispatcher("/frontend/jsp/additem.jsp").forward(req, resp);
+            //resp.sendRedirect(req.getContextPath() + "/frontend/jsp/additem.jsp");
         } else {
             // If item creation fails, send an error message back to the form
             req.setAttribute("error", "Item creation failed.");
-            req.getRequestDispatcher("/create_item.jsp").forward(req, resp);
+            req.getRequestDispatcher("/frontend/jsp/additem.jsp").forward(req, resp);
         }
     }
 }

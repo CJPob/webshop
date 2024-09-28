@@ -14,7 +14,7 @@ public class ItemDB extends bo.Item {
         try {
             Connection con = DBManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, name, type, colour, price, quantity, description FROM T_ITEM WHERE item_group = '" + item_group + "'");
+            ResultSet rs = st.executeQuery("SELECT id, name, type, colour, price, quantity, description FROM T_ITEM WHERE type = '" + item_group + "'");
 
             while (rs.next()) {
                 int id = rs.getInt("id");
