@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1> SEE CURRENT ORDERS // PLOCKA OCH UPPDATERA LAGERSALDO </h1>
         <h1>    </h1>
         <h1> //   ENDAST BEHÖRIG PERSONAL   </h1>

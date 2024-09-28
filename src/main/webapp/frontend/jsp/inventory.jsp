@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1>  LAGERSALDO // INVENTORY  </h1>
         <h1> //   SE SALDO // ADD REMOVE ITEMS  ?  </h1>
 

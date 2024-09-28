@@ -27,7 +27,7 @@
     </header>
 
 
-    <main id = "itemsGrid">
+    <main>
         <h1>  // REMOVE ITEM   //   CHANGE SALDO    </h1>
 
     </main>

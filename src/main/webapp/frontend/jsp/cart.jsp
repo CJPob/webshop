@@ -27,7 +27,7 @@
         </header>
 
 
-        <main id = "itemsGrid">
+        <main>
             <h1>    //  DISPLAY SHOPPING CART HERE    //</h1>
             <h1>    //  ACTIONS: PAY => SINGLE TRANSACTION     //</h1>
             <h1>    //  CHANGE ITEMS SALDO, ADD TO ORDER HISTORY (?)    //</h1>
