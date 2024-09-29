@@ -90,7 +90,7 @@ footer {
 
 .login-form input[type="email"],
 .login-form input[type="password"],
-.signup-form input[type="email"],
+.signup-form input[type="text"],
 .signup-form input[type="password"],
 .signup-form input[type="password2"]  {
     width: 94%;

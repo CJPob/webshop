@@ -32,6 +32,19 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        // Step 1: Retrieve form data
+        String name = req.getParameter("name");       // Add 'name' field in form
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        boolean signupSuccess = UserHandler.signupUser(name, username, password);
+
+        if (signupSuccess) {
+            req.setAttribute("message", "Signup successful! Please log in.");
+            req.getRequestDispatcher("/frontend/jsp/login.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("error", "Signup failed. Please try again.");
+            req.getRequestDispatcher("/frontend/jsp/signup.jsp").forward(req, resp);
+        }
     }
 }

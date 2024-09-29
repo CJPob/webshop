@@ -1,5 +1,6 @@
 package bo;
 
+import db.UserDB;
 import ui.UserInfo;
 
 import java.util.ArrayList;
@@ -16,5 +17,11 @@ public class UserHandler {
         }
 
         return userInfos;
+    }
+
+    public static boolean signupUser(String name, String username, String password) {
+        boolean isUserInserted = UserDB.insertUser(name, username, password);
+
+        return isUserInserted;
     }
 }
