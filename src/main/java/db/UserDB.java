@@ -16,11 +16,10 @@ public class UserDB extends bo.User {
     public static Collection<UserDB> searchUser(String username) {
         Vector<UserDB> users = new Vector<>();
         try {
-            Connection con = DBManager.getConnection();  // Assuming DBManager handles the database connection
+            Connection con = DBManager.getConnection();
             Statement st = con.createStatement();
 
             String query;
-            // Fetch all users if the username is empty or null
             if (username == null || username.isEmpty()) {
                 query = "SELECT id, name, password, username, userRole FROM T_USER";
             } else {
@@ -59,7 +58,7 @@ public class UserDB extends bo.User {
             pstmt.setString(1, name);
             pstmt.setString(2, username);
             pstmt.setString(3, password);
-            pstmt.setString(4, UserRole.CUSTOMER.name());  // Assuming default role as CUSTOMER
+            pstmt.setString(4, UserRole.CUSTOMER.name());
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
@@ -73,6 +72,34 @@ public class UserDB extends bo.User {
         }
 
         return success;
+    }
+
+
+    public static boolean checkUserCredentials(String username, String password) {
+        boolean loginSuccess = false;
+        try {
+            Connection con = DBManager.getConnection();
+            String query = "SELECT password FROM T_USER WHERE username = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+
+                if (storedPassword.equals(password)) {
+                    loginSuccess = true;  // Successful login
+                }
+            }
+
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return loginSuccess;
     }
 
 

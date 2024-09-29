@@ -20,8 +20,17 @@ public class UserHandler {
     }
 
     public static boolean signupUser(String name, String username, String password) {
-        boolean isUserInserted = UserDB.insertUser(name, username, password);
+        return UserDB.insertUser(name, username, password);
+    }
 
-        return isUserInserted;
+    public static boolean loginUser(String username, String password) {
+        boolean loginSuccess = false;
+        try {
+            loginSuccess = UserDB.checkUserCredentials(username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return loginSuccess;  // Return true if login is successful, false otherwise
     }
 }

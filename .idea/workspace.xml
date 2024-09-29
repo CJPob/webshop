@@ -10,13 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="items in stock are now displayed on the main page;">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/UserDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/signup.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/login.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -333,7 +332,7 @@
       <workItem from="1727522153272" duration="9847000" />
       <workItem from="1727532044657" duration="2113000" />
       <workItem from="1727562276829" duration="4614000" />
-      <workItem from="1727613097332" duration="3815000" />
+      <workItem from="1727613097332" duration="7328000" />
     </task>
     <servers />
   </component>
