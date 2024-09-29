@@ -1,28 +1,33 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-//THIS is singleton
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class DBManager {
     private static DBManager instance = null;
-    private Connection connection;
+    private HikariDataSource dataSource;
 
-    private static DBManager getInstance() {
+    private DBManager() {
+        HikariConfig config = new HikariConfig();
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/my_webshop");
+        config.setUsername("root");
+        config.setPassword("password");
+        dataSource = new HikariDataSource(config);
+    }
+
+    public static synchronized DBManager getInstance() {
         if (instance == null) {
             instance = new DBManager();
         }
         return instance;
     }
 
-    private DBManager() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_webshop", "root", "password");
-        } catch (Exception e) {e.printStackTrace();}
-    }
-
-    public static Connection getConnection() {
-        return getInstance().connection;
+    public static Connection getConnection() throws SQLException {
+        return getInstance().dataSource.getConnection();
     }
 }
+

@@ -9,15 +9,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="V1, needs to research more jsp for testing">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/cart_test.jsp" afterDir="false" />
+    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="items in stock are now displayed on the main page;">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/home.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DBManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/TestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/TestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/additem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/additem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/adminpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/adminpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/inventory.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/inventory.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/itemDetails.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/itemDetails.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/orders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/orders.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/passwordrecovery.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/passwordrecovery.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/removeitem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/removeitem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/signup.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/user.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/jsp/user.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,26 +42,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jsp File" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;CJPob&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/CJPob/webshop.git&quot;,
-    &quot;accountId&quot;: &quot;b2a33605-59ad-4252-9ee5-1ca6de6f6fca&quot;
-  }
-}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -85,7 +88,7 @@
     &quot;Tomcat Server.Tomcat 10.1.30.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.create_item.jsp.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ShoppingCartHandler&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;display-items-rebase&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/42310/kthjava/ServletJSPWebApp000&quot;,
@@ -107,6 +110,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\frontend" />
       <recent name="C:\JavaProj\webshop\src\main\webapp" />
     </key>
   </component>
@@ -314,8 +318,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
       </set>
     </attachedChunks>
   </component>
@@ -332,8 +336,7 @@
       <workItem from="1727520139271" duration="1996000" />
       <workItem from="1727522153272" duration="9847000" />
       <workItem from="1727532044657" duration="2113000" />
-      <workItem from="1727598117811" duration="5977000" />
-      <workItem from="1727604178126" duration="4835000" />
+      <workItem from="1727562276829" duration="4614000" />
     </task>
     <servers />
   </component>
@@ -353,5 +356,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="items in stock are now displayed on the main page;" />
+    <option name="LAST_COMMIT_MESSAGE" value="items in stock are now displayed on the main page;" />
   </component>
 </project>

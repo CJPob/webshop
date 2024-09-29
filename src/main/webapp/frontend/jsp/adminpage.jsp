@@ -15,7 +15,7 @@
         <h1>SURFBOARDS</h1>
         <nav>
             <ul>
-                <li><a href="../../index.jsp">home</a></li>
+                <li><a href="${pageContext.request.contextPath}/item">home</a></li>
                 <li><a href="login.jsp">log in</a></li>
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
@@ -28,10 +28,11 @@
 
     <main>
         <div class="submenu">
-            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">See Orders and Their Statuses</button>
-            <button class="continue-btn admin-inventory-btn" onclick="window.location.href='inventory.jsp'">Inventory (Current Items Saldo)</button>
-            <button class="continue-btn admin-additem-btn" onclick="window.location.href='additem.jsp'">Add Item</button>
-            <button class="continue-btn admin-removeitem-btn" onclick="window.location.href='removeitem.jsp'">Remove Item</button>
+            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">See orders and their statuses</button>
+            <button class="continue-btn admin-inventory-btn" onclick="window.location.href='inventory.jsp'">Inventory / current items saldo</button>
+            <button class="continue-btn admin-additem-btn" onclick="window.location.href='additem.jsp'">Add item</button>
+            <button class="continue-btn admin-removeitem-btn" onclick="window.location.href='removeitem.jsp'">Change saldo or remove item</button>
+            <button class="continue-btn admin-seeusers-btn" onclick="window.location.href='${pageContext.request.contextPath}/user'">Users</button>
         </div>
     </main>
 

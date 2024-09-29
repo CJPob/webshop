@@ -15,7 +15,7 @@
             <h1>SURFBOARDS</h1>
             <nav>
                 <ul>
-                    <li><a href="../../index.jsp">home</a></li>
+                    <li><a href="${pageContext.request.contextPath}/item">home</a></li>
                     <li><a href="login.jsp">log in</a></li>
                     <li><a href="cart.jsp">my cart</a></li>
                     <%-- Check if the user is logged in and is an admin, display extra menu --%>
