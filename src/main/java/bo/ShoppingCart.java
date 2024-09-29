@@ -1,6 +1,9 @@
 package bo;
 
+import db.ShoppingCartDB;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class ShoppingCart {
@@ -17,6 +20,10 @@ public class ShoppingCart {
         this.sumTotal = 0;
     }
 
+    static public Collection getItems(String username){
+        return ShoppingCartDB.viewShoppingCart(username);
+    }
+
     public void addItem(Item item) {
         for (Item cartItem : items) {
             if (cartItem.getId() == item.getId()) {
@@ -28,6 +35,11 @@ public class ShoppingCart {
         }
         items.add(item);
         sumTotal += item.getPrice() * item.getQuantity();
+    }
+
+    public void addItem(int itemID, String name, String type, String colour, int price, int quantity, String description) {
+        Item item = new Item(itemID, name, bo.ItemType.valueOf(type), bo.ItemColour.valueOf(colour), price, quantity, description);
+        this.items.add(item);  // Add the newly created item to the list
     }
 
     public void removeItem(int itemId) {

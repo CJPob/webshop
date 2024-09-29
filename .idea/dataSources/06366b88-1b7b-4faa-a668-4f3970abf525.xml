@@ -999,7 +999,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="my_webshop">
-      <LastIntrospectionLocalTimestamp>2024-09-28.17:41:23</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-09-29.11:07:10</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="mysql">
@@ -1030,98 +1030,183 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="297" parent="289" name="t_item">
+    <table id="297" parent="289" name="t_cart_items">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="298" parent="289" name="t_user">
+    <table id="298" parent="289" name="t_item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="299" parent="297" name="id">
+    <table id="299" parent="289" name="t_shoppingcart">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="300" parent="289" name="t_user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="301" parent="297" name="cartID">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="302" parent="297" name="itemID">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="303" parent="297" name="quantity">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="304" parent="297" name="t_cart_items_ibfk_1">
+      <ColNames>cartID</ColNames>
+      <RefColNames>cartID</RefColNames>
+      <RefTableName>t_shoppingcart</RefTableName>
+    </foreign-key>
+    <foreign-key id="305" parent="297" name="t_cart_items_ibfk_2">
+      <ColNames>itemID</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>t_item</RefTableName>
+    </foreign-key>
+    <index id="306" parent="297" name="PRIMARY">
+      <ColNames>cartID
+itemID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="307" parent="297" name="itemID">
+      <ColNames>itemID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="308" parent="297" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="309" parent="298" name="id">
       <AutoIncrement>3</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="300" parent="297" name="name">
+    <column id="310" parent="298" name="name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="301" parent="297" name="type">
+    <column id="311" parent="298" name="type">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="302" parent="297" name="colour">
+    <column id="312" parent="298" name="colour">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="303" parent="297" name="price">
+    <column id="313" parent="298" name="price">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="304" parent="297" name="quantity">
+    <column id="314" parent="298" name="quantity">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="305" parent="297" name="description">
+    <column id="315" parent="298" name="description">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <index id="306" parent="297" name="PRIMARY">
+    <index id="316" parent="298" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="307" parent="297" name="PRIMARY">
+    <key id="317" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="308" parent="298" name="id">
+    <column id="318" parent="299" name="cartID">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="319" parent="299" name="userID">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="320" parent="299" name="sumTotal">
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <foreign-key id="321" parent="299" name="t_shoppingcart_ibfk_1">
+      <ColNames>userID</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>t_user</RefTableName>
+    </foreign-key>
+    <index id="322" parent="299" name="PRIMARY">
+      <ColNames>cartID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="323" parent="299" name="userID">
+      <ColNames>userID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="324" parent="299" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="325" parent="300" name="id">
       <AutoIncrement>3</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="309" parent="298" name="name">
+    <column id="326" parent="300" name="name">
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="310" parent="298" name="password">
+    <column id="327" parent="300" name="password">
       <Position>3</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="311" parent="298" name="username">
+    <column id="328" parent="300" name="username">
       <Position>4</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="312" parent="298" name="userRole">
+    <column id="329" parent="300" name="userRole">
       <Position>5</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <index id="313" parent="298" name="PRIMARY">
+    <index id="330" parent="300" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="314" parent="298" name="username">
+    <index id="331" parent="300" name="username">
       <ColNames>username</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="315" parent="298" name="PRIMARY">
+    <key id="332" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="316" parent="298" name="username">
+    <key id="333" parent="300" name="username">
       <UnderlyingIndexName>username</UnderlyingIndexName>
     </key>
   </database-model>

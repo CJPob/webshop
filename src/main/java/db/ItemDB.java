@@ -58,7 +58,6 @@ public class ItemDB extends bo.Item {
         }
     }
 
-
     private ItemDB(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String desc) {
         super(id, name, type, colour, price, quantity, desc);
     }
