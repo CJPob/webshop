@@ -29,7 +29,7 @@ public class ItemHandler {
     private static Collection<ItemInfo> convertToItemInfo(Collection<ItemDB> dbItems) {
         Collection<ItemInfo> items = new ArrayList<>();
         for (ItemDB item : dbItems) {
-            items.add(new ItemInfo(item.getName(), item.getType(), item.getColour(), item.getPrice(), item.getQuantity(), item.getDescription()));
+            items.add(new ItemInfo(item.getId(), item.getName(), item.getType(), item.getColour(), item.getPrice(), item.getQuantity(), item.getDescription()));
         }
         return items;
     }
