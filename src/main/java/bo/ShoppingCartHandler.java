@@ -1,6 +1,6 @@
 package bo;
 
-import bo.ShoppingCart;
+import db.ShoppingCartDB;
 import ui.ItemInfo;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,5 +28,23 @@ public class ShoppingCartHandler {
             }
         }
         return items;
+    }
+
+    public static boolean addItem(String username, int itemId, int quantity) {
+        try {
+            return ShoppingCartDB.addItemToCart(username, itemId, quantity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;  // Return false if there's an error
+        }
+    }
+
+    public static boolean removeItem(String username, int itemId) {
+        try {
+            return ShoppingCartDB.removeItemFromCart(username, itemId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;  // Return false if there's an error
+        }
     }
 }
