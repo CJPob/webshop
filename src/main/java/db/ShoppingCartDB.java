@@ -71,4 +71,122 @@ public class ShoppingCartDB extends ShoppingCart {
 
         return cartList;  // Return the collection containing the cart
     }
+
+    public static boolean addItemToCart(String username, int itemID, int quantity) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean success = false;
+
+        try {
+            // Establish a connection to the database
+            con = DBManager.getConnection();
+
+            // Get the user's cartID by username
+            stmt = con.prepareStatement(
+                    "SELECT sc.cartID FROM t_shoppingcart sc " +
+                            "JOIN t_user u ON sc.userID = u.id " +
+                            "WHERE u.username = ?"
+            );
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            int cartID = -1;
+            if (rs.next()) {
+                cartID = rs.getInt("cartID");
+            }
+
+            if (cartID != -1) {
+                // Check if the item already exists in the cart
+                stmt = con.prepareStatement(
+                        "SELECT quantity FROM t_cart_items WHERE cartID = ? AND itemID = ?"
+                );
+                stmt.setInt(1, cartID);
+                stmt.setInt(2, itemID);
+                rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    // Item exists, update the quantity
+                    int currentQuantity = rs.getInt("quantity");
+                    stmt = con.prepareStatement(
+                            "UPDATE t_cart_items SET quantity = ? WHERE cartID = ? AND itemID = ?"
+                    );
+                    stmt.setInt(1, currentQuantity + quantity);
+                    stmt.setInt(2, cartID);
+                    stmt.setInt(3, itemID);
+                } else {
+                    // Item doesn't exist, insert a new record
+                    stmt = con.prepareStatement(
+                            "INSERT INTO t_cart_items (cartID, itemID, quantity) VALUES (?, ?, ?)"
+                    );
+                    stmt.setInt(1, cartID);
+                    stmt.setInt(2, itemID);
+                    stmt.setInt(3, quantity);
+                }
+
+                stmt.executeUpdate();
+                success = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+
+        return success;
+    }
+
+    public static boolean removeItemFromCart(String username, int itemID) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean success = false;
+
+        try {
+            // Establish a connection to the database
+            con = DBManager.getConnection();
+
+            // Get the user's cartID by username
+            stmt = con.prepareStatement(
+                    "SELECT sc.cartID FROM t_shoppingcart sc " +
+                            "JOIN t_user u ON sc.userID = u.id " +
+                            "WHERE u.username = ?"
+            );
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            int cartID = -1;
+            if (rs.next()) {
+                cartID = rs.getInt("cartID");
+            }
+
+            if (cartID != -1) {
+                // Delete the item from the cart
+                stmt = con.prepareStatement(
+                        "DELETE FROM t_cart_items WHERE cartID = ? AND itemID = ?"
+                );
+                stmt.setInt(1, cartID);
+                stmt.setInt(2, itemID);
+
+                int rowsAffected = stmt.executeUpdate();
+                success = (rowsAffected > 0);  // Item successfully removed
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+
+        return success;
+    }
+
+
 }
