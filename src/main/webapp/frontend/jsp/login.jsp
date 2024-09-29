@@ -27,15 +27,15 @@
 
     <main>
         <div class="login-form">
-            <form action="LoginServletURLhere" method="POST" id="loginForm">
+            <form action="${pageContext.request.contextPath}/login" method="POST" id="loginForm">
                 <div class="login-prompt">
                     Log in:
                 </div>
 
-                <label for="email">E-mail:* </label>
-                <input  type="email"
-                        id="email"
-                        name="email"
+                <label for="username">Username:* </label>
+                <input  type="text"
+                        id="username"
+                        name="username"
                         required>
 
                 <label for="password">Password:* </label>

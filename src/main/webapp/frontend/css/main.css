@@ -88,7 +88,7 @@ footer {
     font-family: sans-serif;
 }
 
-.login-form input[type="email"],
+.login-form input[type="text"],
 .login-form input[type="password"],
 .signup-form input[type="text"],
 .signup-form input[type="password"],
