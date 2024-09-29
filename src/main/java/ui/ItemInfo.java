@@ -4,6 +4,7 @@ import bo.ItemColour;
 import bo.ItemType;
 
 public class ItemInfo {
+    private int Id;
     private String name;
     private ItemType type;
     private ItemColour colour;
@@ -11,7 +12,8 @@ public class ItemInfo {
     private int quantity;
     private String description;
 
-    public ItemInfo(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
+    public ItemInfo(int Id, String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
+        this.Id = Id;
         this.name = name;
         this.type = type;
         this.colour = colour;
@@ -19,6 +21,13 @@ public class ItemInfo {
         this.quantity = quantity;
         this.description = description;
 
+    }
+
+    public ItemInfo(String itemName, int itemPrice, int itemId, int itemQuantity) {
+    }
+
+    public int getId() {
+        return Id;
     }
 
     public String getName() {
