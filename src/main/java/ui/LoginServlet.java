@@ -28,10 +28,11 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();  // Create or retrieve session
             session.setAttribute("username", username);  // Store username in session
             System.out.println("DEBUG: Username stored in session: " + username);  // Debug output
-            resp.sendRedirect(req.getContextPath() + "/item");  // Redirect to the item page
+            // Redirect to UserServlet instead of forwarding to JSP directly
+            resp.sendRedirect(req.getContextPath() + "/user");
         } else {
-            // If login fails, reload the login page (or show an error message)
-            resp.sendRedirect(req.getContextPath() + "/frontend/jsp/login.jsp");
+            // If login fails, reload the login page (which is outside WEB-INF)
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
         }
     }
 }

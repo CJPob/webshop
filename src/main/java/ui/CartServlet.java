@@ -19,14 +19,14 @@ public class CartServlet extends HttpServlet {
         String username = (String) req.getSession().getAttribute("username");
 
         if (username == null) {
-            resp.sendRedirect(req.getContextPath() + "/frontend/jsp/login.jsp");
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
 
         Collection<ItemInfo> cartItems = ShoppingCartHandler.getItemsForUser(username);
         req.setAttribute("cartItems", cartItems);
 
-        req.getRequestDispatcher("/frontend/jsp/cart_test.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/cart-test.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CartServlet extends HttpServlet {
         String username = (String) req.getSession().getAttribute("username");
 
         if (username == null) {
-            resp.sendRedirect(req.getContextPath() + "/frontend/jsp/login.jsp");
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
 

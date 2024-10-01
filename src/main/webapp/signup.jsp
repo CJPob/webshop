@@ -4,9 +4,9 @@
 <html>
 <head>
     <title>surfboards</title>
-    <link href="../css/reset.css" rel="stylesheet" >
-    <link href="../images/favicon.ico" rel="icon">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="frontend/css/reset.css" rel="stylesheet" >
+    <link href="frontend/images/favicon.ico" rel="icon">
+    <link rel="stylesheet" type="text/css" href="frontend/css/main.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
                 <li><a href="login.jsp">log in</a></li>
-                <li><a href="cart.jsp">my cart</a></li>
+                <li><a href="WEB-INF/jsp/cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
                 <li><a href="adminpage.jsp">admin</a></li>

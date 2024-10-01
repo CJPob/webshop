@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="ui.UserInfo" %>
+<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
@@ -16,25 +18,44 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
-                <li><a href="login.jsp">log in</a></li>
+                <li><a href="../../login.jsp">log in</a></li>
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
-                <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
-                <li><a href="adminpage.jsp">admin</a></li>
-                <%--     <% } %>   --%>
+                <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
+                <li><a href="../../adminpage.jsp">admin</a></li>
+                <%-- } %>   --%>
             </ul>
         </nav>
     </header>
 
-
     <main>
-        <h1> SEE CURRENT ORDERS // PLOCKA OCH UPPDATERA LAGERSALDO </h1>
-        <h1>    </h1>
-        <h1> //   ENDAST BEHÖRIG PERSONAL   </h1>
-
+        <%
+            Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
+            if (users != null && !users.isEmpty()) {
+        %>
+        <!-- Start of users list -->
+        <div class="users-list">
+            <ul>
+                <%
+                    for (UserInfo user : users) {
+                %>
+                <li>
+                    <strong>Username:</strong> <%= user.getUsername() %>,
+                    <strong>Name:</strong> <%= user.getName() %>
+                </li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>  <!-- End of users list -->
+        <%
+        } else {
+        %>
+        <p>No users found.</p>
+        <%
+            }
+        %>
     </main>
-
-
 
     <footer>
         <ul>
@@ -44,7 +65,6 @@
         </ul>
     </footer>
 </div><!-- end of container -->
-
 
 <div id="copyright">
     <ul>
@@ -60,7 +80,5 @@
         <li>jzbk@somemail.se</li>
     </ul>
 </div><!-- end of authors -->
-
 </body>
 </html>
-

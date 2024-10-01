@@ -22,7 +22,7 @@ public class ItemServlet extends HttpServlet {
         // Fetch items in stock by default (FOR NOW) will implement other later
         Collection<ItemInfo> itemsInStock = ItemHandler.getItemsInStock();
         request.setAttribute("items", itemsInStock);
-        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
     }
 
     @Override

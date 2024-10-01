@@ -1,14 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ui.UserInfo" %>
-<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
 <head>
   <title>surfboards</title>
-  <link href="../frontend/css/reset.css" rel="stylesheet" >
-  <link href="../frontend/images/favicon.ico" rel="icon">
-  <link rel="stylesheet" type="text/css" href="../frontend/css/main.css">
+  <link href="../../frontend/css/reset.css" rel="stylesheet" >
+  <link href="../../frontend/images/favicon.ico" rel="icon">
+  <link rel="stylesheet" type="text/css" href="../../frontend/css/main.css">
 </head>
 
 <body>
@@ -18,43 +17,29 @@
     <nav>
       <ul>
         <li><a href="${pageContext.request.contextPath}/item">home</a></li>
-        <li><a href="../frontend/jsp/login.jsp">log in</a></li>
-        <li><a href="../frontend/jsp/cart.jsp">my cart</a></li>
+        <li><a href="../../login.jsp">log in</a></li>
+        <li><a href="cart.jsp">my cart</a></li>
         <%-- Check if the user is logged in and is an admin, display extra menu --%>
         <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
-        <li><a href="../frontend/jsp/adminpage.jsp">admin</a></li>
+        <li><a href="../../adminpage.jsp">admin</a></li>
         <%-- } %>   --%>
       </ul>
     </nav>
   </header>
 
   <main>
-    <%
-      Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
-      if (users != null && !users.isEmpty()) {
-    %>
-    <!-- Start of users list -->
-    <div class="users-list">
-      <ul>
-        <%
-          for (UserInfo user : users) {
-        %>
-        <li>
-          <strong>Username:</strong> <%= user.getUsername() %>,
-          <strong>Name:</strong> <%= user.getName() %>
-        </li>
-        <%
-          }
-        %>
-      </ul>
-    </div>  <!-- End of users list -->
-    <%
-    } else {
-    %>
-    <p>No users found.</p>
-    <%
-      }
-    %>
+    <div class="user-details">
+      <h2>Your Profile</h2>
+      <%
+        UserInfo user = (UserInfo) request.getAttribute("user");
+        if (user != null) {
+      %>
+      <p>Hi there, <strong><%= user.getName() %></strong></p>
+      <p><strong>Username:</strong> <%= user.getUsername() %></p>
+      <% } else { %>
+      <p>No user information available.</p>
+      <% } %>
+    </div>
   </main>
 
   <footer>

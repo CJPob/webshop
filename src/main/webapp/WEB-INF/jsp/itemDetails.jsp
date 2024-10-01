@@ -4,9 +4,9 @@
 <html>
 <head>
     <title>surfboards</title>
-    <link href="../css/reset.css" rel="stylesheet" >
-    <link href="../images/favicon.ico" rel="icon">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="../../frontend/css/reset.css" rel="stylesheet" >
+    <link href="../../frontend/images/favicon.ico" rel="icon">
+    <link rel="stylesheet" type="text/css" href="../../frontend/css/main.css">
 </head>
 
 <body>
@@ -16,11 +16,11 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
-                <li><a href="login.jsp">log in</a></li>
+                <li><a href="../../login.jsp">log in</a></li>
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
-                <li><a href="adminpage.jsp">admin</a></li>
+                <li><a href="../../adminpage.jsp">admin</a></li>
                 <%--     <% } %>   --%>
             </ul>
         </nav>
@@ -28,8 +28,16 @@
 
 
     <main>
-        <h1>  // REMOVE ITEM   //   CHANGE SALDO    </h1>
+        <h1> SINGLE ITEM DETAILS HERE   </h1>
 
+
+        <ul>
+            <c:forEach var="item" items="${items}">
+                <li>
+                    Name: ${item.name}, Type: ${item.type}, Colour: ${item.colour}, Price: ${item.price}, Quantity: ${item.quantity}, Description: ${item.description}
+                </li>
+            </c:forEach>
+        </ul>
     </main>
 
 
@@ -61,4 +69,3 @@
 
 </body>
 </html>
-
