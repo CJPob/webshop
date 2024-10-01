@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ui.ItemInfo" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="ui.ItemInfo" %>
 <!DOCTYPE html>
 
 <html>
@@ -28,43 +28,40 @@
         </nav>
     </header>
 
-
     <main>
         <%
-            // Retrieve the cartItems from the servlet
             Collection<ItemInfo> cartItems = (Collection<ItemInfo>) request.getAttribute("cartItems");
 
-            // Check if the cart is empty
-            if (cartItems == null || cartItems.isEmpty()) {
+            if (cartItems != null && !cartItems.isEmpty()) {
         %>
-        <p>Your cart is empty.</p>
-        <%
-        } else {
-        %>
-        <h2>Total Items: <%= cartItems.size() %></h2>
-        <ul>
+        <table>
+            <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+            </thead>
+            <tbody>
             <%
-                // Loop through the cart items and display them
                 for (ItemInfo item : cartItems) {
             %>
-            <li>
-                <strong>Item:</strong> <%= item.getName() %><br>
-                <strong>Quantity:</strong> <%= item.getQuantity() %><br>
-                <strong>Price:</strong> $<%= item.getPrice() %><br>
-                <strong>Subtotal:</strong> $<%= item.getPrice() * item.getQuantity() %>
-
-                <!-- Form for removing the item -->
-                <form action="<%= request.getContextPath() %>/cart" method="post">
-                    <input type="hidden" name="action" value="remove">
-                    <input type="hidden" name="itemID" value="<%= item.getId() %>">
-                    <input type="submit" value="Remove from Cart">
-                </form>
-            </li>
-            <hr>
+            <tr>
+                <td><%= item.getName() %></td>
+                <td>$<%= item.getPrice() %></td>
+                <td><%= item.getQuantity() %></td>
+                <td>$<%= item.getPrice() * item.getQuantity() %></td>
+            </tr>
             <%
                 }
             %>
-        </ul>
+            </tbody>
+        </table>
+        <%
+        } else {
+        %>
+        <p>Your cart is empty.</p>
         <%
             }
         %>

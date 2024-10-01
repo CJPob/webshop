@@ -28,10 +28,30 @@
 
 
     <main>
-        <div class="welcome-container">
-            <p> Hi, welcome </p>
-        </div>
+        <table id="display-item">
+            <tr>
+                <td>
+                    <img src="#" alt="item image">
+                </td>
+                <td>
+                    <p><strong>Name:</strong> <%= request.getParameter("name") %></p>
+                    <p><strong>Price:</strong> $<%= request.getParameter("price") %></p>
+                    <p><strong>Description:</strong> <%= request.getParameter("description") %></p>
+
+                    <!-- add to cart form -->
+                    <form action="${pageContext.request.contextPath}/cart" method="POST">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="itemID" value="<%= request.getParameter("itemID") %>">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required><br><br>
+                        <button type="submit">Add to Cart</button>
+                    </form>
+
+                </td>
+            </tr>
+        </table>
     </main>
+
 
 
     <footer>
@@ -58,5 +78,6 @@
         <li>jzbk@somemail.se</li>
     </ul>
 </div><!-- end of authors -->
+
 </body>
 </html>

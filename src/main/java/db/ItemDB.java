@@ -29,6 +29,7 @@ public class ItemDB extends bo.Item {
         return searchItemsBy("1=1");  // Always true, fetches all records
     }
 
+
     private static Collection<ItemDB> searchItemsBy(String condition) {
         Vector<ItemDB> items = new Vector<>();
         String query = "SELECT * FROM T_ITEM WHERE " + condition;
