@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ui.ItemInfo" %>
-<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
@@ -18,11 +16,11 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
-                <li><a href="frontend/jsp/login.jsp">log in</a></li>
-                <li><a href="frontend/jsp/cart.jsp">my cart</a></li>
+                <li><a href="login.jsp">log in</a></li>
+                <li><a href="WEB-INF/jsp/cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
-                <li><a href="frontend/jsp/adminpage.jsp">admin</a></li>
+                <li><a href="adminpage.jsp">admin</a></li>
                 <%--     <% } %>   --%>
             </ul>
         </nav>
@@ -31,9 +29,7 @@
 
     <main>
         <div class="welcome-container">
-            <a href="${pageContext.request.contextPath}/item">
-                <button class="welcome-button">hi</button>
-            </a>
+            <p> HI welcome </p>
         </div>
     </main>
 

@@ -1,6 +1,4 @@
 package db;
-
-import bo.User;
 import bo.UserRole;
 
 import java.sql.*;

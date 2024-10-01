@@ -4,9 +4,9 @@
 <html>
 <head>
     <title>surfboards</title>
-    <link href="../css/reset.css" rel="stylesheet" >
-    <link href="../images/favicon.ico" rel="icon">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link href="../../frontend/css/reset.css" rel="stylesheet" >
+    <link href="../../frontend/images/favicon.ico" rel="icon">
+    <link rel="stylesheet" type="text/css" href="../../frontend/css/main.css">
 </head>
 
 <body>
@@ -16,25 +16,23 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
-                <li><a href="login.jsp">log in</a></li>
+                <li><a href="../../login.jsp">log in</a></li>
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
-                <li><a href="adminpage.jsp">admin</a></li>
+                <li><a href="../../adminpage.jsp">admin</a></li>
                 <%--     <% } %>   --%>
             </ul>
         </nav>
     </header>
 
+
     <main>
-        <div class="submenu">
-            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">See orders and their statuses</button>
-            <button class="continue-btn admin-inventory-btn" onclick="window.location.href='inventory.jsp'">Inventory / current items saldo</button>
-            <button class="continue-btn admin-additem-btn" onclick="window.location.href='additem.jsp'">Add item</button>
-            <button class="continue-btn admin-removeitem-btn" onclick="window.location.href='removeitem.jsp'">Change saldo or remove item</button>
-            <button class="continue-btn admin-seeusers-btn" onclick="window.location.href='${pageContext.request.contextPath}/user'">Users</button>
-        </div>
+        <h1>  // REMOVE ITEM   //   CHANGE SALDO    </h1>
+
     </main>
+
+
 
     <footer>
         <ul>
