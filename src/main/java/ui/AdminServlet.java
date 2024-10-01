@@ -14,6 +14,8 @@ import java.util.Collection;
 @WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
 
+
+    // ver 1, need to implement role check
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");

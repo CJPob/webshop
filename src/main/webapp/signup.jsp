@@ -54,25 +54,25 @@
                         name="password2"
                         required>
 
+                <div class="checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="privacyPolicy" name="privacyPolicy" required>
+                        I have read and understood the&nbsp;<a href="#">Privacy Policy</a>.
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termsOfService" name="termsOfService" required>
+                        I have read and accept the&nbsp;<a href="#">Terms of Service</a>.
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="offers" name="offers">
+                        I would like to subscribe to the newsletter.
+                    </label>
+                </div>
+
                 <button type="submit" class="register-btn">Submit</button>
             </form>
-
-            <div class="checkboxes">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="privacyPolicy" name="privacyPolicy" required>
-                    I have read and understood the&nbsp;<a href="#">Privacy Policy</a>.
-                </label>
-
-                <label class="checkbox-label">
-                    <input type="checkbox" id="termsOfService" name="termsOfService" required>
-                    I have read and accept the&nbsp;<a href="#">Terms of Service</a>.
-                </label>
-
-                <label class="checkbox-label">
-                    <input type="checkbox" id="offers" name="offers">
-                    I would like to subscribe to the newsletter.
-                </label>
-            </div>
         </div>
     </main>
 

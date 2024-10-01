@@ -1,6 +1,7 @@
 package ui;
 
 import bo.ShoppingCartHandler;
+import jakarta.servlet.http.HttpSession;
 import ui.ItemInfo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,14 +27,19 @@ public class CartServlet extends HttpServlet {
         Collection<ItemInfo> cartItems = ShoppingCartHandler.getItemsForUser(username);
         req.setAttribute("cartItems", cartItems);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/cart-test.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String username = (String) req.getSession().getAttribute("username");
 
+        // If not logged in, redirect to login page
         if (username == null) {
+            // Set the redirect action to "cart"
+            session.setAttribute("redirectAfterLogin", "cart");
+            // Redirect to login page
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }

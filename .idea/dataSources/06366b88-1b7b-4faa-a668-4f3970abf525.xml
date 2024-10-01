@@ -1021,7 +1021,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="my_webshop">
-      <LastIntrospectionLocalTimestamp>2024-10-01.13:07:07</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-10-01.18:45:00</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="291" parent="1" name="mysql">
@@ -1056,101 +1056,179 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="299" parent="290" name="t_item">
+    <table id="299" parent="290" name="t_cart_items">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="300" parent="290" name="t_user">
+    <table id="300" parent="290" name="t_item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="301" parent="299" name="id">
+    <table id="301" parent="290" name="t_shoppingcart">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="302" parent="290" name="t_user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="303" parent="299" name="cartID">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="304" parent="299" name="itemID">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="305" parent="299" name="quantity">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <foreign-key id="306" parent="299" name="t_cart_items_ibfk_1">
+      <ColNames>cartID</ColNames>
+      <RefColNames>cartID</RefColNames>
+      <RefTableName>t_shoppingcart</RefTableName>
+    </foreign-key>
+    <foreign-key id="307" parent="299" name="t_cart_items_ibfk_2">
+      <ColNames>itemID</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>t_item</RefTableName>
+    </foreign-key>
+    <index id="308" parent="299" name="PRIMARY">
+      <ColNames>cartID
+itemID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="309" parent="299" name="itemID">
+      <ColNames>itemID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="310" parent="299" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="311" parent="300" name="id">
       <AutoIncrement>16</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="302" parent="299" name="name">
+    <column id="312" parent="300" name="name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="303" parent="299" name="description">
+    <column id="313" parent="300" name="description">
       <DasType>text|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="304" parent="299" name="type">
+    <column id="314" parent="300" name="type">
       <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="305" parent="299" name="colour">
+    <column id="315" parent="300" name="colour">
       <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="306" parent="299" name="price">
+    <column id="316" parent="300" name="price">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="307" parent="299" name="quantity">
+    <column id="317" parent="300" name="quantity">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <index id="308" parent="299" name="PRIMARY">
+    <index id="318" parent="300" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="309" parent="299" name="PRIMARY">
+    <key id="319" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="310" parent="300" name="id">
+    <column id="320" parent="301" name="cartID">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="321" parent="301" name="userID">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="322" parent="301" name="t_shoppingcart_ibfk_1">
+      <ColNames>userID</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>t_user</RefTableName>
+    </foreign-key>
+    <index id="323" parent="301" name="PRIMARY">
+      <ColNames>cartID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="324" parent="301" name="userID">
+      <ColNames>userID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="325" parent="301" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="326" parent="302" name="id">
       <AutoIncrement>4</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="311" parent="300" name="name">
+    <column id="327" parent="302" name="name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="312" parent="300" name="username">
+    <column id="328" parent="302" name="username">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="313" parent="300" name="password">
+    <column id="329" parent="302" name="password">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="314" parent="300" name="userRole">
+    <column id="330" parent="302" name="userRole">
       <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <index id="315" parent="300" name="PRIMARY">
+    <index id="331" parent="302" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="316" parent="300" name="username">
+    <index id="332" parent="302" name="username">
       <ColNames>username</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="317" parent="300" name="PRIMARY">
+    <key id="333" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="318" parent="300" name="username">
+    <key id="334" parent="302" name="username">
       <UnderlyingIndexName>username</UnderlyingIndexName>
     </key>
   </database-model>
