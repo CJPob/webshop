@@ -1,5 +1,6 @@
 package db;
 
+import bo.Item;
 import bo.ItemColour;
 import bo.ItemType;
 
@@ -9,25 +10,31 @@ import java.util.Vector;
 
 public class ItemDB extends bo.Item {
 
-
     private ItemDB(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String desc) {
         super(id, name, type, colour, price, quantity, desc);
     }
 
-    //  search items by type
-    public static Collection<ItemDB> searchItemsByType(ItemType type) {
-        return searchItemsBy("type = '" + type.name() + "'");
+    public static Collection<ItemDB> findByType(String type) {
+        return searchItemsBy("type = '" + type.toUpperCase() + "'");
     }
 
-    // search items with quantity > 0
-    public static Collection<ItemDB> searchItemsInStock() {
+    public static Collection<ItemDB> findByColour(String colour) {
+        return searchItemsBy("colour = '" + colour + "'");
+    }
+
+    public static Collection<ItemDB> findByInStock() {
         return searchItemsBy("quantity > 0");
     }
 
+    public static Collection<ItemDB> findByName(String name) {
+        return searchItemsBy("name = '" + name.toUpperCase() + "'");
+    }
+
     // retrieves all items
-    public static Collection<ItemDB> getAllItems() {
+    public static Collection<ItemDB> findAll() {
         return searchItemsBy("1=1");  // Always true, fetches all records
     }
+
 
 
     private static Collection<ItemDB> searchItemsBy(String condition) {

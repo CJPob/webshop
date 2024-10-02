@@ -19,10 +19,25 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Fetch items in stock by default (FOR NOW) will implement other later
-        Collection<ItemInfo> itemsInStock = ItemHandler.getItemsInStock();
-        request.setAttribute("items", itemsInStock);
-        request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
+        String itemType = request.getParameter("type");
+        String itemColour = request.getParameter("colour");
+        String itemName = request.getParameter("name");
+
+        Collection<ItemInfo> items;
+        if (itemName != null && !itemName.isEmpty()) {
+            items = ItemHandler.searchByName(itemName);
+        } else if (itemColour != null && !itemColour.isEmpty()) {
+            items = ItemHandler.searchByColour(itemColour);
+        } else if (itemType == null || itemType.isEmpty()) {
+            items = ItemHandler.searchAll();
+        } else if ("IN_STOCK".equals(itemType)) {
+            items = ItemHandler.searchByInStock();
+        } else {
+            items = ItemHandler.searchByType(itemType);
+        }
+
+        request.setAttribute("items", items);
+        request.getRequestDispatcher("/WEB-INF/test/main.jsp").forward(request, response);
     }
 
     @Override

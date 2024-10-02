@@ -11,9 +11,21 @@ public class User {
     private String username;
     private UserRole userRole;
 
-
+    // searches should be for admin only
     static public Collection searchUser(String username){
         return UserDB.searchUser(username);
+    }
+
+    static public Collection searchAllUsers(){
+        return UserDB.searchAllUsers();
+    }
+
+    static public boolean signup(String name, String username, String password){
+        return UserDB.insertUser(name, username, password);
+    }
+
+    static public boolean login(String username, String password){
+        return UserDB.checkUserCredentials(username, password);
     }
 
     protected User(int id, String name,String password, String username, UserRole userRole) {

@@ -23,9 +23,6 @@ public class ItemInfo {
 
     }
 
-    public ItemInfo(String itemName, int itemPrice, int itemId, int itemQuantity) {
-    }
-
     public int getId() {
         return Id;
     }
