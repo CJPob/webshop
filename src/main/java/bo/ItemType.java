@@ -2,7 +2,9 @@ package bo;
 
 public enum ItemType {
     SURFBOARD("Surfboard"),
-    TOWELS("Towels");
+    TOWEL("Towel"),
+    WETSUIT("Wetsuit"),
+    SUNSCREEN("Sunscreen");
 
     private final String type;
 

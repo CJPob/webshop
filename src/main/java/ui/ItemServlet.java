@@ -19,10 +19,36 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Fetch items in stock by default (FOR NOW) will implement other later
-        Collection<ItemInfo> itemsInStock = ItemHandler.getItemsInStock();
-        request.setAttribute("items", itemsInStock);
-        request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
+        // Get the 'type', 'colour', and 'name' parameters from the request
+        String itemType = request.getParameter("type");
+        String itemColour = request.getParameter("colour");
+        String itemName = request.getParameter("name");
+
+        Collection<ItemInfo> items;
+
+        // Check if the user wants to filter by name
+        if (itemName != null && !itemName.isEmpty()) {
+            // If name is specified, filter by name
+            items = ItemHandler.searchByName(itemName);
+        } else if (itemColour != null && !itemColour.isEmpty()) {
+            // If colour is specified, filter by colour
+            items = ItemHandler.searchByColour(itemColour);
+        } else if (itemType == null || itemType.isEmpty()) {
+            // If "All Items" (empty value) is selected, fetch all items
+            items = ItemHandler.searchAll();
+        } else if ("IN_STOCK".equals(itemType)) {
+            // Fetch only in-stock items
+            items = ItemHandler.searchByInStock();
+        } else {
+            // Fetch items by the selected type (e.g., Surfboard, Towel, etc.)
+            items = ItemHandler.searchByType(itemType);
+        }
+
+        // Set the items in the request scope for the JSP
+        request.setAttribute("items", items);
+
+        // Forward to the main JSP
+        request.getRequestDispatcher("/WEB-INF/test/main.jsp").forward(request, response);
     }
 
     @Override

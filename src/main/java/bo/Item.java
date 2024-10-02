@@ -12,9 +12,32 @@ public class Item {
     private int quantity;
     private String description;
 
-    static public Collection<Item> searchItems(String group) {
-        return ItemDB.searchItems(group);
+    static public Collection all() {
+        return ItemDB.findAll();
     }
+
+    static public Collection inStock() {
+        return ItemDB.findByInStock();
+    }
+
+    static public Collection byType(String type) {
+        return ItemDB.findByType(type);
+    }
+
+    static public Collection byColour(String colour) {
+        return ItemDB.findByColour(colour);
+    }
+
+    static public Collection byName(String name) {
+        return ItemDB.findByName(name);
+    }
+
+    //ADMIN ONKY
+    static public boolean createNewItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
+        return ItemDB.createItem(name, type, colour, price, quantity, description);
+    }
+
+
 
     protected Item(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         this.id = id;

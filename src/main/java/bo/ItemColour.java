@@ -5,7 +5,8 @@ public enum ItemColour {
     BLUE("Blue"),
     GREEN("Green"),
     YELLOW("Yellow"),
-    BLACK("Black");
+    BLACK("Black"),
+    WHITE("White");
 
     private final String colour;
 
