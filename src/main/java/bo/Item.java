@@ -37,8 +37,6 @@ public class Item {
         return ItemDB.createItem(name, type, colour, price, quantity, description);
     }
 
-
-
     protected Item(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         this.id = id;
         this.name = name;

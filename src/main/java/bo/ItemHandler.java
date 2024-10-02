@@ -35,10 +35,8 @@ public class ItemHandler {
         return convertToItemInfo(all);
     }
 
-
-
     public static boolean createItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
-        return ItemDB.createItem(name, type, colour, price, quantity, description);
+        return Item.createNewItem(name, type, colour, price, quantity, description);
     }
 
     private static Collection<ItemInfo> convertToItemInfo(Collection<Item> items) {
