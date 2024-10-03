@@ -53,6 +53,7 @@ public class UserServlet extends HttpServlet {
         } else {
             req.setAttribute("error", "Signup failed. Please try again.");
             req.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(req, resp);
+
         }
     }
 }

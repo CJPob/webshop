@@ -24,4 +24,7 @@ public class UserHandler {
     public static boolean loginUser(String username, String password) {
         return User.login(username, password);
     }
+
+    // TODO create a convert method here
+
 }

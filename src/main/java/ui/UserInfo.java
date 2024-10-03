@@ -1,6 +1,7 @@
 package ui;
 
 public class UserInfo {
+    private int id;
     private String name;
     private String username;
 
@@ -17,7 +18,11 @@ public class UserInfo {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public void setUsername(String username) {

@@ -10,14 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="items in stock are now displayed on the main page;">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/test/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/UserDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ShoppingCartInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ShoppingCartInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +34,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jsp File" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -86,7 +92,7 @@
     "Tomcat Server.Tomcat 10.1.30.executor": "Run",
     "Tomcat Server.Unnamed.executor": "Run",
     "Tomcat Server.create_item.jsp.executor": "Run",
-    "git-widget-placeholder": "architecture-update",
+    "git-widget-placeholder": "UserID-CartID",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/42310/kthjava/ServletJSPWebApp000",

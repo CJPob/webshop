@@ -1,29 +1,86 @@
 package db;
 
+import bo.ItemColour;
+import bo.ItemType;
 import bo.ShoppingCart;
 import bo.Item;
+import ui.ItemInfo;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
 public class ShoppingCartDB extends ShoppingCart {
 
-    // Protected constructor matching the superclass constructor
-    protected ShoppingCartDB(int cartID, int userID) {
-        super(cartID, userID); // Call the ShoppingCart constructor
+    protected ShoppingCartDB(int userID) {
+        super(userID); // Call the ShoppingCart constructor
     }
 
-    /**
-     * Fetches and returns the shopping cart and its items for a specific user.
-     *
-     * @param username The username of the user whose cart is to be viewed.
-     * @return A collection containing the ShoppingCart object with items inside.
-     */
-    public static Collection<ShoppingCart> viewShoppingCart(String username) {
+    public static boolean newCart(ShoppingCart cart) {
+        String query = "INSERT INTO T_SHOPPINGCART (userID, sumTotal) VALUES (?, ?)";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, cart.getUserID());
+            ps.setInt(2, cart.getSumTotal());
+
+            int result = ps.executeUpdate();
+            return result > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean insertItemIntoCart(int cartId, int itemId, int quantity) {
+        String query = "INSERT INTO T_CART_ITEMS (cartId, itemId, quantity) VALUES (?, ?, ?)";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            // this should be fetched dynamically not manually fix later
+            ps.setInt(1, cartId);
+            ps.setInt(2, itemId);
+            ps.setInt(3, quantity);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static int getCartIdByUserId(int userId) {
+        int cartId = -1;  // Default value if no cart is found
+        try {
+            Connection con = DBManager.getConnection();
+            String query = "SELECT cartId FROM T_SHOPPINGCART WHERE userID = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                cartId = rs.getInt("cartId");
+            }
+
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cartId;
+    }
+
+    public static Collection<ItemInfo> viewShoppingCart(String username) {
         Connection con;
-        Vector<ShoppingCart> cartList = new Vector<>();
-        ShoppingCartDB cart = null;
+        Collection<ItemInfo> itemList = new ArrayList<>();
 
         try {
             // Establish a connection to the database
@@ -31,7 +88,7 @@ public class ShoppingCartDB extends ShoppingCart {
 
             // SQL query to fetch the cart and its items for the specific user
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT sc.cartID, sc.userID, ci.itemID, i.name, i.price, i.type, i.colour, i.description, ci.quantity " +
+                    "SELECT i.id, i.name, i.price, i.type, i.colour, i.description, ci.quantity " +
                             "FROM t_shoppingcart sc " +
                             "JOIN t_cart_items ci ON sc.cartID = ci.cartID " +
                             "JOIN t_item i ON ci.itemID = i.id " +
@@ -41,152 +98,28 @@ public class ShoppingCartDB extends ShoppingCart {
             stmt.setString(1, username);  // Set the username in the query
             ResultSet rs = stmt.executeQuery();
 
+            // Fetch each item and add it to the item list
             while (rs.next()) {
-                int cartID = rs.getInt("cartID");
-                int userID = rs.getInt("userID");
+                int itemID = rs.getInt("id");
                 String itemName = rs.getString("name");
-                int itemID = rs.getInt("itemID");
-                int quantity = rs.getInt("quantity");
+                ItemType itemType = ItemType.valueOf(rs.getString("type"));  // Using ItemType enum
+                ItemColour itemColour = ItemColour.valueOf(rs.getString("colour"));  // Using ItemColour enum
                 int price = rs.getInt("price");
-                String itemType = rs.getString("type");
-                String itemColour = rs.getString("colour");
+                int quantity = rs.getInt("quantity");
                 String description = rs.getString("description");
 
-                // Initialize the cart the first time an item is found
-                if (cart == null) {
-                    cart = new ShoppingCartDB(cartID, userID); // Create a new ShoppingCartDB object
-                }
-
-                cart.addItem(itemID, itemName, itemType, itemColour, price, quantity, description);
+                // Create an ItemInfo and add it to the list
+                itemList.add(new ItemInfo(itemID, itemName, itemType, itemColour, price, quantity, description));
             }
 
-            // Add the cart to the collection if items were found
-            if (cart != null) {
-                cartList.add(cart);
-            }
+            rs.close();
+            stmt.close();
+            con.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return cartList;  // Return the collection containing the cart
+        return itemList;  // Return the collection containing items
     }
-
-    public static boolean addItemToCart(String username, int itemID, int quantity) {
-        Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean success = false;
-
-        try {
-            // Establish a connection to the database
-            con = DBManager.getConnection();
-
-            // Get the user's cartID by username
-            stmt = con.prepareStatement(
-                    "SELECT sc.cartID FROM t_shoppingcart sc " +
-                            "JOIN t_user u ON sc.userID = u.id " +
-                            "WHERE u.username = ?"
-            );
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
-
-            int cartID = -1;
-            if (rs.next()) {
-                cartID = rs.getInt("cartID");
-            }
-
-            if (cartID != -1) {
-                // Check if the item already exists in the cart
-                stmt = con.prepareStatement(
-                        "SELECT quantity FROM t_cart_items WHERE cartID = ? AND itemID = ?"
-                );
-                stmt.setInt(1, cartID);
-                stmt.setInt(2, itemID);
-                rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    // Item exists, update the quantity
-                    int currentQuantity = rs.getInt("quantity");
-                    stmt = con.prepareStatement(
-                            "UPDATE t_cart_items SET quantity = ? WHERE cartID = ? AND itemID = ?"
-                    );
-                    stmt.setInt(1, currentQuantity + quantity);
-                    stmt.setInt(2, cartID);
-                    stmt.setInt(3, itemID);
-                } else {
-                    // Item doesn't exist, insert a new record
-                    stmt = con.prepareStatement(
-                            "INSERT INTO t_cart_items (cartID, itemID, quantity) VALUES (?, ?, ?)"
-                    );
-                    stmt.setInt(1, cartID);
-                    stmt.setInt(2, itemID);
-                    stmt.setInt(3, quantity);
-                }
-
-                stmt.executeUpdate();
-                success = true;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
-        }
-
-        return success;
-    }
-
-    public static boolean removeItemFromCart(String username, int itemID) {
-        Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean success = false;
-
-        try {
-            // Establish a connection to the database
-            con = DBManager.getConnection();
-
-            // Get the user's cartID by username
-            stmt = con.prepareStatement(
-                    "SELECT sc.cartID FROM t_shoppingcart sc " +
-                            "JOIN t_user u ON sc.userID = u.id " +
-                            "WHERE u.username = ?"
-            );
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
-
-            int cartID = -1;
-            if (rs.next()) {
-                cartID = rs.getInt("cartID");
-            }
-
-            if (cartID != -1) {
-                // Delete the item from the cart
-                stmt = con.prepareStatement(
-                        "DELETE FROM t_cart_items WHERE cartID = ? AND itemID = ?"
-                );
-                stmt.setInt(1, cartID);
-                stmt.setInt(2, itemID);
-
-                int rowsAffected = stmt.executeUpdate();
-                success = (rowsAffected > 0);  // Item successfully removed
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
-        }
-
-        return success;
-    }
-
-
 }
