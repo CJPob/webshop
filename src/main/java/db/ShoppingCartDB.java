@@ -36,19 +36,37 @@ public class ShoppingCartDB extends ShoppingCart {
     }
 
     public static boolean insertItemIntoCart(int cartId, int itemId, int quantity) {
-        String query = "INSERT INTO T_CART_ITEMS (cartId, itemId, quantity) VALUES (?, ?, ?)";
+        // First, check if the item is already in the cart
+        String checkQuery = "SELECT quantity FROM T_CART_ITEMS WHERE cartId = ? AND itemId = ?";
+        String insertQuery = "INSERT INTO T_CART_ITEMS (cartId, itemId, quantity) VALUES (?, ?, ?)";
+        String updateQuery = "UPDATE T_CART_ITEMS SET quantity = ? WHERE cartId = ? AND itemId = ?";
 
         try (Connection con = DBManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
 
-            // this should be fetched dynamically not manually fix later
-            ps.setInt(1, cartId);
-            ps.setInt(2, itemId);
-            ps.setInt(3, quantity);
+            checkStmt.setInt(1, cartId);
+            checkStmt.setInt(2, itemId);
 
-            int result = ps.executeUpdate();
-            return result > 0;
+            ResultSet rs = checkStmt.executeQuery();
 
+            if (rs.next()) {
+                int currentQuantity = rs.getInt("quantity");
+                try (PreparedStatement updateStmt = con.prepareStatement(updateQuery)) {
+                    updateStmt.setInt(1, currentQuantity + quantity); // Increase the quantity
+                    updateStmt.setInt(2, cartId);
+                    updateStmt.setInt(3, itemId);
+                    int result = updateStmt.executeUpdate();
+                    return result > 0;
+                }
+            } else {
+                try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, cartId);
+                    insertStmt.setInt(2, itemId);
+                    insertStmt.setInt(3, quantity);
+                    int result = insertStmt.executeUpdate();
+                    return result > 0;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -83,10 +101,8 @@ public class ShoppingCartDB extends ShoppingCart {
         Collection<ItemInfo> itemList = new ArrayList<>();
 
         try {
-            // Establish a connection to the database
             con = DBManager.getConnection();
 
-            // SQL query to fetch the cart and its items for the specific user
             PreparedStatement stmt = con.prepareStatement(
                     "SELECT i.id, i.name, i.price, i.type, i.colour, i.description, ci.quantity " +
                             "FROM t_shoppingcart sc " +
@@ -98,17 +114,15 @@ public class ShoppingCartDB extends ShoppingCart {
             stmt.setString(1, username);  // Set the username in the query
             ResultSet rs = stmt.executeQuery();
 
-            // Fetch each item and add it to the item list
             while (rs.next()) {
                 int itemID = rs.getInt("id");
                 String itemName = rs.getString("name");
-                ItemType itemType = ItemType.valueOf(rs.getString("type"));  // Using ItemType enum
-                ItemColour itemColour = ItemColour.valueOf(rs.getString("colour"));  // Using ItemColour enum
+                ItemType itemType = ItemType.valueOf(rs.getString("type"));
+                ItemColour itemColour = ItemColour.valueOf(rs.getString("colour"));
                 int price = rs.getInt("price");
                 int quantity = rs.getInt("quantity");
                 String description = rs.getString("description");
 
-                // Create an ItemInfo and add it to the list
                 itemList.add(new ItemInfo(itemID, itemName, itemType, itemColour, price, quantity, description));
             }
 
@@ -120,6 +134,6 @@ public class ShoppingCartDB extends ShoppingCart {
             e.printStackTrace();
         }
 
-        return itemList;  // Return the collection containing items
+        return itemList;
     }
 }

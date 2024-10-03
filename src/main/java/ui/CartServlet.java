@@ -23,53 +23,59 @@ public class CartServlet extends HttpServlet {
 
         if (session != null && session.getAttribute("username") != null) {
             String username = (String) session.getAttribute("username");
-
-            // Call the handler method to display cart items
             Collection<ItemInfo> cartItems = ShoppingCartHandler.showMyCart(username);
-
-            // Attach the cart items to the request so they can be displayed in the JSP
             req.setAttribute("cartItems", cartItems);
-
-            // Forward to the JSP page to display the cart
-            req.getRequestDispatcher("/WEB-INF/test/cart.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
         } else {
             resp.sendRedirect("login.jsp");
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Integer cartId = (Integer) session.getAttribute("cartId");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        Integer cartId = (Integer) session.getAttribute("cartId");  // Retrieve cartId from session
 
-        if (cartId == null) {
-            request.setAttribute("error", "No cart available in session.");
-            request.getRequestDispatcher("/WEB-INF/test/cart.jsp").forward(request, response);
+        // If user is not logged in or cartId is missing, redirect to login page
+        if (userId == null || cartId == null) {
+            session.setAttribute("redirectAfterLogin", "cart");
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
 
-        try {
-            // Retrieve itemId and quantity from request
-            int itemId = Integer.parseInt(request.getParameter("itemId"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String action = req.getParameter("action");
 
-            // Add the item to the cart via ShoppingCartHandler
-            boolean success = ShoppingCartHandler.addItemToCart(cartId, itemId, quantity);
+        // Handling 'add' action
+        if ("add".equals(action)) {
+            try {
+                int itemID = Integer.parseInt(req.getParameter("itemID"));
+                int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-            if (success) {
-                request.setAttribute("message", "Item successfully added to the cart!");
-            } else {
-                request.setAttribute("error", "Failed to add the item to the cart.");
+                // Add item to the user's cart using cartId
+                ShoppingCartHandler.addItemToCart(cartId, itemID, quantity);
+                req.setAttribute("message", "Item successfully added to cart.");
+            } catch (NumberFormatException e) {
+                req.setAttribute("error", "Invalid item or quantity. Please try again.");
             }
-
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Invalid item ID or quantity.");
-        } catch (Exception e) {
-            request.setAttribute("error", "An error occurred while adding the item.");
-            e.printStackTrace();
         }
 
-        request.getRequestDispatcher("/WEB-INF/test/cart.jsp").forward(request, response);
+        // Handling 'remove' action
+        /*else if ("remove".equals(action)) {
+            try {
+                int itemID = Integer.parseInt(req.getParameter("itemID"));
+
+                // Remove item from the user's cart using cartId
+                ShoppingCartHandler.removeItem(cartId, itemID);
+                req.setAttribute("message", "Item successfully removed from cart.");
+            } catch (NumberFormatException e) {
+                req.setAttribute("error", "Invalid item ID. Please try again.");
+            }
+        }*/
+
+        // Redirect to cart page to show updated cart
+        resp.sendRedirect(req.getContextPath() + "/cart");
     }
+
 }
 

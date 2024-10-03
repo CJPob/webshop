@@ -30,12 +30,9 @@ public class ItemDB extends bo.Item {
         return searchItemsBy("name = '" + name.toUpperCase() + "'");
     }
 
-    // retrieves all items
     public static Collection<ItemDB> findAll() {
         return searchItemsBy("1=1");  // Always true, fetches all records
     }
-
-
 
     private static Collection<ItemDB> searchItemsBy(String condition) {
         Vector<ItemDB> items = new Vector<>();

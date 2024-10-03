@@ -32,7 +32,6 @@ public class Item {
         return ItemDB.findByName(name);
     }
 
-    //ADMIN ONKY
     static public boolean createNewItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         return ItemDB.createItem(name, type, colour, price, quantity, description);
     }

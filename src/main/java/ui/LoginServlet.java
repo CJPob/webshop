@@ -21,50 +21,40 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        // Validate user credentials using UserHandler
         boolean loginSuccess = UserHandler.loginUser(username, password);
 
         if (loginSuccess) {
-            // After successful login, directly retrieve the userId from the database
-            int userId = UserDB.getUserIdByUsername(username);  // Directly querying UserDB for userId
+            int userId = UserDB.getUserIdByUsername(username);
 
-            if (userId != -1) {  // Ensure that a valid userId was found
-                // Retrieve the cartId based on userId
-                int cartId = ShoppingCartDB.getCartIdByUserId(userId);  // Fetch the cartId from the database
-
-                // Debug print to check the retrieved cartId
+            if (userId != -1) {
+                int cartId = ShoppingCartDB.getCartIdByUserId(userId);
+                String userRole = UserDB.getUserRoleByUserId(userId);
                 System.out.println("DEBUG: Retrieved CartId for UserId: " + userId + " is: " + cartId);
 
-                // Create or retrieve session
                 HttpSession session = req.getSession();
-                // Store userId, username, and cartId in the session
-                session.setAttribute("userId", userId);  // Store userId in session
-                session.setAttribute("username", username);  // Store username in session
-                session.setAttribute("cartId", cartId);  // Store cartId in session
+                session.setAttribute("userId", userId);
+                session.setAttribute("username", username);
+                session.setAttribute("cartId", cartId);
+                session.setAttribute("userRole", userRole); // Store the user role in the session
+                System.out.println("TEST: UserId, Username, CartId, and UserRole stored in session: " + userId + ", " + username + ", " + cartId + ", " + userRole);
 
-                System.out.println("DEBUG: UserId, Username, and CartId stored in session: " + userId + ", " + username + ", " + cartId);
-
-                // Check if the user was redirected from a specific action
                 String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
-
                 if (redirectAfterLogin != null) {
-                    session.removeAttribute("redirectAfterLogin");  // Clear the attribute
+                    session.removeAttribute("redirectAfterLogin");
                     if (redirectAfterLogin.equals("cart")) {
                         resp.sendRedirect(req.getContextPath() + "/cart");
                     } else {
-                        resp.sendRedirect(req.getContextPath() + "/user");  // Default "my page"
+                        resp.sendRedirect(req.getContextPath() + "/user");
                     }
                 } else {
-                    resp.sendRedirect(req.getContextPath() + "/user");  // Default if no prior action
+                    resp.sendRedirect(req.getContextPath() + "/user");
                 }
             } else {
-                // If userId could not be found, reload the login page
                 req.getSession().setAttribute("loginError", "User not found");
                 resp.sendRedirect(req.getContextPath() + "/login.jsp");
             }
 
         } else {
-            // If login fails, reload the login page
             req.getSession().setAttribute("loginError", "Invalid username or password");
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
         }

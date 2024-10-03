@@ -16,8 +16,15 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
+
+                <%-- Check if the user is logged in --%>
+                <% if (session.getAttribute("userId") == null) { %>
                 <li><a href="../../login.jsp">log in</a></li>
-                <li><a href="cart.jsp">my cart</a></li>
+                <% } else { %>
+                <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+                <% } %>
+
+                <li><a href="${pageContext.request.contextPath}/cart">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
                 <li><a href="../../adminpage.jsp">admin</a></li>
@@ -49,7 +56,9 @@
                 <label for="type">Item Type:</label>
                 <select id="type" name="type" required>
                     <option value="SURFBOARD">Surfboard</option>
-                    <option value="TOWELS">Towels</option>
+                    <option value="TOWEL">Towels</option>
+                    <option value="WETSUIT">Wetsuit</option>
+                    <option value="SUNSCREEN">Sunscreen</option>
                 </select>
             </p>
             <p>
@@ -60,13 +69,15 @@
                     <option value="GREEN">Green</option>
                     <option value="YELLOW">Yellow</option>
                     <option value="BLACK">Black</option>
+                    <option value="WHITE">White</option>
+
                 </select>
             </p>
             <p>
                 <input type="submit" value="Add Item" />
                 <input type="reset" value="Clear the form" />
             </p>
-            </form>
+        </form>
     </main>
 
     <footer>
@@ -96,4 +107,3 @@
 
 </body>
 </html>
-

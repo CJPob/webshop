@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class UserDB extends bo.User {
 
-    private UserDB(int id, String name, String password, String username) {
+    private UserDB(int id, String name, String username, String password, UserRole userRole) {
         super(id, name, username, password, UserRole.CUSTOMER);
     }
 
@@ -37,7 +37,39 @@ public class UserDB extends bo.User {
                 String retrievedUsername = rs.getString("username");
                 UserRole userRole = UserRole.valueOf(rs.getString("userRole"));
 
-                users.add(new UserDB(id, name, password, retrievedUsername));
+                users.add(new UserDB(id, name, retrievedUsername, password, userRole));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public static Collection<UserDB> searchAllUsers() {
+        Vector<UserDB> users = new Vector<>();
+        try {
+            Connection con = DBManager.getConnection();
+            Statement st = con.createStatement();
+
+            // Query to fetch all users
+            String query = "SELECT id, name, password, username, userRole FROM T_USER";
+
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                String retrievedUsername = rs.getString("username");
+                UserRole userRole = UserRole.valueOf(rs.getString("userRole"));
+
+                // Add each user to the collection
+                users.add(new UserDB(id, name, retrievedUsername, password, userRole));
             }
 
             rs.close();
@@ -155,4 +187,24 @@ public class UserDB extends bo.User {
         }
     }
 
+    public static String getUserRoleByUserId(int userId) {
+        String role = null;
+        String query = "SELECT userRole FROM T_USER WHERE id = ?";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                role = rs.getString("userRole");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return role;
+    }
 }
