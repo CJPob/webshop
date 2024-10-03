@@ -1,29 +1,20 @@
 package db;
-
-import bo.ShoppingCart;
-import bo.Item;
+import bo.Cart;
 
 import java.sql.*;
 import java.util.Collection;
 import java.util.Vector;
 
-public class ShoppingCartDB extends ShoppingCart {
-
-    // Protected constructor matching the superclass constructor
-    protected ShoppingCartDB(int cartID, int userID) {
-        super(cartID, userID); // Call the ShoppingCart constructor
+public class CartDB extends bo.Cart {
+    protected CartDB(int cartId, int userID) {
+        super(cartId, userID);
     }
 
-    /**
-     * Fetches and returns the shopping cart and its items for a specific user.
-     *
-     * @param username The username of the user whose cart is to be viewed.
-     * @return A collection containing the ShoppingCart object with items inside.
-     */
-    public static Collection<ShoppingCart> viewShoppingCart(String username) {
-        Connection con;
-        Vector<ShoppingCart> cartList = new Vector<>();
-        ShoppingCartDB cart = null;
+    // Fetches and returns the shopping cart and its items for a specific user by userId
+    public static Collection<Cart> viewShoppingCartByUserId(int userId) {
+        Connection con = null;
+        Vector<Cart> cartList = new Vector<>();
+        CartDB cart = null;
 
         try {
             // Establish a connection to the database
@@ -35,17 +26,15 @@ public class ShoppingCartDB extends ShoppingCart {
                             "FROM t_shoppingcart sc " +
                             "JOIN t_cart_items ci ON sc.cartID = ci.cartID " +
                             "JOIN t_item i ON ci.itemID = i.id " +
-                            "JOIN t_user u ON sc.userID = u.id " +
-                            "WHERE u.username = ?"
+                            "WHERE sc.userID = ?"
             );
-            stmt.setString(1, username);  // Set the username in the query
+            stmt.setInt(1, userId);  // Set the userId in the query
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int cartID = rs.getInt("cartID");
-                int userID = rs.getInt("userID");
-                String itemName = rs.getString("name");
                 int itemID = rs.getInt("itemID");
+                String itemName = rs.getString("name");
                 int quantity = rs.getInt("quantity");
                 int price = rs.getInt("price");
                 String itemType = rs.getString("type");
@@ -54,7 +43,7 @@ public class ShoppingCartDB extends ShoppingCart {
 
                 // Initialize the cart the first time an item is found
                 if (cart == null) {
-                    cart = new ShoppingCartDB(cartID, userID); // Create a new ShoppingCartDB object
+                    cart = new CartDB(cartID, userId); // Create a new ShoppingCartDB object
                 }
 
                 cart.addItem(itemID, itemName, itemType, itemColour, price, quantity, description);
@@ -67,12 +56,19 @@ public class ShoppingCartDB extends ShoppingCart {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return cartList;  // Return the collection containing the cart
     }
 
-    public static boolean addItemToCart(String username, int itemID, int quantity) {
+    public static boolean addItemToCart(int userId, int itemID, int quantity) {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -82,20 +78,39 @@ public class ShoppingCartDB extends ShoppingCart {
             // Establish a connection to the database
             con = DBManager.getConnection();
 
-            // Get the user's cartID by username
+            // Get the user's cartID from t_shoppingcart
             stmt = con.prepareStatement(
-                    "SELECT sc.cartID FROM t_shoppingcart sc " +
-                            "JOIN t_user u ON sc.userID = u.id " +
-                            "WHERE u.username = ?"
+                    "SELECT cartID FROM t_shoppingcart WHERE userID = ?"
             );
-            stmt.setString(1, username);
+            stmt.setInt(1, userId);
             rs = stmt.executeQuery();
 
             int cartID = -1;
             if (rs.next()) {
-                cartID = rs.getInt("cartID");
+                cartID = rs.getInt("cartID");  // Retrieve the cartID for the logged-in user
+            } else {
+                // No cart exists, create a new cart for this user
+                stmt = con.prepareStatement(
+                        "INSERT INTO t_shoppingcart (userID) VALUES (?)",
+                        Statement.RETURN_GENERATED_KEYS  // Retrieve the newly created cartID
+                );
+                stmt.setInt(1, userId);
+                int rowsInserted = stmt.executeUpdate();
+
+                if (rowsInserted > 0) {
+                    // Get the newly created cartID
+                    rs = stmt.getGeneratedKeys();
+                    if (rs.next()) {
+                        cartID = rs.getInt(1);
+                    } else {
+                        throw new SQLException("Failed to retrieve cartID after cart creation.");
+                    }
+                } else {
+                    throw new SQLException("Failed to create cart for userID: " + userId);
+                }
             }
 
+            // Now add the item to the cart in t_cart_items
             if (cartID != -1) {
                 // Check if the item already exists in the cart
                 stmt = con.prepareStatement(
@@ -115,7 +130,7 @@ public class ShoppingCartDB extends ShoppingCart {
                     stmt.setInt(2, cartID);
                     stmt.setInt(3, itemID);
                 } else {
-                    // Item doesn't exist, insert a new record
+                    // Item doesn't exist in the cart, insert a new record
                     stmt = con.prepareStatement(
                             "INSERT INTO t_cart_items (cartID, itemID, quantity) VALUES (?, ?, ?)"
                     );
@@ -124,6 +139,7 @@ public class ShoppingCartDB extends ShoppingCart {
                     stmt.setInt(3, quantity);
                 }
 
+                // Execute the insert or update query
                 stmt.executeUpdate();
                 success = true;
             }
@@ -131,7 +147,6 @@ public class ShoppingCartDB extends ShoppingCart {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Close resources
             try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
@@ -140,7 +155,9 @@ public class ShoppingCartDB extends ShoppingCart {
         return success;
     }
 
-    public static boolean removeItemFromCart(String username, int itemID) {
+
+
+    public static boolean removeItemFromCart(int userId, int itemID) {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -150,13 +167,11 @@ public class ShoppingCartDB extends ShoppingCart {
             // Establish a connection to the database
             con = DBManager.getConnection();
 
-            // Get the user's cartID by username
+            // Get the user's cartID by userID
             stmt = con.prepareStatement(
-                    "SELECT sc.cartID FROM t_shoppingcart sc " +
-                            "JOIN t_user u ON sc.userID = u.id " +
-                            "WHERE u.username = ?"
+                    "SELECT sc.cartID FROM t_shoppingcart sc WHERE sc.userID = ?"
             );
-            stmt.setString(1, username);
+            stmt.setInt(1, userId);
             rs = stmt.executeQuery();
 
             int cartID = -1;
@@ -180,13 +195,70 @@ public class ShoppingCartDB extends ShoppingCart {
             e.printStackTrace();
         } finally {
             // Close resources
+            try {
+                if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
+    }
+
+    // Check if a cart exists for a given userId
+    public static boolean cartExistsForUser(int userId) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean exists = false;
+
+        try {
+            con = DBManager.getConnection();
+
+            // Query to check if the cart exists
+            stmt = con.prepareStatement("SELECT cartID FROM t_shoppingcart WHERE userID = ?");
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            exists = rs.next();  // If there's a result, the cart exists
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
 
-        return success;
+        return exists;
     }
 
+    // Create a new cart for the user
+    public static void createCartForUser(int userId) {
+        Connection con = null;
+        PreparedStatement stmt = null;
 
+        try {
+            con = DBManager.getConnection();
+
+            // Insert a new cart for the user
+            stmt = con.prepareStatement("INSERT INTO t_shoppingcart (userID) VALUES (?)");
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();  // Create the cart
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
 }

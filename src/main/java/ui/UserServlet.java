@@ -48,8 +48,8 @@ public class UserServlet extends HttpServlet {
         boolean signupSuccess = UserHandler.signupUser(name, username, password);
 
         if (signupSuccess) {
-            req.setAttribute("message", "Signup successful! Please log in.");
-            req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+            // Redirect to the login page after successful signup
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
         } else {
             req.setAttribute("error", "Signup failed. Please try again.");
             req.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(req, resp);

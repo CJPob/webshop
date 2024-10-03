@@ -1,27 +1,28 @@
 package bo;
 
-import db.ShoppingCartDB;
+import db.CartDB;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ShoppingCart {
+public class Cart {
 
     private int cartId;
     private int userID;
     private ArrayList<Item> items;
     private int sumTotal;
 
-    protected ShoppingCart(int cartId, int userID) {
+    protected Cart(int cartId, int userID) {
         this.cartId = cartId;
         this.userID = userID;
         this.items = new ArrayList<>();
         this.sumTotal = 0;
     }
 
-    static public Collection getItems(String username){
-        return ShoppingCartDB.viewShoppingCart(username);
+    // Method to get items by userId
+    public static Collection<Cart> getItemsByUserId(int userId) {
+        return CartDB.viewShoppingCartByUserId(userId);  // Call CartDB to fetch the cart by userId
     }
 
     public void addItem(Item item) {
@@ -38,7 +39,7 @@ public class ShoppingCart {
     }
 
     public void addItem(int itemID, String name, String type, String colour, int price, int quantity, String description) {
-        Item item = new Item(itemID, name, bo.ItemType.valueOf(type), bo.ItemColour.valueOf(colour), price, quantity, description);
+        Item item = new Item(itemID, name, Item.ItemType.valueOf(type), Item.ItemColour.valueOf(colour), price, quantity, description);
         this.items.add(item);  // Add the newly created item to the list
     }
 

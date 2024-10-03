@@ -1,8 +1,5 @@
 package db;
 
-import bo.ItemColour;
-import bo.ItemType;
-
 import java.sql.*;
 import java.util.Collection;
 import java.util.Vector;

@@ -6,13 +6,11 @@ import ui.ItemInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 public class ItemHandler {
 
     // Utilizes ItemDB's methods to fetch items based on the type or conditions
-
     public static Collection<ItemInfo> getItemsByType(String type) {
-        Collection<ItemDB> dbItems = ItemDB.searchItemsByType(ItemType.valueOf(type.toUpperCase()));
+        Collection<ItemDB> dbItems = ItemDB.searchItemsByType(Item.ItemType.valueOf(type.toUpperCase()));
         return convertToItemInfo(dbItems);
     }
 
@@ -34,7 +32,7 @@ public class ItemHandler {
         return items;
     }
 
-    public static boolean createItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
+    public static boolean createItem(String name, Item.ItemType type, Item.ItemColour colour, int price, int quantity, String description) {
         return ItemDB.createItem(name, type, colour, price, quantity, description);
     }
 }

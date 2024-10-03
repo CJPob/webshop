@@ -18,8 +18,15 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
+
+                <%-- Check if the user is logged in --%>
+                <% if (session.getAttribute("userId") == null) { %>
                 <li><a href="../../login.jsp">log in</a></li>
-                <li><a href="cart.jsp">my cart</a></li>
+                <% } else { %>
+                <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+                <% } %>
+
+                <li><a href="${pageContext.request.contextPath}/cart">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
                 <li><a href="../../adminpage.jsp">admin</a></li>
@@ -40,8 +47,9 @@
                     for (UserInfo user : users) {
                 %>
                 <li>
-                    <strong>Username:</strong> <%= user.getUsername() %>,
-                    <strong>Name:</strong> <%= user.getName() %>
+                    <strong>Username: </strong> <%= user.getUsername() %>,
+                    <strong> Name: </strong> <%= user.getName() %>
+                    <strong> Role: </strong> <%= user.getUserRole() %>
                 </li>
                 <%
                     }

@@ -286,6 +286,41 @@ grid-gap: 20px;
     margin: 5px 0;
 }
 
+/*******************************************************************/
+/* shopping cart table                */
+#shoppingcart {
+    width: 100%;             /* Make the table take the full width of its container */
+    border-collapse: collapse; /* Remove the space between the table cells */
+    margin: 20px 0;          /* Add some margin above and below the table */
+}
+
+#shoppingcart th, #shoppingcart td {
+    padding: 10px;           /* Add space inside the cells */
+    text-align: left;        /* Align text to the left */
+    border-bottom: 1px solid #ddd; /* Add a bottom border to the rows */
+}
+
+#shoppingcart th {
+    background-color: #f2f2f2; /* Light background color for the table header */
+    font-weight: bold;         /* Bold font for the headers */
+}
+
+#shoppingcart tr:hover {
+    background-color: #f9f9f9; /* Add hover effect for the rows */
+}
+
+#shoppingcart td {
+    vertical-align: middle;    /* Vertically align the text in the middle */
+}
+
+#shoppingcart td:last-child {
+    font-weight: bold;         /* Make the total price bold */
+}
+
+#shoppingcart td:nth-child(2),
+#shoppingcart td:nth-child(4) {
+    text-align: right;         /* Align price columns to the right */
+}
 
 
 

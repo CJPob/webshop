@@ -1,8 +1,5 @@
 package bo;
 
-import db.ItemDB;
-import java.util.Collection;
-
 public class Item {
     private final int id;
     private String name;
@@ -11,10 +8,6 @@ public class Item {
     private int price;
     private int quantity;
     private String description;
-
-    static public Collection<Item> searchItems(String group) {
-        return ItemDB.searchItems(group);
-    }
 
     protected Item(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         this.id = id;
@@ -68,5 +61,33 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public enum ItemColour {
+        RED("Red"), BLUE("Blue"), GREEN("Green"), YELLOW("Yellow"), BLACK("Black");
+
+        private final String colour;
+
+        ItemColour(String colour) {
+            this.colour = colour;
+        }
+
+        public String getColour() {
+            return this.colour;
+        }
+    }
+
+    public enum ItemType {
+        SURFBOARD("Surfboard"), TOWELS("Towels");
+
+        private final String type;
+
+        ItemType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return this.type;
+        }
     }
 }

@@ -1,13 +1,14 @@
 package ui;
 
 import bo.UserHandler;
+import bo.CartHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;  // Import HttpSession
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -16,18 +17,29 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        // Check if user is already logged in
+        if (session.getAttribute("userId") != null) {
+            resp.sendRedirect(req.getContextPath() + "/user");  // Redirect to user's main page
+            return;  // no need in further execution
+        }
+
         // Retrieve username and password from form
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         // Validate user credentials using UserHandler
-        boolean loginSuccess = UserHandler.loginUser(username, password);
+        UserInfo user = UserHandler.loginUser(username, password);
 
-        // If login is successful, store username in session
-        if (loginSuccess) {
-            HttpSession session = req.getSession();  // Create or retrieve session
+        // If login is successful, store user details in session
+        if (user != null) {
             session.setAttribute("username", username);  // Store username in session
+            session.setAttribute("userId", user.getId());  // Store user ID in session
             System.out.println("DEBUG: Username stored in session: " + username);  // Debug output
+
+            // Check if the user has a cart, create one if not
+            CartHandler.ensureCartForUser(user.getId());
 
             // Check if the user was redirected from a specific action
             String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
@@ -44,7 +56,7 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             // If login fails, reload the login page (which is outside WEB-INF)
-            req.getSession().setAttribute("loginError", "Invalid username or password");  // Optional: add error message
+            session.setAttribute("loginError", "Invalid username or password");  // Optional: add error message
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
         }
     }

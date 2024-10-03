@@ -4,16 +4,17 @@ import db.UserDB;
 import ui.UserInfo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 public class UserHandler {
+
+
     public static ArrayList<UserInfo> getUser(String username) {
-        Collection<User> users = User.searchUser(username);
+        List<User> users = UserDB.searchUser(username);
         ArrayList<UserInfo> userInfos = new ArrayList<>();
 
-        for (User u : users) {
-            userInfos.add(new UserInfo(u.getUsername()));  // Converting User to UserInfo
+        for (User user : users) {
+            userInfos.add(new UserInfo(user.getId(), user.getUsername(), user.getName(), user.getUserRole()));
         }
 
         return userInfos;
@@ -23,14 +24,37 @@ public class UserHandler {
         return UserDB.insertUser(name, username, password);
     }
 
-    public static boolean loginUser(String username, String password) {
-        boolean loginSuccess = false;
-        try {
-            loginSuccess = UserDB.checkUserCredentials(username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static UserInfo loginUser(String username, String password) {
+        boolean isValidUser = UserDB.checkUserCredentials(username, password);
+        if (isValidUser) {
+            List<User> users = UserDB.searchUser(username);
+            if (!users.isEmpty()) {
+                User user = users.get(0);
+                return new UserInfo(user.getId(), user.getUsername(), user.getName(), user.getUserRole());
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<UserInfo> getAllUsers() {
+        List<User> users = UserDB.getAllUsers();
+        ArrayList<UserInfo> userInfos = new ArrayList<>();
+
+        for (User user : users) {
+            userInfos.add(new UserInfo(user.getId(), user.getUsername(), user.getName(), user.getUserRole()));
         }
 
-        return loginSuccess;  // Return true if login is successful, false otherwise
+        return userInfos;
+    }
+
+    public static boolean setUserRole(String username, String roleName) {
+        User.UserRole userRole;
+        try {
+            userRole = User.UserRole.valueOf(roleName.toUpperCase());
+            return UserDB.updateUserRole(username, userRole);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid role specified: " + roleName);
+            return false;
+        }
     }
 }

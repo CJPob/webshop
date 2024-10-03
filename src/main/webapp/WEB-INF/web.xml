@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>itemServlet</servlet-name>
-        <servlet-class>ui.ItemServlet</servlet-class> <!-- Change to dashboardServlet later -->
+        <servlet-class>ui.ItemServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

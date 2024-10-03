@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="ui.ItemInfo" %>
+<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
@@ -16,7 +18,14 @@
         <nav>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
+
+                <%-- Check if the user is logged in --%>
+                <% if (session.getAttribute("userId") == null) { %>
                 <li><a href="../../login.jsp">log in</a></li>
+                <% } else { %>
+                <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+                <% } %>
+
                 <li><a href="cart.jsp">my cart</a></li>
                 <%-- Check if the user is logged in and is an admin, display extra menu --%>
                 <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
@@ -28,9 +37,49 @@
 
 
     <main>
-        <h1>  LAGERSALDO // INVENTORY  </h1>
-        <h1> //   SE SALDO // ADD REMOVE ITEMS  ?  </h1>
+        <h1>Inventory</h1>
 
+        <%
+            Collection<ItemInfo> items = (Collection<ItemInfo>) request.getAttribute("items");
+            if (items != null && !items.isEmpty()) {
+        %>
+        <!-- Start of inventory list -->
+        <table>
+            <thead>
+            <tr>
+                <th>| Name:  </th>
+                <th> | Type:  </th>
+                <th> | Colour:  </th>
+                <th> | Price:  </th>
+                <th> | Quantity:  </th>
+                <th> | Description:  </th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (ItemInfo item : items) {
+            %>
+            <tr>
+                <td><%= item.getName() %></td>
+                <td><%= item.getType().getType() %></td>
+                <td><%= item.getColour().name() %></td>
+                <td>$<%= item.getPrice() %></td>
+                <td><%= item.getQuantity() %></td>
+                <td><%= item.getDescription() %></td>
+            </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+        <!-- End of inventory list -->
+        <%
+        } else {
+        %>
+        <p>No items available in the inventory.</p>
+        <%
+            }
+        %>
     </main>
 
 
