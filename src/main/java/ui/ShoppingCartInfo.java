@@ -49,5 +49,4 @@ public class ShoppingCartInfo {
         ItemInfo newItem = new ItemInfo(itemId, itemName, itemType, itemColour, itemPrice, itemQuantity, itemDescription);
         this.items.add(newItem);
     }
-
 }

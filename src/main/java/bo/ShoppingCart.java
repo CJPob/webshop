@@ -1,66 +1,51 @@
 package bo;
 
 import db.ShoppingCartDB;
+import ui.ItemInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 public class ShoppingCart {
 
     private int cartId;
     private int userID;
-    private ArrayList<Item> items;
+    private Collection<ItemInfo> items;
     private int sumTotal;
+    private Status status;
 
-    protected ShoppingCart(int cartId, int userID) {
-        this.cartId = cartId;
-        this.userID = userID;
-        this.items = new ArrayList<>();
-        this.sumTotal = 0;
+    public enum Status {
+        IN_PROGRESS("In Progress"),
+        ORDERED("Ordered");
+
+        private final String status;
+
+        Status(String status) {
+            this.status = status;
+        }
+
+        @Override
+        public String toString() {
+            return status;
+        }
     }
 
-    static public Collection getItems(String username){
+    public static boolean createNewCart(ShoppingCart shoppingCart) {
+        return ShoppingCartDB.newCart(shoppingCart);
+    }
+
+    public static boolean addItem(int cartId, int itemId, int quantity) {
+        return ShoppingCartDB.insertItemIntoCart(cartId, itemId, quantity);
+    }
+
+    public static Collection<ItemInfo> displayMyCart(String username) {
         return ShoppingCartDB.viewShoppingCart(username);
     }
 
-    public void addItem(Item item) {
-        for (Item cartItem : items) {
-            if (cartItem.getId() == item.getId()) {
-                int newQuantity = cartItem.getQuantity() + item.getQuantity();
-                sumTotal += item.getPrice() * item.getQuantity();
-                cartItem.setQuantity(newQuantity);
-                return;
-            }
-        }
-        items.add(item);
-        sumTotal += item.getPrice() * item.getQuantity();
-    }
-
-    public void addItem(int itemID, String name, String type, String colour, int price, int quantity, String description) {
-        Item item = new Item(itemID, name, bo.ItemType.valueOf(type), bo.ItemColour.valueOf(colour), price, quantity, description);
-        this.items.add(item);  // Add the newly created item to the list
-    }
-
-    public void removeItem(int itemId) {
-        Iterator<Item> iterator = items.iterator();
-        while (iterator.hasNext()) {
-            Item item = iterator.next();
-            if (item.getId() == itemId) {
-                if (item.getQuantity() > 1) {
-                    item.setQuantity(item.getQuantity() - 1);
-                    sumTotal -= item.getPrice(); // Adjust for quantity decrease
-                } else {
-                    sumTotal -= item.getPrice() * item.getQuantity(); // Adjust for complete removal
-                    iterator.remove();
-                }
-                break;
-            }
-        }
-    }
-
-    public ArrayList<Item> getItems() {
-        return new ArrayList<>(items);
+    protected ShoppingCart(int userID) {
+        this.userID = userID;
+        this.items = new ArrayList<>();
+        this.sumTotal = 0;
     }
 
     public int getTotal() {

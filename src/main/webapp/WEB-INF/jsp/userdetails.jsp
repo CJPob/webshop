@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ui.UserInfo" %>
+<%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
 <html>
@@ -17,8 +18,15 @@
     <nav>
       <ul>
         <li><a href="${pageContext.request.contextPath}/item">home</a></li>
+
+        <%-- Check if the user is logged in --%>
+        <% if (session.getAttribute("userId") == null) { %>
         <li><a href="../../login.jsp">log in</a></li>
-        <li><a href="cart.jsp">my cart</a></li>
+        <% } else { %>
+        <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+        <% } %>
+
+        <li><a href="${pageContext.request.contextPath}/cart">my cart</a></li>
         <%-- Check if the user is logged in and is an admin, display extra menu --%>
         <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
         <li><a href="../../adminpage.jsp">admin</a></li>
@@ -28,18 +36,33 @@
   </header>
 
   <main>
-    <div class="user-details">
-      <h2>Your Profile</h2>
-      <%
-        UserInfo user = (UserInfo) request.getAttribute("user");
-        if (user != null) {
-      %>
-      <p>Hi there, <strong><%= user.getName() %></strong></p>
-      <p><strong>Username:</strong> <%= user.getUsername() %></p>
-      <% } else { %>
-      <p>No user information available.</p>
-      <% } %>
-    </div>
+    <%
+      Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
+      if (users != null && !users.isEmpty()) {
+    %>
+    <!-- Start of users list -->
+    <div class="users-list">
+      <ul>
+        <%
+          for (UserInfo user : users) {
+        %>
+        <li>
+          <strong>Username: </strong> <%= user.getUsername() %>,
+          <strong> Name: </strong> <%= user.getName() %>
+          <strong> Role: </strong> <%= user.getUserRole() %>
+        </li>
+        <%
+          }
+        %>
+      </ul>
+    </div>  <!-- End of users list -->
+    <%
+    } else {
+    %>
+    <p>No users found.</p>
+    <%
+      }
+    %>
   </main>
 
   <footer>

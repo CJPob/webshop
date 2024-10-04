@@ -1,11 +1,18 @@
 package ui;
 
+import bo.UserRole;
+
 public class UserInfo {
+    private int id;
     private String name;
     private String username;
+    private UserRole userRole;
 
-    public UserInfo(String username) {
+    public UserInfo(int userId, String name, String username, UserRole userRole) {
+        this.id = userId;
         this.username = username;
+        this.name = name;
+        this.userRole = userRole;
     }
 
     public String getName() {
@@ -17,7 +24,15 @@ public class UserInfo {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
     }
 
     public void setUsername(String username) {
