@@ -36,6 +36,7 @@
 
     <main>
         <form action="${pageContext.request.contextPath}/item" method="POST" id="additemForm">
+            <input type="hidden" name="action" value="addItem" />
             <p>
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -70,7 +71,6 @@
                     <option value="YELLOW">Yellow</option>
                     <option value="BLACK">Black</option>
                     <option value="WHITE">White</option>
-
                 </select>
             </p>
             <p>

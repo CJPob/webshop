@@ -49,7 +49,8 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <button onclick="window.location.href='${pageContext.request.contextPath}/item?action=add'">Add New Item</button>
+                    <button onclick="window.location.href='${pageContext.request.contextPath}/admin?action=addItemPage'">Add New Item</button>
+
                 </td>
                 <td colspan="6">
                     <form action="${pageContext.request.contextPath}/item" method="get">

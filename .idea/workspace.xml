@@ -9,26 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="items in stock are now displayed on the main page;">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
+    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="Major fixes and new features, read merge comment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/UserDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/additem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/additem.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/adminpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/adminpage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,8 +334,17 @@
       <workItem from="1727562276829" duration="4614000" />
       <workItem from="1727613097332" duration="17274000" />
       <workItem from="1727788057341" duration="7226000" />
-      <workItem from="1728064805689" duration="13173000" />
+      <workItem from="1728064805689" duration="13921000" />
+      <workItem from="1728079178298" duration="991000" />
     </task>
+    <task id="LOCAL−00001" summary="Major fixes and new features, read merge comment">
+      <option name="closed" value="true" />
+      <created>1728078095299</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1728078095299</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,6 +364,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="items in stock are now displayed on the main page;" />
-    <option name="LAST_COMMIT_MESSAGE" value="items in stock are now displayed on the main page;" />
+    <MESSAGE value="Major fixes and new features, read merge comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major fixes and new features, read merge comment" />
   </component>
 </project>
