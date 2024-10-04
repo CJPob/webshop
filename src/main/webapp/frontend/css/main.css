@@ -31,7 +31,7 @@ header {
     border-radius: 10px;
     margin-bottom: 1rem;
     font-family: "Nabla", sans-serif;
-    text-shadow: 6px 6px 6px #006699d2 ;
+    text-shadow: 6px 6px 6px #006699d2;
 }
 
 header h1 {
@@ -52,7 +52,7 @@ nav ul li {
 }
 
 main {
-    flex:1;
+    flex: 1;
     height: auto;
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ footer {
     border-radius: 10px;
 }
 
-#copyright ul li, #authors ul li{
+#copyright ul li, #authors ul li {
     display: inline-block;
     line-height: 1;
     padding-left: 1rem;
@@ -88,11 +88,9 @@ footer {
     font-family: sans-serif;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"],
-.signup-form input[type="text"],
-.signup-form input[type="password"],
-.signup-form input[type="password2"]  {
+.login-form input[type="text"], .login-form input[type="password"],
+.signup-form input[type="text"], .signup-form input[type="password"],
+.signup-form input[type="password2"] {
     width: 94%;
     padding: 10px;
     margin-bottom: 20px;
@@ -100,7 +98,7 @@ footer {
     border-radius: 5px;
 }
 
-.signup-form input[id="password2"]  {
+.signup-form input[id="password2"] {
     margin-bottom: 50px;
 }
 
@@ -173,8 +171,6 @@ footer {
     height: 200px;
 }
 
-/**********************************************************************/
-/***     this needs cleanup *******************************************/
 #additemForm {
     background-color: white;
     padding: 40px;
@@ -198,8 +194,7 @@ footer {
     font-size: 1.2rem;
 }
 
-#additemForm input[type="text"],
-#additemForm input[type="number"],
+#additemForm input[type="text"], #additemForm input[type="number"],
 #additemForm select {
     flex: 1;
     padding: 12px;
@@ -207,8 +202,7 @@ footer {
     border-radius: 5px;
 }
 
-#additemForm input[type="submit"],
-#additemForm input[type="reset"] {
+#additemForm input[type="submit"], #additemForm input[type="reset"] {
     width: auto;
     padding: 10px 20px;
     cursor: pointer;
@@ -240,13 +234,11 @@ footer {
     color: white;
 }
 
-#additemForm input:focus,
-#additemForm select:focus {
+#additemForm input:focus, #additemForm select:focus {
     outline: none;
     border-color: rgba(42, 157, 157, 0.84);
     background-color: #e6f7ff;
 }
-/********************************************************************/
 
 .admin-seeusers-btn {
     margin-bottom: 40px;
@@ -256,50 +248,133 @@ footer {
     margin-top: 40px;
 }
 
-/*******************************************************************/
-/* Items grid styles  ****************   PRELIMINARY   *************/
+/* Items grid styles */
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /
-grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* Adjust as needed */
+    grid-gap: 20px;
+    padding: 20px;
 }
 
 .item {
+    display: flex;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 15px;
-    box-sizing: border-box;
+    overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.item h3 {
+.item-image, .item-details {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.item-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    height: 100%; /* Ensure it takes the full height of its parent */
+    box-sizing: border-box;
+}
+
+.item-details h3 {
     margin-top: 0;
 }
 
-.item p {
+.item-details p {
     margin: 5px 0;
 }
 
+.item-details a {
+    margin-top: auto;
+}
+
+.item-details a button {
+    padding: 10px 15px;
+    background-color: rgba(42, 157, 157, 0.84);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item-details a button:hover {
+    background-color: rgba(5, 100, 100, 0.89);
+}
 
 
+/* shopping cart table, inventory table, user list table, user details table */
+#shoppingcart, #inventorytable, #userstable, #userdetails {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 40px 20px;
+}
+
+#shoppingcart th, #shoppingcart td, #inventorytable th,
+#inventorytable td, #userstable th, #userstable td,
+#userdetails th, #userdetails td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#shoppingcart th, #inventorytable th, #userstable th, #userdetails th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+#shoppingcart tr:hover, #inventorytable tr:hover,
+#userstable tr:hover, #userdetails tr:hover {
+    background-color: #f9f9f9;
+}
+
+#shoppingcart td, #inventorytable td,
+#userstable td, #userdetails td {
+    vertical-align: middle;
+}
+
+#shoppingcart td:last-child, #inventorytable td:last-child,
+#userstable td:last-child, #userdetails td:last-child {
+    font-weight: bold;
+}
+
+#userstable tr {
+    height: auto;
+}
+
+#userstable .role-dropdown {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 3px solid rgba(42, 157, 157, 0.84);
+    background-color: white;
+    color: rgba(42, 157, 157, 0.84);
+    cursor: pointer;
+    margin: 0;
+    text-align: center;
+}
 
 /******************************************************************/
 
-
-
-@media (min-width: 640px) and (max-width:1280px){
+@media (min-width: 640px) and (max-width:1280px) {
 }
 
 @media (max-width: 639px) {
 }
-
-
-
-
-

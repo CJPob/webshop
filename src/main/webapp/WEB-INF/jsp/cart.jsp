@@ -35,34 +35,59 @@
         </nav>
     </header>
 
+
     <main>
         <%
             Collection<ItemInfo> cartItems = (Collection<ItemInfo>) request.getAttribute("cartItems");
+            double totalAmount = 0.0; // To calculate total amount
 
             if (cartItems != null && !cartItems.isEmpty()) {
         %>
-        <table id = "shoppingcart">
+        <table id="shoppingcart">
             <thead>
             <tr>
-                <th>Item Name: </th>
-                <th>Price: </th>
-                <th>Quantity: </th>
-                <th>Total Price: </th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Actions</th> <!-- Added for the Remove button -->
             </tr>
             </thead>
             <tbody>
             <%
                 for (ItemInfo item : cartItems) {
+                    double itemTotal = item.getPrice() * item.getQuantity();
+                    totalAmount += itemTotal;
             %>
             <tr>
                 <td><%= item.getName() %></td>
                 <td>$<%= item.getPrice() %></td>
                 <td><%= item.getQuantity() %></td>
-                <td>$<%= item.getPrice() * item.getQuantity() %></td>
+                <td>$<%= itemTotal %></td>
+                <td>
+                    <form action="#" method="POST"> <!-- Placeholder for future action -->
+                        <button type="button" class="removeitem">Remove</button>
+                    </form>
+                </td>
             </tr>
             <%
                 }
             %>
+            <tr>
+                <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount to Pay:</td>
+                <td style="font-weight: bold;">$<%= totalAmount %></td>
+                <td></td> <!-- Empty for the actions column -->
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right;">
+                    <form action="#" method="POST" style="display: inline-block;">
+                        <button type="button" class="continue-btn">Empty Cart</button>
+                    </form>
+                    <form action="#" method="POST" style="display: inline-block; margin-left: 10px;">
+                        <button type="button" class="continue-btn">Place Order</button>
+                    </form>
+                </td>
+            </tr>
             </tbody>
         </table>
         <%
@@ -73,7 +98,6 @@
             }
         %>
     </main>
-
 
 
     <footer>
@@ -103,3 +127,4 @@
 
 </body>
 </html>
+

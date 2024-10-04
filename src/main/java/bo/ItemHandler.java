@@ -1,38 +1,31 @@
 package bo;
 
-import db.ItemDB;
 import ui.ItemInfo;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-
 
 public class ItemHandler {
 
-    public static Collection<ItemInfo> searchByType(String type) {
+    // Renamed from searchByType to old getItemsByType
+    public static Collection<ItemInfo> getItemsByType(String type) {
         Collection<Item> itemsByType = Item.byType(type);
         return convertToItemInfo(itemsByType);
     }
 
-    public static Collection<ItemInfo> searchByInStock() {
+    // Renamed from searchByInStock to old  getItemsInStock
+    public static Collection<ItemInfo> getItemsInStock() {
         Collection<Item> itemInStock = Item.inStock();
         return convertToItemInfo(itemInStock);
     }
 
-    public static Collection<ItemInfo> searchByColour(String colour) {
-        Collection<Item> itemsByColour = Item.byColour(colour);
-        return convertToItemInfo(itemsByColour);
+    // Renamed from searchAll to old getAllItems
+    public static Collection<ItemInfo> getAllItems() {
+        Collection<Item> allItems = Item.all();
+        return convertToItemInfo(allItems);
     }
 
-    public static Collection<ItemInfo> searchByName(String name) {
-        Collection<Item> itemsByName = Item.byName(name);
-        return convertToItemInfo(itemsByName);
-    }
-
-    public static Collection<ItemInfo> searchAll() {
-        Collection<Item> all = Item.all();
-        return convertToItemInfo(all);
+    public static boolean updateItemQuantity(int itemId, int changeAmount) {
+        return Item.updateQuantity(itemId, changeAmount);
     }
 
     public static boolean createItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
@@ -54,5 +47,4 @@ public class ItemHandler {
         }
         return itemInfos;
     }
-
 }

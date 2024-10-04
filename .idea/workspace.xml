@@ -10,7 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="items in stock are now displayed on the main page;">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/UserDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/adminpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/adminpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/frontend/css/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,42 +87,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.TestConnection.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Tomcat Server.Tomcat 10.1.30.executor": "Run",
-    "Tomcat Server.Unnamed.executor": "Run",
-    "Tomcat Server.create_item.jsp.executor": "Run",
-    "git-widget-placeholder": "MergeBranches",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/42310/kthjava/ServletJSPWebApp000",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.TestConnection.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.30.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.create_item.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/42310/kthjava/ServletJSPWebApp000&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\java\ui" />
       <recent name="C:\JavaProj\webshop\src\main\webapp\WEB-INF" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\WEB-INF" />
-      <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\frontend" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.30">
@@ -332,6 +350,7 @@
       <workItem from="1727562276829" duration="4614000" />
       <workItem from="1727613097332" duration="17274000" />
       <workItem from="1727788057341" duration="7226000" />
+      <workItem from="1728064805689" duration="13173000" />
     </task>
     <servers />
   </component>

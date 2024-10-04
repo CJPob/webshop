@@ -43,26 +43,28 @@
     %>
     <!-- Start of items grid -->
     <div class="items-grid">
-      <%
-        for (ItemInfo item : items) {
-      %>
+      <% for (ItemInfo item : items) { %>
       <div class="item">
-        <h3><%= item.getName() %></h3>
-        <p>Price: $<%= item.getPrice() %></p>
-        <p>Description: <%= item.getDescription() %></p>
-
-        <!-- Link to redirect to itemDetails.jsp and pass itemID -->
-        <a href="${pageContext.request.contextPath}/itemDetails.jsp?itemID=<%= item.getId()
-                                                    %>&name=<%= item.getName()
-                                                    %>&price=<%= item.getPrice()
-                                                    %>&description=<%= item.getDescription() %>">
-          <button type="button">See Details</button>
-        </a>
+        <div class="item-image">
+          <!-- placeholder image or dynamic image -->
+          <img src="#" alt="Product Image">
+        </div>
+        <div class="item-details">
+          <h3><%= item.getName() %></h3>
+          <p>Price: $<%= item.getPrice() %></p>
+          <p>Description: <%= item.getDescription() %></p>
+          <!-- Link to redirect to itemDetails.jsp and pass itemID -->
+          <a href="${pageContext.request.contextPath}/itemDetails.jsp?itemID=<%= item.getId()
+                                                  %>&name=<%= item.getName()
+                                                  %>&price=<%= item.getPrice()
+                                                  %>&description=<%= item.getDescription() %>">
+            <button type="button">See Details</button>
+          </a>
+        </div>
       </div>
-      <%
-        }
-      %>
+      <% } %>
     </div>  <!-- End of items grid -->
+
     <%
     } else {
     %>

@@ -35,16 +35,11 @@
 
     <main>
         <div class="submenu">
-            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">See orders and their statuses</button>
+            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">Orders</button>
             <button class="continue-btn admin-inventory-btn" onclick="window.location.href
-                    ='${pageContext.request.contextPath}/item?filter=all'">Inventory / current items saldo</button>
-            <button class="continue-btn admin-additem-btn" onclick="window.location.href=
-                    '${pageContext.request.contextPath}/admin?action=addItemPage'">Add / create new item</button>
-            <button class="continue-btn admin-removeitem-btn" onclick="window.location.href='removeitem.jsp'">Change saldo or remove item</button>
+                    ='${pageContext.request.contextPath}/item?filter=all'">Warehouse</button>
             <button class="continue-btn admin-seeusers-btn" onclick="window.location.href=
-                    '${pageContext.request.contextPath}/admin?action=viewUsers'">See users, set privileges</button>
-
-
+                    '${pageContext.request.contextPath}/admin?action=viewUsers'">Users</button>
         </div>
     </main>
 
@@ -56,7 +51,7 @@
         </ul>
     </footer>
 </div><!-- end of container -->
-can we also fix the path tu list of users?
+
 
 <div id="copyright">
     <ul>
@@ -71,6 +66,7 @@ can we also fix the path tu list of users?
         <li>cjpob@somemail.se</li>
         <li>jzbk@somemail.se</li>
     </ul>
+
 </div><!-- end of authors -->
 
 </body>

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ui.ItemInfo" %>
+<%@ page import="ui.ItemInfo, bo.ItemType" %>
 <%@ page import="java.util.Collection" %>
 <!DOCTYPE html>
 
@@ -37,28 +37,49 @@
 
 
     <main>
-        <h1>Inventory</h1>
-
         <%
             Collection<ItemInfo> items = (Collection<ItemInfo>) request.getAttribute("items");
             if (items != null && !items.isEmpty()) {
         %>
         <!-- Start of inventory list -->
-        <table>
+        <table id="inventorytable" style="width: 80%; border-collapse: collapse; margin: 40px 20px;">
             <thead>
             <tr>
-                <th>| Name:  </th>
-                <th> | Type:  </th>
-                <th> | Colour:  </th>
-                <th> | Price:  </th>
-                <th> | Quantity:  </th>
-                <th> | Description:  </th>
+                <th colspan="7">Warehouse / Inventory</th>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button onclick="window.location.href='${pageContext.request.contextPath}/item?action=add'">Add New Item</button>
+                </td>
+                <td colspan="6">
+                    <form action="${pageContext.request.contextPath}/item" method="get">
+                        <label for="type">Filter by Category:</label>
+                        <select name="type" id="type">
+                            <option value="">All</option>
+                            <% for (ItemType itemType : ItemType.values()) { %>
+                            <option value="<%= itemType.name() %>"
+                                    <%= itemType.name().equals(request.getParameter("type")) ? "selected" : "" %>>
+                                <%= itemType.getType() %>
+                            </option>
+                            <% } %>
+                        </select>
+                        <button type="submit">Filter</button>
+                    </form>
+                </td>
+
+            </tr>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Colour</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Change Saldo</th>
             </tr>
             </thead>
             <tbody>
-            <%
-                for (ItemInfo item : items) {
-            %>
+            <% for (ItemInfo item : items) { %>
             <tr>
                 <td><%= item.getName() %></td>
                 <td><%= item.getType().getType() %></td>
@@ -66,20 +87,22 @@
                 <td>$<%= item.getPrice() %></td>
                 <td><%= item.getQuantity() %></td>
                 <td><%= item.getDescription() %></td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/item" method="post">
+                        <input type="hidden" name="action" value="updateQuantity" />
+                        <input type="hidden" name="itemId" value="<%= item.getId() %>" />
+                        <input type="number" name="changeAmount" placeholder="+/- amount" style="width: auto;" required />
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
             </tr>
-            <%
-                }
-            %>
+            <% } %>
             </tbody>
         </table>
         <!-- End of inventory list -->
-        <%
-        } else {
-        %>
+        <% } else { %>
         <p>No items available in the inventory.</p>
-        <%
-            }
-        %>
+        <% } %>
     </main>
 
 

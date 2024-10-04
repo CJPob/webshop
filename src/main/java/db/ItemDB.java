@@ -1,6 +1,4 @@
 package db;
-
-import bo.Item;
 import bo.ItemColour;
 import bo.ItemType;
 
@@ -74,6 +72,25 @@ public class ItemDB extends bo.Item {
 
             int result = ps.executeUpdate();
             return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean updateItemQuantity(int itemId, int changeAmount) {
+        String query = "UPDATE T_ITEM SET quantity = quantity + ? WHERE id = ? AND quantity + ? >= 0";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, changeAmount);
+            ps.setInt(2, itemId);
+            ps.setInt(3, changeAmount);
+
+            int result = ps.executeUpdate();
+            return result > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

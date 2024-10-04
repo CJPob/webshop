@@ -37,6 +37,11 @@ public class UserHandler {
         return User.login(username, password);
     }
 
+    public static boolean updateUserRole(String username, UserRole newRole) {
+        return UserDB.updateUserRole(username, newRole);
+    }
+
+
     // TODO create a convert method here
 
 }

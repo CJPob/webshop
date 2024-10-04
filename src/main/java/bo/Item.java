@@ -36,6 +36,10 @@ public class Item {
         return ItemDB.createItem(name, type, colour, price, quantity, description);
     }
 
+    static public boolean updateQuantity(int itemId, int changeAmount) {
+        return ItemDB.updateItemQuantity(itemId, changeAmount);
+    }
+
     protected Item(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         this.id = id;
         this.name = name;

@@ -36,34 +36,45 @@
   </header>
 
   <main>
-    <%
-      Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
-      if (users != null && !users.isEmpty()) {
-    %>
-    <!-- Start of users list -->
-    <div class="users-list">
-      <ul>
+    <div class="user-details">
+      <h2>User Information</h2>
+      <table id="userdetails">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
         <%
-          for (UserInfo user : users) {
+          UserInfo user = (UserInfo) request.getAttribute("user");
+          if (user != null) {
         %>
-        <li>
-          <strong>Username: </strong> <%= user.getUsername() %>,
-          <strong> Name: </strong> <%= user.getName() %>
-          <strong> Role: </strong> <%= user.getUserRole() %>
-        </li>
-        <%
-          }
-        %>
-      </ul>
-    </div>  <!-- End of users list -->
-    <%
-    } else {
-    %>
-    <p>No users found.</p>
-    <%
-      }
-    %>
+        <tr>
+          <td><%= user.getName() %></td>
+          <td><%= user.getUsername() %></td>
+          <td><%= user.getUserRole() %></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align:center;">
+            <form action="${pageContext.request.contextPath}/logout" method="POST" class="action-form">
+              <button type="submit" class="continue-btn">Log out</button>
+            </form>
+          </td>
+        </tr>
+        <% } else { %>
+        <tr>
+          <td colspan="3">No user information available.</td>
+        </tr>
+        <% } %>
+        </tbody>
+      </table>
+    </div>
   </main>
+
+
+
 
   <footer>
     <ul>

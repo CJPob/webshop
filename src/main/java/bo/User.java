@@ -29,6 +29,10 @@ public class User {
         return UserDB.checkUserCredentials(username, password);
     }
 
+    public static boolean updateUserRole(String username, UserRole newRole) {
+        return UserDB.updateUserRole(username, newRole);
+    }
+
     protected User(int id, String name, String username, String password, UserRole userRole) {
         this.id = id;
         this.name = name;

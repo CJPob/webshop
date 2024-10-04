@@ -36,34 +36,45 @@
     </header>
 
     <main>
-        <%
-            Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
-            if (users != null && !users.isEmpty()) {
-        %>
-        <!-- Start of users list -->
-        <div class="users-list">
-            <ul>
-                <%
-                    for (UserInfo user : users) {
-                %>
-                <li>
-                    <strong>Username: </strong> <%= user.getUsername() %>,
-                    <strong> Name: </strong> <%= user.getName() %>
-                    <strong> Role: </strong> <%= user.getUserRole() %>
-                </li>
-                <%
-                    }
-                %>
-            </ul>
-        </div>  <!-- End of users list -->
-        <%
-        } else {
-        %>
-        <p>No users found.</p>
-        <%
-            }
-        %>
+        <table id="userstable">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Current Role</th>
+                <th>Change Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                Collection<UserInfo> users = (Collection<UserInfo>) request.getAttribute("users");
+                for (UserInfo user : users) {
+            %>
+            <tr>
+                <td><%= user.getUsername() %></td>
+                <td><%= user.getName() %></td>
+                <td><%= user.getUserRole() %></td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/user" method="POST">
+                        <input type="hidden" name="action" value="setRole">
+                        <input type="hidden" name="username" value="<%= user.getUsername() %>">
+                        <select name="newRole">
+                            <option value="ADMIN" <%= "ADMIN".equals(user.getUserRole().name()) ? "selected" : "" %>>Admin</option>
+                            <option value="STAFF" <%= "STAFF".equals(user.getUserRole().name()) ? "selected" : "" %>>Staff</option>
+                            <option value="CUSTOMER" <%= "CUSTOMER".equals(user.getUserRole().name()) ? "selected" : "" %>>Customer</option>
+
+                        </select>
+                        <button type="submit">Update Role</button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
     </main>
+
 
     <footer>
         <ul>

@@ -1,7 +1,7 @@
 package ui;
 
 import bo.UserHandler;
-
+import bo.UserRole;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,6 +38,16 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
+        if ("signup".equals(action)) {
+            handleSignup(req, resp);
+        } else if ("setRole".equals(action)) {
+            handleSetRole(req, resp);
+        }
+    }
+
+    private void handleSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -46,11 +56,24 @@ public class UserServlet extends HttpServlet {
 
         if (signupSuccess) {
             req.setAttribute("message", "Signup successful! Please log in.");
-            req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else {
             req.setAttribute("error", "Signup failed. Please try again.");
-            req.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(req, resp);
-
+            req.getRequestDispatcher("/signup.jsp").forward(req, resp);
         }
+    }
+
+    private void handleSetRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String newRole = req.getParameter("newRole");
+
+        boolean updateSuccess = UserHandler.updateUserRole(username, UserRole.valueOf(newRole));
+
+        if (updateSuccess) {
+            req.setAttribute("message", "Role updated successfully for " + username);
+        } else {
+            req.setAttribute("error", "Failed to update role for " + username);
+        }
+        resp.sendRedirect(req.getContextPath() + "/admin?action=viewUsers");
     }
 }
