@@ -35,4 +35,7 @@ Use 21 oracle openjdk 21
 
 **9. Added relevant methods in UserServlet to set roles.** 
 
-**PS:** Had no time to fix the broken CartServlet and, keeping items in session untill user logs in, broken cart-related  redirections, will take care of it tomorrow.
+**PS: Had no time to fix:**
+- the broken CartServlet and proper redirections; 
+- keeping items in session untill user logs in, which had disappeared after several rebases; 
+- broken cart-related redirections, will take care of it tomorrow. 😴😴😴
