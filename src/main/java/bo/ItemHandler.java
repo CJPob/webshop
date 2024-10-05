@@ -24,6 +24,8 @@ public class ItemHandler {
         return convertToItemInfo(allItems);
     }
 
+
+
     public static boolean updateItemQuantity(int itemId, int changeAmount) {
         return Item.updateQuantity(itemId, changeAmount);
     }
@@ -31,6 +33,12 @@ public class ItemHandler {
     public static boolean createItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {
         return Item.createNewItem(name, type, colour, price, quantity, description);
     }
+
+    public static ItemInfo getItemById(int itemId) {
+        Item item = Item.getItemById(itemId);
+        return convertToItemInfo(item);
+    }
+
 
     private static Collection<ItemInfo> convertToItemInfo(Collection<Item> items) {
         Collection<ItemInfo> itemInfos = new ArrayList<>();
@@ -47,4 +55,20 @@ public class ItemHandler {
         }
         return itemInfos;
     }
+
+    private static ItemInfo convertToItemInfo(Item item) {
+        if (item == null) {
+            return null;
+        }
+        return new ItemInfo(
+                item.getId(),
+                item.getName(),
+                item.getType(),
+                item.getColour(),
+                item.getPrice(),
+                item.getQuantity(),
+                item.getDescription()
+        );
+    }
+
 }

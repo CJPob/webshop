@@ -56,10 +56,10 @@ public class UserServlet extends HttpServlet {
 
         if (signupSuccess) {
             req.setAttribute("message", "Signup successful! Please log in.");
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
         } else {
             req.setAttribute("error", "Signup failed. Please try again.");
-            req.getRequestDispatcher("/signup.jsp").forward(req, resp);
+            req.getRequestDispatcher("signup.jsp").forward(req, resp);
         }
     }
 
