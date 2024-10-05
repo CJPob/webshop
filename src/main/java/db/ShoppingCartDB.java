@@ -11,10 +11,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
+/**
+ * The ShoppingCartDB class manages database operations for shopping carts.
+ * It handles creating carts, adding items, viewing cart contents, and emptying carts.
+ *
+ * Key methods:
+ * - {@code newCart()}: Creates a new cart.
+ * - {@code insertItemIntoCart()}: Adds or updates items in the cart.
+ * - {@code viewShoppingCart()}: Retrieves cart contents.
+ * - {@code emptyCart()}: Empties the cart.
+ */
 public class ShoppingCartDB extends ShoppingCart {
 
     protected ShoppingCartDB(int userID) {
-        super(userID); // Call the ShoppingCart constructor
+        super(userID);
     }
 
     public static boolean newCart(ShoppingCart cart) {
@@ -36,7 +46,6 @@ public class ShoppingCartDB extends ShoppingCart {
     }
 
     public static boolean insertItemIntoCart(int cartId, int itemId, int quantity) {
-        // First, check if the item is already in the cart
         String checkQuery = "SELECT quantity FROM T_CART_ITEMS WHERE cartId = ? AND itemId = ?";
         String insertQuery = "INSERT INTO T_CART_ITEMS (cartId, itemId, quantity) VALUES (?, ?, ?)";
         String updateQuery = "UPDATE T_CART_ITEMS SET quantity = ? WHERE cartId = ? AND itemId = ?";
@@ -65,10 +74,7 @@ public class ShoppingCartDB extends ShoppingCart {
                     insertStmt.executeUpdate();
                 }
             }
-
-            // Recalculate and update the sumTotal for the shopping cart
             updateCartTotal(cartId);
-
             return true;
 
         } catch (SQLException e) {
@@ -78,7 +84,7 @@ public class ShoppingCartDB extends ShoppingCart {
     }
 
     public static int getCartIdByUserId(int userId) {
-        int cartId = -1;  // Default value if no cart is found
+        int cartId = -1;
         try {
             Connection con = DBManager.getConnection();
             String query = "SELECT cartId FROM T_SHOPPINGCART WHERE userID = ?";
@@ -150,13 +156,10 @@ public class ShoppingCartDB extends ShoppingCart {
         PreparedStatement updateStmt = null;
 
         try {
-            // Establish database connection
             conn = DBManager.getConnection();
 
-            // Disable auto-commit for transaction management
             conn.setAutoCommit(false);
 
-            // Step 1: Delete cart items from t_cart_items
             deleteStmt = conn.prepareStatement(deleteCartItemsSQL);
             deleteStmt.setInt(1, cartId);  // Set the cartId parameter
             int rowsAffected = deleteStmt.executeUpdate();
@@ -167,7 +170,6 @@ public class ShoppingCartDB extends ShoppingCart {
                 System.out.println("Cart is already empty or cartID not found.");
             }
 
-            // Step 2: Update the sumTotal in t_shoppingcart to 0
             updateStmt = conn.prepareStatement(updateCartSumSQL);
             updateStmt.setInt(1, cartId);  // Set the cartId parameter
             int updateCount = updateStmt.executeUpdate();
@@ -178,20 +180,18 @@ public class ShoppingCartDB extends ShoppingCart {
                 System.out.println("Failed to update sumTotal or cartID not found.");
             }
 
-            // Commit the transaction
             conn.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
             try {
                 if (conn != null) {
-                    conn.rollback();  // Rollback the transaction in case of error
+                    conn.rollback();
                 }
             } catch (SQLException rollbackEx) {
                 rollbackEx.printStackTrace();
             }
         } finally {
-            // Close resources
             try {
                 if (deleteStmt != null) deleteStmt.close();
                 if (updateStmt != null) updateStmt.close();
@@ -218,7 +218,6 @@ public class ShoppingCartDB extends ShoppingCart {
         try {
             conn = DBManager.getConnection();
 
-            // Step 1: Calculate the total price of items in the cart
             calculateStmt = conn.prepareStatement(calculateTotalSQL);
             calculateStmt.setInt(1, cartId);
             rs = calculateStmt.executeQuery();
@@ -226,10 +225,9 @@ public class ShoppingCartDB extends ShoppingCart {
             if (rs.next()) {
                 double total = rs.getDouble("total");
 
-                // Step 2: Update the sumTotal in t_shoppingcart
                 updateStmt = conn.prepareStatement(updateSumTotalSQL);
-                updateStmt.setDouble(1, total); // Set the new total
-                updateStmt.setInt(2, cartId);   // Set the cartId
+                updateStmt.setDouble(1, total);
+                updateStmt.setInt(2, cartId);
                 updateStmt.executeUpdate();
             }
 

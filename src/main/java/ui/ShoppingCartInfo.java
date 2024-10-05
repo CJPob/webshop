@@ -5,6 +5,9 @@ import bo.ItemType;
 
 import java.util.ArrayList;
 
+/**
+ * The ShoppingCartInfo class represents a user's shopping cart, containing the cart ID, user ID, and a list of items.
+ */
 public class ShoppingCartInfo {
 
     private int shoppingCartId;

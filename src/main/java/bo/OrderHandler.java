@@ -5,6 +5,9 @@ import ui.OrderInfo;
 
 import java.util.Collection;
 
+/**
+ * The OrderHandler class manages order-related business logic, providing methods to place, send, and retrieve orders.
+ */
 public class OrderHandler {
 
     public static boolean placeOrder(int userId, int cartId) {
@@ -17,10 +20,6 @@ public class OrderHandler {
 
     public static Collection<OrderInfo> getAllOrders() {
         Collection<OrderInfo> orders = Order.getAllOrders();
-
-        // Log the number of orders retrieved for debugging
-        System.out.println("OrderHandler.getAllOrders() - Number of orders: " + (orders != null ? orders.size() : "null"));
-
         return orders;
     }
 }

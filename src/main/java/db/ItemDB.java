@@ -6,6 +6,11 @@ import java.sql.*;
 import java.util.Collection;
 import java.util.Vector;
 
+/**
+ * This is the class that interacts with the actual DB and manages all the static methods called from the servlet. It provides ths standard crud operations
+ * The class is used to manage the item entities.
+ */
+
 public class ItemDB extends bo.Item {
 
     private ItemDB(int id, String name, ItemType type, ItemColour colour, int price, int quantity, String desc) {
@@ -16,32 +21,23 @@ public class ItemDB extends bo.Item {
         return searchItemsBy("type = '" + type.toUpperCase() + "'");
     }
 
-    public static Collection<ItemDB> findByColour(String colour) {
-        return searchItemsBy("colour = '" + colour + "'");
-    }
-
     public static Collection<ItemDB> findByInStock() {
         return searchItemsBy("quantity > 0");
     }
 
-    public static Collection<ItemDB> findByName(String name) {
-        return searchItemsBy("name = '" + name.toUpperCase() + "'");
-    }
 
     public static Collection<ItemDB> findAll() {
-        return searchItemsBy("1=1");  // Always true, fetches all records
+        return searchItemsBy("1=1");
     }
 
     public static ItemDB findById(int itemId) {
         Collection<ItemDB> items = searchItemsBy("id = " + itemId);
         if (!items.isEmpty()) {
-            // returns the first item from the collection since id is unique
             return items.iterator().next();
         } else {
             return null;
         }
     }
-
 
     private static Collection<ItemDB> searchItemsBy(String condition) {
         Vector<ItemDB> items = new Vector<>();
@@ -50,7 +46,6 @@ public class ItemDB extends bo.Item {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-
             while (resultSet.next()) {
                 items.add(new ItemDB(
                         resultSet.getInt("id"),

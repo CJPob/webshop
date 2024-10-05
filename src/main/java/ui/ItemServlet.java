@@ -12,6 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * The ItemServlet handles HTTP requests related to item management, including displaying items,
+ * viewing item details, adding new items, and updating item quantities.
+ */
 @WebServlet("/item")
 public class ItemServlet extends HttpServlet {
 
@@ -21,7 +25,6 @@ public class ItemServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("viewDetails".equals(action)) {
-            // Handle viewing item details
             handleViewDetails(request, response);
         } else {
             String filter = request.getParameter("filter");
@@ -31,21 +34,17 @@ public class ItemServlet extends HttpServlet {
             try {
                 if (type != null) {
                     if (!type.isEmpty()) {
-                        // Fetch items by type
                         items = ItemHandler.getItemsByType(type);
                     } else {
-                        // Type is empty (All selected), fetch all items
                         items = ItemHandler.getAllItems();
                     }
                     request.setAttribute("items", items);
                     request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
                 } else if ("all".equals(filter)) {
-                    // Fetch all items when filter=all
                     items = ItemHandler.getAllItems();
                     request.setAttribute("items", items);
                     request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
                 } else {
-                    // Default: Fetch items in stock (quantity > 0)
                     items = ItemHandler.getItemsInStock();
                     request.setAttribute("items", items);
                     request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
@@ -59,26 +58,19 @@ public class ItemServlet extends HttpServlet {
     //  method to handle viewing item details
     private void handleViewDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // retrieve the itemId from request
             int itemId = Integer.parseInt(request.getParameter("itemId"));
-            // fetch item info
             ItemInfo item = ItemHandler.getItemById(itemId);
 
             if (item != null) {
-                // set the item as a request attribute
                 request.setAttribute("item", item);
 
-                // fwd to itemDetails.jsp / display single item details
                 request.getRequestDispatcher("/WEB-INF/jsp/itemDetails.jsp").forward(request, response);
             } else {
-                // item not found
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Item not found");
             }
         } catch (NumberFormatException e) {
-            // invalid itemId
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid item ID");
         } catch (Exception e) {
-            // other exceptions
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error retrieving item details: " + e.getMessage());
         }
     }
@@ -122,7 +114,6 @@ public class ItemServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/additem.jsp").forward(request, response);
             }
         } else if ("updateQuantity".equals(action)) {
-            // Handle updating item quantity
             try {
                 int itemId = Integer.parseInt(request.getParameter("itemId"));
                 int changeAmount = Integer.parseInt(request.getParameter("changeAmount"));
@@ -140,7 +131,6 @@ public class ItemServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
             }
         } else {
-            // other / unspecified
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
         }
     }

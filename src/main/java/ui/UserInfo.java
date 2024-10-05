@@ -2,6 +2,10 @@ package ui;
 
 import bo.UserRole;
 
+/**
+ * The Userinfo reveals the infromation of a ser to the ui. Used both by users and admins.
+ */
+
 public class UserInfo {
     private int id;
     private String name;

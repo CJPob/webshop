@@ -3,6 +3,11 @@ package ui;
 import bo.ItemColour;
 import bo.ItemType;
 
+/**
+ * The ItemInfo class serves as a UI model to represent item details for display in the view layer.
+ * It encapsulates item attributes like name, type, colour, price, quantity, and description.
+ */
+
 public class ItemInfo {
     private int Id;
     private String name;

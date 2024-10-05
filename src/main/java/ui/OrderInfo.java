@@ -1,8 +1,13 @@
 package ui;
 
-import ui.ItemInfo;
 import java.util.ArrayList;
 
+/**
+ * The OrderInfo class represents an order's information in the UI layer,
+ * including order details such as orderId, userId, status, and a list of items in the order.
+ * It provides methods to manage and add items to the order.
+ * This model is used by staffs and admin to send and watch orders.
+ */
 public class OrderInfo {
     private int orderId;
     private int userId;
@@ -17,7 +22,6 @@ public class OrderInfo {
         this.items = new ArrayList<>();
     }
 
-    // Getters and Setters
     public int getOrderId() {
         return orderId;
     }
@@ -50,7 +54,6 @@ public class OrderInfo {
         this.items = items;
     }
 
-    // Add an item to the order
     public void addItem(ItemInfo item) {
         this.items.add(item);
     }

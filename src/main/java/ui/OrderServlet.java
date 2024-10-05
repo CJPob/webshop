@@ -13,6 +13,12 @@ import java.io.IOException;
 import java.util.Collection;
 import ui.OrderInfo;
 
+/**
+ * The OrderServlet handles HTTP requests related to order management.
+ * It allows users to place orders and, for authorized roles, send orders.
+ * Customers can place orders, while only staff/admin can send orders.
+ * The servlet forwards order-related data to the appropriate JSP views.
+ */
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
 
@@ -20,22 +26,17 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Retrieve the userRole from session and log it for debugging
         String userRole = (String) session.getAttribute("userRole");
-        System.out.println("User role in doGet is: " + userRole);
 
-        // Block access for users with the role "Customer"
         if ("Customer".equalsIgnoreCase(userRole)) {
             request.setAttribute("error", "You do not have permission to access this page.");
             request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
-            return; // Stop further processing
+            return;
         }
 
-        // Retrieve all orders and set them as request attribute
         Collection<OrderInfo> allOrders = OrderHandler.getAllOrders();
         request.setAttribute("orders", allOrders);
 
-        // Forward to sendorder.jsp to display all orders
         request.getRequestDispatcher("/WEB-INF/jsp/sendorder.jsp").forward(request, response);
     }
 
@@ -43,45 +44,37 @@ public class OrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        // Retrieve the userRole from session and log it for debugging
         String userRole = (String) session.getAttribute("userRole");
-        System.out.println("User role in doPost is: " + userRole);
 
-        // Block access for users with the role "Customer"
-        if ("Customer".equalsIgnoreCase(userRole)) {
-            req.setAttribute("error", "You do not have permission to perform this action.");
-            req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
-            return; // Stop further processing
-        }
-
-        // Proceed with order actions if the user is not a Customer
-        int userId = (Integer) session.getAttribute("userId");
-        int cartId = (Integer) session.getAttribute("cartId");
-
-        // Determine which action to perform
         String action = req.getParameter("action");
 
         if ("placeOrder".equals(action)) {
-            // Place the order
+            int userId = (Integer) session.getAttribute("userId");
+            int cartId = (Integer) session.getAttribute("cartId");
+
             boolean success = OrderHandler.placeOrder(userId, cartId);
 
             if (success) {
                 req.setAttribute("message", "Order placed successfully!");
-                ShoppingCartHandler.emptyCartItems(cartId); // Empty the cart after placing the order
-                session.removeAttribute("cartItems"); // Clear cartItems from session
+                ShoppingCartHandler.emptyCartItems(cartId);
+                session.removeAttribute("cartItems");
             } else {
                 req.setAttribute("error", "Failed to place order.");
             }
 
         } else if ("sendOrder".equals(action)) {
-            // Send the order (only requires the orderId now)
+            if ("Customer".equalsIgnoreCase(userRole)) {
+                req.setAttribute("error", "You do not have permission to send an order.");
+                req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
+                return;
+            }
+
             String orderIdParam = req.getParameter("orderId");
 
             if (orderIdParam != null) {
                 try {
                     int orderId = Integer.parseInt(orderIdParam);
 
-                    // Now send the order with just the orderId
                     boolean success = OrderHandler.sendOrder(orderId);
 
                     if (success) {
@@ -99,7 +92,6 @@ public class OrderServlet extends HttpServlet {
             }
         }
 
-        // Forward to the cart page after either action
         req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
     }
 }

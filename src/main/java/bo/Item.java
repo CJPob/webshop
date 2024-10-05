@@ -3,6 +3,11 @@ package bo;
 import db.ItemDB;
 import java.util.Collection;
 
+/**
+ * The Item class represents a product with attributes such as name, type, colour, price, quantity, and description.
+ * It provides methods to access and modify these properties for individual items.
+ */
+
 public class Item {
     private final int id;
     private String name;
@@ -26,14 +31,6 @@ public class Item {
 
     static public Item getItemById(int itemId) {
         return ItemDB.findById(itemId);
-    }
-
-    static public Collection byColour(String colour) {
-        return ItemDB.findByColour(colour);
-    }
-
-    static public Collection byName(String name) {
-        return ItemDB.findByName(name);
     }
 
     static public boolean createNewItem(String name, ItemType type, ItemColour colour, int price, int quantity, String description) {

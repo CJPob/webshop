@@ -6,6 +6,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The DBManager class manages the database connection pool using HikariCP.
+ * It implements a singleton connection to the database
+ */
+
 public class DBManager {
     private static DBManager instance = null;
     private HikariDataSource dataSource;

@@ -1,10 +1,7 @@
 package ui;
 
-import bo.ShoppingCart;
 import bo.ShoppingCartHandler;
-import db.ShoppingCartDB;
 import jakarta.servlet.http.HttpSession;
-import ui.ItemInfo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
+
+/**
+ * The CartServlet handles actions related to the user's shopping cart, including viewing the cart,
+ * adding items, and managing cart contents. It ensures users are logged in before modifying the cart.
+ */
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
 

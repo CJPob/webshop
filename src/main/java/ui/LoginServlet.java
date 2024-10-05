@@ -13,6 +13,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * The LoginServlet handles user login requests, validates credentials,
+ * and manages session attributes for user data such as userId, username, cartId, and userRole.
+ * It redirects users based on login success or failure.
+ */
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 

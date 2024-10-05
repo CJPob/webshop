@@ -4,6 +4,11 @@ import db.UserDB;
 
 import java.util.Collection;
 
+/**
+ * The User class represents a user in the system, including their details, role, and shopping cart.
+ * It provides methods for user-related operations like signup, login, and role updates.
+ */
+
 public class User {
     private int id;
     private String name;
@@ -12,7 +17,6 @@ public class User {
     private ShoppingCart shoppingCart;
     private UserRole userRole;
 
-    // searches should be for admin only
     static public Collection searchUser(String username){
         return UserDB.searchUser(username);
     }
@@ -82,9 +86,6 @@ public class User {
         this.password = password;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
