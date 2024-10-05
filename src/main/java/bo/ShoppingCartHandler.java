@@ -1,12 +1,15 @@
 package bo;
 
-import db.ShoppingCartDB;
 import ui.ItemInfo;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The shopppingcarthandler is responsible for redirecting requests from the servlets to the static methods in the shoppingcart model
+ * Methods for creating, adding, showing and removing items.
+ */
 public class ShoppingCartHandler {
+
     public static boolean createCartForUser(int userId) {
         ShoppingCart shoppingCart = new ShoppingCart(userId);
         return ShoppingCart.createNewCart(shoppingCart);

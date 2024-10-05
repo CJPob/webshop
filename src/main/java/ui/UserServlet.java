@@ -1,5 +1,6 @@
 package ui;
 
+
 import bo.UserHandler;
 import bo.UserRole;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,10 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * * The UserServlet handles user-related actions such as viewing user details, signing up,
+ * * and updating user roles. It processes both GET and POST requests for user management.
+ */
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 

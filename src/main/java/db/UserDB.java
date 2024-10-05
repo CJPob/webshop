@@ -8,6 +8,17 @@ import java.sql.*;
 import java.util.Collection;
 import java.util.Vector;
 
+/**
+ * The UserDB class handles database operations for user accounts, including user search, insertion,
+ * authentication, and role updates. It provides methods for managing user data such as creating new users,
+ * checking credentials, and retrieving user roles.
+ *
+ * Key methods:
+ * - {@code searchUser()}: Searches for users by username.
+ * - {@code insertUser()}: Inserts a new user into the database.
+ * - {@code checkUserCredentials()}: Verifies user login credentials.
+ * - {@code updateUserRole()}: Updates the role of a user.
+ */
 public class UserDB extends bo.User {
 
     private UserDB(int id, String name, String username, String password, UserRole userRole) {
@@ -161,6 +172,4 @@ public class UserDB extends bo.User {
         }
         return false;
     }
-
-
 }

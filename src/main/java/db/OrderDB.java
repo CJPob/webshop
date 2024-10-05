@@ -14,6 +14,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The OrderDB class handles database operations for orders, including creating orders, sending orders,
+ * and retrieving order details. It ensures proper transaction management, using private helper methods to
+ * split tasks and improve readabilty
+ *
+ * Main methods:
+ * - {@code createOrder(int userId, int cartId)}: Creates an order, adds items from the cart, and manages transactions.
+ * - {@code sendOrder(int orderId)}: Sends the order and updates its status.
+ * - {@code getAllOrders()}: Retrieves all orders from the database.
+ *
+ * Private helper methods handle specific tasks like inserting orders and managing the connection lifecycle.
+ */
 public class OrderDB extends Order {
 
     public OrderDB(int userId, int cartId) {
@@ -21,23 +33,127 @@ public class OrderDB extends Order {
     }
 
     public static boolean createOrder(int userId, int cartId) {
-        String insertOrderSQL = "INSERT INTO t_order (userID, status) VALUES (?, ?)";
-        String insertOrderItemSQL = "INSERT INTO t_order_items (orderID, itemID, quantity) VALUES (?, ?, ?)";
-        String getCartItemsSQL = "SELECT itemID, quantity FROM t_cart_items WHERE cartID = ?";
-
         Connection conn = null;
-        PreparedStatement orderStmt = null;
-        PreparedStatement orderItemStmt = null;
-        PreparedStatement cartItemsStmt = null;
-        ResultSet rs = null;
-        ResultSet cartItemsRS = null;
-
         try {
             conn = DBManager.getConnection();
             conn.setAutoCommit(false);
 
-            // Step 1: Insert the order into t_order with default status 'PENDING'
-            orderStmt = conn.prepareStatement(insertOrderSQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            int orderId = insertOrder(conn, userId);
+            insertOrderItems(conn, orderId, cartId);
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(conn);
+        }
+    }
+
+    public static boolean sendOrder(int orderId) {
+        Connection con = null;
+
+        try {
+            con = DBManager.getConnection();
+            con.setAutoCommit(false);
+            Collection<ItemInfo> orderItems = getOrderItems(con, orderId);
+
+            if (!checkStock(con, orderItems)) {
+                con.rollback();
+                return false;
+            }
+            if (!updateStock(con, orderItems)) {
+                con.rollback();
+                return false;
+            }
+            if (!markOrderAsShipped(con, orderId)) {
+                con.rollback();
+                return false;
+            }
+            con.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            if (con != null) {
+                try {
+                    con.setAutoCommit(true);
+                    con.close();
+                } catch (SQLException closeEx) {
+                    closeEx.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static Collection<OrderInfo> getAllOrders() {
+        Collection<OrderInfo> orders = new ArrayList<>();
+
+        String orderQuery = "SELECT o.id, o.userID, o.status FROM t_order o";
+        String itemQuery = "SELECT i.id, i.name, i.type, i.colour, i.price, oi.quantity " +
+                "FROM t_order_items oi " +
+                "JOIN t_item i ON oi.itemID = i.id " +
+                "WHERE oi.orderID = ?";
+
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement orderStmt = con.prepareStatement(orderQuery)) {
+
+            ResultSet orderRs = orderStmt.executeQuery();
+            while (orderRs.next()) {
+                int orderId = orderRs.getInt("id");
+                int userId = orderRs.getInt("userID");
+                String status = orderRs.getString("status");
+
+                OrderInfo order = new OrderInfo(orderId, userId, status);
+
+                try (PreparedStatement itemStmt = con.prepareStatement(itemQuery)) {
+                    itemStmt.setInt(1, orderId);
+                    ResultSet itemRs = itemStmt.executeQuery();
+
+                    while (itemRs.next()) {
+                        int itemId = itemRs.getInt("id");
+                        String itemName = itemRs.getString("name");
+                        String itemType = itemRs.getString("type");
+                        String itemColour = itemRs.getString("colour");
+                        int price = itemRs.getInt("price");
+                        int quantity = itemRs.getInt("quantity");
+
+                        ItemInfo item = new ItemInfo(itemId, itemName, ItemType.valueOf(itemType),
+                                ItemColour.valueOf(itemColour), price, quantity, "");
+                        order.addItem(item);
+                    }
+                    itemRs.close();
+                }
+
+                orders.add(order);
+            }
+            orderRs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    //private helper methods for creating order & sending an order
+    private static int insertOrder(Connection conn, int userId) throws SQLException {
+        String insertOrderSQL = "INSERT INTO t_order (userID, status) VALUES (?, ?)";
+        try (PreparedStatement orderStmt = conn.prepareStatement(insertOrderSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
             orderStmt.setInt(1, userId);
             orderStmt.setString(2, OrderStatus.PENDING.toString());
 
@@ -46,61 +162,46 @@ public class OrderDB extends Order {
                 throw new SQLException("Creating order failed, no rows affected.");
             }
 
-            // Retrieve the generated orderID
-            rs = orderStmt.getGeneratedKeys();
-            int orderId;
-            if (rs.next()) {
-                orderId = rs.getInt(1);
-            } else {
-                throw new SQLException("Creating order failed, no order ID obtained.");
-            }
-
-            // Step 2: Retrieve items from the cart (t_cart_items)
-            cartItemsStmt = conn.prepareStatement(getCartItemsSQL);
-            cartItemsStmt.setInt(1, cartId);
-            cartItemsRS = cartItemsStmt.executeQuery();
-
-            // Step 3: Insert each item from the cart into t_order_items
-            orderItemStmt = conn.prepareStatement(insertOrderItemSQL);
-            while (cartItemsRS.next()) {
-                int itemId = cartItemsRS.getInt("itemID");
-                int quantity = cartItemsRS.getInt("quantity");
-
-                orderItemStmt.setInt(1, orderId);       // Set orderID
-                orderItemStmt.setInt(2, itemId);        // Set itemID
-                orderItemStmt.setInt(3, quantity);      // Set quantity
-                orderItemStmt.addBatch();               // Add to batch
-            }
-
-            // Execute batch insert for order items
-            orderItemStmt.executeBatch();
-
-            // Commit the transaction
-            conn.commit();
-            return true;
-
-        } catch (SQLException e) {
-            // Handle any SQL exceptions
-            if (conn != null) {
-                try {
-                    conn.rollback(); // Rollback in case of failure
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
+            try (ResultSet rs = orderStmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Return generated order ID
+                } else {
+                    throw new SQLException("Creating order failed, no order ID obtained.");
                 }
             }
-            e.printStackTrace();
-            return false;
-        } finally {
-            // Close all resources
+        }
+    }
+
+    private static void insertOrderItems(Connection conn, int orderId, int cartId) throws SQLException {
+        String getCartItemsSQL = "SELECT itemID, quantity FROM t_cart_items WHERE cartID = ?";
+        String insertOrderItemSQL = "INSERT INTO t_order_items (orderID, itemID, quantity) VALUES (?, ?, ?)";
+
+        try (PreparedStatement cartItemsStmt = conn.prepareStatement(getCartItemsSQL);
+             PreparedStatement orderItemStmt = conn.prepareStatement(insertOrderItemSQL)) {
+
+            cartItemsStmt.setInt(1, cartId);
+            try (ResultSet cartItemsRS = cartItemsStmt.executeQuery()) {
+                while (cartItemsRS.next()) {
+                    int itemId = cartItemsRS.getInt("itemID");
+                    int quantity = cartItemsRS.getInt("quantity");
+
+                    orderItemStmt.setInt(1, orderId);  // Set orderID
+                    orderItemStmt.setInt(2, itemId);   // Set itemID
+                    orderItemStmt.setInt(3, quantity); // Set quantity
+                    orderItemStmt.addBatch();          // Add to batch
+                }
+                orderItemStmt.executeBatch();
+            }
+        }
+    }
+
+    private static void closeConnection(Connection conn) {
+        if (conn != null) {
             try {
-                if (cartItemsRS != null) cartItemsRS.close();
-                if (rs != null) rs.close();
-                if (orderStmt != null) orderStmt.close();
-                if (orderItemStmt != null) orderItemStmt.close();
-                if (cartItemsStmt != null) cartItemsStmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException closeEx) {
-                closeEx.printStackTrace();
+                conn.setAutoCommit(true); // Restore auto-commit mode
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -125,7 +226,6 @@ public class OrderDB extends Order {
                 int price = rs.getInt("price");
                 int quantity = rs.getInt("quantity");
 
-                // Add the order item to the collection
                 orderItems.add(new ItemInfo(itemId, itemName, ItemType.valueOf(itemType),
                         ItemColour.valueOf(itemColour), price, quantity, ""));
             }
@@ -135,64 +235,6 @@ public class OrderDB extends Order {
 
         return orderItems;
     }
-
-
-    public static boolean sendOrder(int orderId) {
-        Connection con = null;
-
-        try {
-            // Step 1: Get database connection and disable auto-commit for transaction
-            con = DBManager.getConnection();
-            con.setAutoCommit(false);
-
-            // Step 2: Retrieve the order items from the t_order_items table
-            Collection<ItemInfo> orderItems = getOrderItems(con, orderId);
-
-            // Step 3: Check if there is enough stock for all items in the order
-            if (!checkStock(con, orderItems)) {
-                con.rollback(); // Rollback the transaction if stock is insufficient
-                return false;
-            }
-
-            // Step 4: Update the stock levels (deduct the quantity)
-            if (!updateStock(con, orderItems)) {
-                con.rollback(); // Rollback the transaction if stock update fails
-                return false;
-            }
-
-            // Step 5: Mark the order as shipped in the database
-            if (!markOrderAsShipped(con, orderId)) {
-                con.rollback(); // Rollback the transaction if marking as shipped fails
-                return false;
-            }
-
-            // Step 6: Commit the transaction if all steps are successful
-            con.commit();
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            if (con != null) {
-                try {
-                    con.rollback(); // Rollback the transaction in case of an error
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
-                }
-            }
-            return false;
-        } finally {
-            // Ensure that the connection's auto-commit is restored and resources are closed
-            if (con != null) {
-                try {
-                    con.setAutoCommit(true);
-                    con.close();
-                } catch (SQLException closeEx) {
-                    closeEx.printStackTrace();
-                }
-            }
-        }
-    }
-
 
     private static boolean checkStock(Connection con, Collection<ItemInfo> orderItems) throws SQLException {
         String checkStockQuery = "SELECT quantity FROM t_item WHERE id = ?";
@@ -206,16 +248,13 @@ public class OrderDB extends Order {
                     int stockQuantity = rs.getInt("quantity");
 
                     if (stockQuantity < item.getQuantity()) {
-                        // If the item quantity in stock is less than required, return false
                         return false;
                     }
                 } else {
-                    // If the item is not found in the database, return false
                     return false;
                 }
             }
         }
-        // If all items have enough stock, return true
         return true;
     }
 
@@ -229,12 +268,10 @@ public class OrderDB extends Order {
 
                 int rowsAffected = updateStmt.executeUpdate();
                 if (rowsAffected == 0) {
-                    // If no rows were updated, return false
                     return false;
                 }
             }
         }
-        // If all stock levels were updated, return true
         return true;
     }
 
@@ -242,73 +279,11 @@ public class OrderDB extends Order {
         String updateOrderStatusQuery = "UPDATE t_order SET status = ? WHERE id = ?";
 
         try (PreparedStatement updateOrderStmt = con.prepareStatement(updateOrderStatusQuery)) {
-            // Set the order status to 'SHIPPED'
             updateOrderStmt.setString(1, OrderStatus.SHIPPED.toString());
-            updateOrderStmt.setInt(2, orderId); // Set the order ID
+            updateOrderStmt.setInt(2, orderId);
 
-            // Execute the update
             int rowsAffected = updateOrderStmt.executeUpdate();
-
-            // Return true if the status was successfully updated, false otherwise
             return rowsAffected > 0;
         }
     }
-
-    public static Collection<OrderInfo> getAllOrders() {
-        Collection<OrderInfo> orders = new ArrayList<>();
-
-        // Query to retrieve orders
-        String orderQuery = "SELECT o.id, o.userID, o.status FROM t_order o";
-        String itemQuery = "SELECT i.id, i.name, i.type, i.colour, i.price, oi.quantity " +
-                "FROM t_order_items oi " +
-                "JOIN t_item i ON oi.itemID = i.id " +
-                "WHERE oi.orderID = ?";
-
-        try (Connection con = DBManager.getConnection();
-             PreparedStatement orderStmt = con.prepareStatement(orderQuery)) {
-
-            ResultSet orderRs = orderStmt.executeQuery();
-            while (orderRs.next()) {
-                int orderId = orderRs.getInt("id");
-                int userId = orderRs.getInt("userID");
-                String status = orderRs.getString("status");
-
-                // Create an OrderInfo object
-                OrderInfo order = new OrderInfo(orderId, userId, status);
-
-                // Fetch the items for each order
-                try (PreparedStatement itemStmt = con.prepareStatement(itemQuery)) {
-                    itemStmt.setInt(1, orderId);
-                    ResultSet itemRs = itemStmt.executeQuery();
-
-                    while (itemRs.next()) {
-                        int itemId = itemRs.getInt("id");
-                        String itemName = itemRs.getString("name");
-                        String itemType = itemRs.getString("type");
-                        String itemColour = itemRs.getString("colour");
-                        int price = itemRs.getInt("price");
-                        int quantity = itemRs.getInt("quantity");
-
-                        // Add the item to the order
-                        ItemInfo item = new ItemInfo(itemId, itemName, ItemType.valueOf(itemType),
-                                ItemColour.valueOf(itemColour), price, quantity, "");
-                        order.addItem(item);
-                    }
-                    itemRs.close();
-                }
-
-                // Add order to list of orders
-                orders.add(order);
-            }
-            orderRs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return orders;
-    }
-
-
-
 }

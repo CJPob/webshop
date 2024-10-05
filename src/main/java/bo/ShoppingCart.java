@@ -6,6 +6,9 @@ import ui.ItemInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The shoppingcart is the model representating the items in the cart. It includes the id of the cart and the associated user and the sum price.
+ */
 public class ShoppingCart {
 
     private int cartId;

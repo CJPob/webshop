@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * The UserHandler class manages business logic related to users, providing methods for user retrieval, signup, login,
+ * and role updates. It converts User objects to UserInfo for UI use.
+ */
+
 public class UserHandler {
 
     public static ArrayList<UserInfo> getUser(String username) {
@@ -25,7 +30,6 @@ public class UserHandler {
         for (User user : users) {
             userInfos.add(new UserInfo(user.getId(), user.getUsername(), user.getName(), user.getUserRole()));
         }
-
         return userInfos;
     }
 
@@ -40,8 +44,4 @@ public class UserHandler {
     public static boolean updateUserRole(String username, UserRole newRole) {
         return UserDB.updateUserRole(username, newRole);
     }
-
-
-    // TODO create a convert method here
-
 }

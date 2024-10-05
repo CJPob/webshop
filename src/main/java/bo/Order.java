@@ -1,10 +1,12 @@
 package bo;
 
 import db.OrderDB;
-import ui.ItemInfo;
-
 import java.util.Collection;
 
+/**
+ * The Order class represents an order with details like userId, cartId, and status.
+ * It provides methods to place, send, and retrieve orders, with order statuses defined in the OrderStatus enum.
+ */
 public class Order {
     private int id;
     private int userId;
@@ -47,10 +49,6 @@ public class Order {
 
     public void setShipped() {
         this.status = OrderStatus.SHIPPED;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
     }
 
     public enum OrderStatus {

@@ -11,17 +11,20 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * The AdminServlet handles admin-related actions such as viewing users and orders,
+ * as well as adding items and setting user roles. It ensures that only users with ADMIN or STAFF roles can access these features.
+ * This class also redirects to other servlets and hence also urls.
+ */
 @WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Check user role
         HttpSession session = req.getSession(false);
         String userRole = (session != null) ? (String) session.getAttribute("userRole") : null;
 
         if (userRole == null || !(userRole.equals("ADMIN") || userRole.equals("STAFF"))) {
-            // User is not logged in or does not have the right role
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
@@ -29,7 +32,6 @@ public class AdminServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if (action == null) {
-            // No action specified, forward to adminpage.jsp
             req.getRequestDispatcher("/WEB-INF/jsp/adminpage.jsp").forward(req, resp);
             return;
         }
@@ -66,15 +68,12 @@ public class AdminServlet extends HttpServlet {
 
         switch (action) {
             case "addItem":
-                // Forward to ItemServlet to add item
                 req.getRequestDispatcher("/item").forward(req, resp);
                 break;
             case "setUserRole":
-                // Forward to UserServlet to set user role
                 req.getRequestDispatcher("/user").forward(req, resp);
                 break;
             case "setQuantity":
-                // Forward to ItemServlet to set new quantity
                 req.getRequestDispatcher("/item").forward(req, resp);
                 break;
             default:
