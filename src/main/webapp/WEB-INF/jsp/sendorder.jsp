@@ -19,13 +19,11 @@
     <nav>
       <ul>
         <li><a href="${pageContext.request.contextPath}/item">Home</a></li>
-        <%-- Add other navigation links as needed --%>
       </ul>
     </nav>
   </header>
 
   <main>
-    <!-- Form to Send an Order by Entering Order ID -->
     <section>
       <h3>Send an Order</h3>
       <form action="<%= request.getContextPath() %>/order" method="POST">
@@ -39,10 +37,8 @@
     <hr>
 
     <%
-      // Retrieve the list of all orders
       Collection<OrderInfo> allOrders = (Collection<OrderInfo>) request.getAttribute("orders");
 
-      // Check if there are orders to display
       if (allOrders != null && !allOrders.isEmpty()) {
     %>
     <table id="orders">
@@ -51,20 +47,20 @@
         <th>Order ID</th>
         <th>User ID</th>
         <th>Item ID</th>
+        <th>Quantity</th>
         <th>Status</th>
       </tr>
       </thead>
       <tbody>
       <%
-        // Iterate over each order
         for (OrderInfo order : allOrders) {
-          // For each order, we will also iterate over its items
           for (ItemInfo item : order.getItems()) {
       %>
       <tr>
         <td><%= order.getOrderId() %></td>
         <td><%= order.getUserId() %></td>
         <td><%= item.getId() %></td> <!-- Item ID -->
+        <td><%= item.getQuantity() %></td> <!-- Display Quantity -->
         <td><%= order.getStatus() %></td> <!-- Order Status -->
       </tr>
       <%
