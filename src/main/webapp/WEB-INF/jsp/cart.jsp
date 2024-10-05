@@ -88,8 +88,9 @@
                     <form action="#" method="POST" style="display: inline-block;">
                         <button type="button" class="continue-btn">Empty Cart</button>
                     </form>
-                    <form action="#" method="POST" style="display: inline-block; margin-left: 10px;">
-                        <button type="button" class="continue-btn">Place Order</button>
+                    <form action="<%= request.getContextPath() %>/order" method="POST" style="display: inline-block;">
+                        <input type="hidden" name="action" value="placeOrder">
+                        <button type="submit" class="continue-btn">Place Order</button>
                     </form>
                 </td>
             </tr>

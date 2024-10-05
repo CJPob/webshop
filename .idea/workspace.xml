@@ -9,22 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix">
-      <change afterPath="$PROJECT_DIR$/src/main/java/bo/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/bo/OrderHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/db/OrderDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ui/OrderInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ui/OrderServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/sendorder.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/adminpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/adminpage.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
