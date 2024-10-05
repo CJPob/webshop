@@ -9,10 +9,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="Major fixes and new features, read merge comment">
+    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/additem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/additem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/inventory.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/mainpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/orders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/orders.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/passwordrecovery.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/passwordrecovery.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/removeitem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/removeitem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/userdetails.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/adminpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/adminpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/itemDetails.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/itemDetails.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/signup.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,41 +92,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.TestConnection.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Tomcat 10.1.30.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.create_item.jsp.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/42310/kthjava/ServletJSPWebApp000&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.TestConnection.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Tomcat Server.Tomcat 10.1.30.executor": "Run",
+    "Tomcat Server.Unnamed.executor": "Run",
+    "Tomcat Server.create_item.jsp.executor": "Run",
+    "git-widget-placeholder": "role-based-acess",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/42310/kthjava/ServletJSPWebApp000",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\java\ui" />
       <recent name="C:\JavaProj\webshop\src\main\webapp\WEB-INF" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp" />
-      <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Users\42310\kthjava\ServletsLabWebshop\src\main\webapp\WEB-INF" />
     </key>
   </component>
@@ -335,7 +356,9 @@
       <workItem from="1727613097332" duration="17274000" />
       <workItem from="1727788057341" duration="7226000" />
       <workItem from="1728064805689" duration="13921000" />
-      <workItem from="1728079178298" duration="991000" />
+      <workItem from="1728079178298" duration="1030000" />
+      <workItem from="1728080250472" duration="270000" />
+      <workItem from="1728116652452" duration="7881000" />
     </task>
     <task id="LOCAL−00001" summary="Major fixes and new features, read merge comment">
       <option name="closed" value="true" />
@@ -344,7 +367,14 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1728078095299</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL−00002" summary="fix">
+      <option name="closed" value="true" />
+      <created>1728080190482</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1728080190482</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,6 +395,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="items in stock are now displayed on the main page;" />
     <MESSAGE value="Major fixes and new features, read merge comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Major fixes and new features, read merge comment" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>

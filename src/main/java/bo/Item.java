@@ -24,6 +24,10 @@ public class Item {
         return ItemDB.findByType(type);
     }
 
+    static public Item getItemById(int itemId) {
+        return ItemDB.findById(itemId);
+    }
+
     static public Collection byColour(String colour) {
         return ItemDB.findByColour(colour);
     }

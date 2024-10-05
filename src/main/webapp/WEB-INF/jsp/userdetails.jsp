@@ -19,18 +19,23 @@
       <ul>
         <li><a href="${pageContext.request.contextPath}/item">home</a></li>
 
-        <%-- Check if the user is logged in --%>
+        <%-- Check if the user is logged in, toggle log in / my account--%>
         <% if (session.getAttribute("userId") == null) { %>
-        <li><a href="../../login.jsp">log in</a></li>
+        <li><a href="login.jsp">log in</a></li>
         <% } else { %>
-        <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+        <li><a href="${pageContext.request.contextPath}/user">my account</a></li>
         <% } %>
 
+        <%-- my cart button --%>
         <li><a href="${pageContext.request.contextPath}/cart">my cart</a></li>
-        <%-- Check if the user is logged in and is an admin, display extra menu --%>
-        <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { --%>
-        <li><a href="../../adminpage.jsp">admin</a></li>
-        <%-- } %>   --%>
+
+        <%-- Check if the user is logged in and is an admin or staff , display extra menu button "admin"--%>
+        <%
+          String userRole = (String) session.getAttribute("userRole");
+          if (userRole != null && (userRole.equals("ADMIN") || userRole.equals("STAFF"))) {
+        %>
+        <li><a href="${pageContext.request.contextPath}/admin">admin</a></li>
+        <% } %>
       </ul>
     </nav>
   </header>

@@ -32,6 +32,17 @@ public class ItemDB extends bo.Item {
         return searchItemsBy("1=1");  // Always true, fetches all records
     }
 
+    public static ItemDB findById(int itemId) {
+        Collection<ItemDB> items = searchItemsBy("id = " + itemId);
+        if (!items.isEmpty()) {
+            // returns the first item from the collection since id is unique
+            return items.iterator().next();
+        } else {
+            return null;
+        }
+    }
+
+
     private static Collection<ItemDB> searchItemsBy(String condition) {
         Vector<ItemDB> items = new Vector<>();
         String query = "SELECT * FROM T_ITEM WHERE " + condition;

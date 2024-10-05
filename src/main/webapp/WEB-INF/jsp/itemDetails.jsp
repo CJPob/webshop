@@ -1,12 +1,13 @@
+<%@ page import="ui.ItemInfo" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 
 <html>
 <head>
     <title>surfboards</title>
-    <link href="frontend/css/reset.css" rel="stylesheet" >
-    <link href="frontend/images/favicon.ico" rel="icon">
-    <link rel="stylesheet" type="text/css" href="frontend/css/main.css">
+    <link href="../../frontend/css/reset.css" rel="stylesheet" >
+    <link href="../../frontend/images/favicon.ico" rel="icon">
+    <link rel="stylesheet" type="text/css" href="../../frontend/css/main.css">
 </head>
 
 <body>
@@ -17,46 +18,59 @@
             <ul>
                 <li><a href="${pageContext.request.contextPath}/item">home</a></li>
 
-                <%-- Check if the user is logged in --%>
+                <%-- Check if the user is logged in, toggle log in / my account--%>
                 <% if (session.getAttribute("userId") == null) { %>
-                <li><a href="login.jsp">log in</a></li>
+                <li><a href="../../login.jsp">log in</a></li>
                 <% } else { %>
-                <li><a href="${pageContext.request.contextPath}/user">my account</a></li>  <%-- Redirect to /user --%>
+                <li><a href="${pageContext.request.contextPath}/user">my account</a></li>
                 <% } %>
 
+                <%-- my cart button --%>
                 <li><a href="${pageContext.request.contextPath}/cart">my cart</a></li>
-                <%-- Check if the user is logged in and is an admin, display extra menu --%>
-                <%--  <% if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) { %>   --%>
-                <li><a href="adminpage.jsp">admin</a></li>
-                <%--     <% } %>   --%>
+
+                <%-- Check if the user is logged in and is an admin or staff , display extra menu button "admin"--%>
+                <%
+                    String userRole = (String) session.getAttribute("userRole");
+                    if (userRole != null && (userRole.equals("ADMIN") || userRole.equals("STAFF"))) {
+                %>
+                <li><a href="${pageContext.request.contextPath}/admin">admin</a></li>
+                <% } %>
             </ul>
         </nav>
     </header>
 
 
     <main>
+        <%
+            // Retrieve the item from the request attribute
+            ItemInfo item = (ItemInfo) request.getAttribute("item");
+            if (item != null) {
+        %>
         <table id="display-item">
             <tr>
                 <td>
+                    <!-- placeholder img-->
                     <img src="#" alt="item image">
                 </td>
                 <td>
-                    <p><strong>Name:</strong> <%= request.getParameter("name") %></p>
-                    <p><strong>Price:</strong> $<%= request.getParameter("price") %></p>
-                    <p><strong>Description:</strong> <%= request.getParameter("description") %></p>
+                    <p><strong>Name:</strong> <%= item.getName() %></p>
+                    <p><strong>Price:</strong> $<%= item.getPrice() %></p>
+                    <p><strong>Description:</strong> <%= item.getDescription() %></p>
 
                     <!-- add to cart form -->
                     <form action="${pageContext.request.contextPath}/cart" method="POST">
                         <input type="hidden" name="action" value="add">
-                        <input type="hidden" name="itemID" value="<%= request.getParameter("itemID") %>">
+                        <input type="hidden" name="itemId" value="<%= item.getId() %>">
                         <label for="quantity">Quantity:</label>
                         <input type="number" id="quantity" name="quantity" min="1" value="1" required><br><br>
                         <button type="submit">Add to Cart</button>
                     </form>
-
                 </td>
             </tr>
         </table>
+        <% } else { %>
+        <p>Item details are not available.</p>
+        <% } %>
     </main>
 
 

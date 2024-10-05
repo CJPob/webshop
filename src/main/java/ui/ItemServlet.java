@@ -17,37 +17,71 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String filter = request.getParameter("filter");
-        String type = request.getParameter("type");
-        Collection<ItemInfo> items;
 
-        try {
-            if (type != null) {
-                if (!type.isEmpty()) {
-                    // Fetch items by type
-                    items = ItemHandler.getItemsByType(type);
-                } else {
-                    // Type is empty (All selected), fetch all items
+        String action = request.getParameter("action");
+
+        if ("viewDetails".equals(action)) {
+            // Handle viewing item details
+            handleViewDetails(request, response);
+        } else {
+            String filter = request.getParameter("filter");
+            String type = request.getParameter("type");
+            Collection<ItemInfo> items;
+
+            try {
+                if (type != null) {
+                    if (!type.isEmpty()) {
+                        // Fetch items by type
+                        items = ItemHandler.getItemsByType(type);
+                    } else {
+                        // Type is empty (All selected), fetch all items
+                        items = ItemHandler.getAllItems();
+                    }
+                    request.setAttribute("items", items);
+                    request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
+                } else if ("all".equals(filter)) {
+                    // Fetch all items when filter=all
                     items = ItemHandler.getAllItems();
+                    request.setAttribute("items", items);
+                    request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
+                } else {
+                    // Default: Fetch items in stock (quantity > 0)
+                    items = ItemHandler.getItemsInStock();
+                    request.setAttribute("items", items);
+                    request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
                 }
-                request.setAttribute("items", items);
-                request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
-            } else if ("all".equals(filter)) {
-                // Fetch all items when filter=all
-                items = ItemHandler.getAllItems();
-                request.setAttribute("items", items);
-                request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
-            } else {
-                // Default: Fetch items in stock
-                items = ItemHandler.getItemsInStock();
-                request.setAttribute("items", items);
-                request.getRequestDispatcher("/WEB-INF/jsp/mainpage.jsp").forward(request, response);
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing request: " + e.getMessage());
             }
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing request: " + e.getMessage());
         }
     }
 
+    //  method to handle viewing item details
+    private void handleViewDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // retrieve the itemId from request
+            int itemId = Integer.parseInt(request.getParameter("itemId"));
+            // fetch item info
+            ItemInfo item = ItemHandler.getItemById(itemId);
+
+            if (item != null) {
+                // set the item as a request attribute
+                request.setAttribute("item", item);
+
+                // fwd to itemDetails.jsp / display single item details
+                request.getRequestDispatcher("/WEB-INF/jsp/itemDetails.jsp").forward(request, response);
+            } else {
+                // item not found
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Item not found");
+            }
+        } catch (NumberFormatException e) {
+            // invalid itemId
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid item ID");
+        } catch (Exception e) {
+            // other exceptions
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error retrieving item details: " + e.getMessage());
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -106,7 +140,7 @@ public class ItemServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/inventory.jsp").forward(request, response);
             }
         } else {
-            // smth else
+            // other / unspecified
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
         }
     }

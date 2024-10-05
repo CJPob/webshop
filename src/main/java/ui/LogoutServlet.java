@@ -10,21 +10,20 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-// cleans the session and redirects to login page
+// basically cleans the session and redirects to login page
+
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Get the current session, if it exists
         HttpSession session = req.getSession(false);  // false ensures it doesn't create a new session if none exists
 
         if (session != null) {
-            // Invalidate the session, removing all attributes
+            // iinvalidate the session --  remove all attributes
             session.invalidate();
         }
-
-        // Redirect to the home page (or login page)
+        // redirect to login
         resp.sendRedirect(req.getContextPath() + "/login.jsp");
     }
 }
