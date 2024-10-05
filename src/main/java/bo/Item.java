@@ -7,7 +7,6 @@ import java.util.Collection;
  * The Item class represents a product with attributes such as name, type, colour, price, quantity, and description.
  * It provides methods to access and modify these properties for individual items.
  */
-
 public class Item {
     private final int id;
     private String name;

@@ -19,6 +19,7 @@ import java.util.Vector;
  * - {@code newCart()}: Creates a new cart.
  * - {@code insertItemIntoCart()}: Adds or updates items in the cart.
  * - {@code viewShoppingCart()}: Retrieves cart contents.
+ * - {@code removeItemFromCart()}: Retrieves cart contents.
  * - {@code emptyCart()}: Empties the cart.
  */
 public class ShoppingCartDB extends ShoppingCart {
@@ -121,7 +122,7 @@ public class ShoppingCartDB extends ShoppingCart {
                             "JOIN t_user u ON sc.userID = u.id " +
                             "WHERE u.username = ?"
             );
-            stmt.setString(1, username);  // Set the username in the query
+            stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -132,7 +133,6 @@ public class ShoppingCartDB extends ShoppingCart {
                 int price = rs.getInt("price");
                 int quantity = rs.getInt("quantity");
                 String description = rs.getString("description");
-
                 itemList.add(new ItemInfo(itemID, itemName, itemType, itemColour, price, quantity, description));
             }
 
@@ -146,6 +146,28 @@ public class ShoppingCartDB extends ShoppingCart {
 
         return itemList;
     }
+
+    public static boolean removeItemFromCart(int cartId, int itemId) {
+        String query = "DELETE FROM t_cart_items WHERE cartID = ? AND itemID = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, cartId);
+            ps.setInt(2, itemId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                updateCartTotal(cartId);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public static void emptyCart(int cartId) {
         String deleteCartItemsSQL = "DELETE FROM t_cart_items WHERE cartID = ?";
@@ -161,7 +183,7 @@ public class ShoppingCartDB extends ShoppingCart {
             conn.setAutoCommit(false);
 
             deleteStmt = conn.prepareStatement(deleteCartItemsSQL);
-            deleteStmt.setInt(1, cartId);  // Set the cartId parameter
+            deleteStmt.setInt(1, cartId);
             int rowsAffected = deleteStmt.executeUpdate();
 
             if (rowsAffected > 0) {

@@ -23,9 +23,9 @@ public class ShoppingCartHandler {
         ShoppingCart.clearCart(cartId);
     }
 
-    /*public static boolean removeItemFromCart(int cartId, int itemId, int quantity) {
-
-    }*/
+    public static boolean removeItemFromCart(int cartId, int itemId) {
+        return ShoppingCart.removeItem(cartId, itemId);
+    }
 
     public static Collection<ItemInfo> showMyCart(String username) {
         return ShoppingCart.displayMyCart(username);

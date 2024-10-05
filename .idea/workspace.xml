@@ -10,32 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06366b88-1b7b-4faa-a668-4f3970abf525.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ItemHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/OrderHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/OrderHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/ShoppingCartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bo/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ItemDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/OrderDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/OrderDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ShoppingCartDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/TestConnection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/UserDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AdminServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ItemServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/LogoutServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/OrderInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/OrderInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/OrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/OrderServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/ShoppingCartInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/ShoppingCartInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/cart.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +85,7 @@
     "Tomcat Server.Tomcat 10.1.30.executor": "Run",
     "Tomcat Server.Unnamed.executor": "Run",
     "Tomcat Server.create_item.jsp.executor": "Run",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "cartButtons",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/42310/kthjava/ServletJSPWebApp000",
