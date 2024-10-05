@@ -1,16 +1,15 @@
 package ui;
 
 import bo.ShoppingCartHandler;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Collection;
-
 
 /**
  * The CartServlet handles actions related to the user's shopping cart, including viewing the cart,
@@ -21,71 +20,59 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
+        if (checkLoginAndRedirect(req, resp)) return;
 
-        if (session != null && session.getAttribute("username") != null) {
-            String username = (String) session.getAttribute("username");
-            Collection<ItemInfo> cartItems = ShoppingCartHandler.showMyCart(username);
-            req.setAttribute("cartItems", cartItems);
-            req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect("login.jsp");
-        }
+        String username = (String) req.getSession().getAttribute("username");
+        Collection<ItemInfo> cartItems = ShoppingCartHandler.showMyCart(username);
+        req.setAttribute("cartItems", cartItems);
+        req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Integer userId = (Integer) session.getAttribute("userId");
-        Integer cartId = (Integer) session.getAttribute("cartId");
+        if (checkLoginAndRedirect(req, resp)) return;
 
+        HttpSession session = req.getSession();
+        Integer cartId = (Integer) session.getAttribute("cartId");
         String action = req.getParameter("action");
 
-        if ("add".equals(action)) {
-            try {
-                int itemID = Integer.parseInt(req.getParameter("itemId"));
-                int quantity = Integer.parseInt(req.getParameter("quantity"));
-
-                if (userId == null || cartId == null) {
-                    // User not logged in, store item info in session
-                    session.setAttribute("pendingItemId", itemID);
-                    session.setAttribute("pendingQuantity", quantity);
-
-                    // Set redirectAfterLogin to navigate back to the cart after login
-                    session.setAttribute("redirectAfterLogin", "cart");
-
-                    // Redirect to login page
-                    resp.sendRedirect(req.getContextPath() + "/login.jsp");
-                } else {
-                    // User is logged in, add item to cart
-                    ShoppingCartHandler.addItemToCart(cartId, itemID, quantity);
-                    resp.sendRedirect(req.getContextPath() + "/cart");
-                }
-            } catch (NumberFormatException e) {
-                req.setAttribute("error", "Invalid item or quantity. Please try again.");
-                req.getRequestDispatcher("/WEB-INF/jsp/itemDetails.jsp").forward(req, resp);
-            }
+        if (cartId == null || action == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid cart or action.");
+            return;
         }
+
+        try {
+            switch (action) {
+                case "add":
+                    int itemId = Integer.parseInt(req.getParameter("itemId"));
+                    int quantity = Integer.parseInt(req.getParameter("quantity"));
+                    ShoppingCartHandler.addItemToCart(cartId, itemId, quantity);
+                    break;
+                case "remove":
+                    itemId = Integer.parseInt(req.getParameter("itemId"));
+                    ShoppingCartHandler.removeItemFromCart(cartId, itemId);
+                    break;
+                case "emptyCart":
+                    ShoppingCartHandler.emptyCartItems(cartId);
+                    session.removeAttribute("cartItems");
+                    break;
+                default:
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
+                    return;
+            }
+        } catch (NumberFormatException e) {
+            req.setAttribute("error", "Invalid item or quantity.");
+        }
+
+        resp.sendRedirect(req.getContextPath() + "/cart");
     }
 
-
-    // Handling 'remove' action
-        /*else if ("remove".equals(action)) {
-            try {
-                int itemID = Integer.parseInt(req.getParameter("itemID"));
-
-                // Remove item from the user's cart using cartId
-                ShoppingCartHandler.removeItem(cartId, itemID);
-                req.setAttribute("message", "Item successfully removed from cart.");
-            } catch (NumberFormatException e) {
-                req.setAttribute("error", "Invalid item ID. Please try again.");
-            }
-        }*/
-
-    // Redirect to cart page to show updated cart
-    //  resp.sendRedirect(req.getContextPath() + "/cart");
-
+    private boolean checkLoginAndRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("username") == null) {
+            resp.sendRedirect("login.jsp");
+            return true;
+        }
+        return false;
+    }
 }
-
-
-

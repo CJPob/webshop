@@ -32,6 +32,10 @@ public class ShoppingCart {
         return ShoppingCartDB.viewShoppingCart(username);
     }
 
+    public static boolean removeItem(int cartId, int itemId) {
+        return ShoppingCartDB.removeItemFromCart(cartId, itemId);
+    }
+
     protected ShoppingCart(int userID) {
         this.userID = userID;
         this.items = new ArrayList<>();

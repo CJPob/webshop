@@ -70,8 +70,10 @@
                 <td><%= item.getQuantity() %></td>
                 <td>$<%= itemTotal %></td>
                 <td>
-                    <form action="#" method="POST"> <!-- Placeholder for future action -->
-                        <button type="button" class="removeitem">Remove</button>
+                    <form action="<%= request.getContextPath() %>/cart" method="POST">
+                        <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                        <button type="submit" class="removeitem">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -85,8 +87,9 @@
             </tr>
             <tr>
                 <td colspan="5" style="text-align: right;">
-                    <form action="#" method="POST" style="display: inline-block;">
-                        <button type="button" class="continue-btn">Empty Cart</button>
+                    <form action="<%= request.getContextPath() %>/cart" method="POST" style="display: inline-block;">
+                        <input type="hidden" name="action" value="emptyCart">
+                        <button type="submit" class="continue-btn">Empty Cart</button>
                     </form>
                     <form action="<%= request.getContextPath() %>/order" method="POST" style="display: inline-block;">
                         <input type="hidden" name="action" value="placeOrder">
