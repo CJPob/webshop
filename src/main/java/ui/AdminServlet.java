@@ -46,9 +46,9 @@ public class AdminServlet extends HttpServlet {
             case "addItemPage":
                 req.getRequestDispatcher("/WEB-INF/jsp/additem.jsp").forward(req, resp);
                 break;
-                /* case "viewOrders":
-                req.getRequestDispatcher("/order").forward(req, resp);
-                break;*/
+                case "viewOrders":
+                req.getRequestDispatcher("/WEB-INF/jsp/order.jsp").forward(req, resp);
+                break;
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
         }
