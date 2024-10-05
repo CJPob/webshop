@@ -35,32 +35,39 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Integer userId = (Integer) session.getAttribute("userId");
-        Integer cartId = (Integer) session.getAttribute("cartId");  // Retrieve cartId from session
-
-        // If user is not logged in or cartId is missing, redirect to login page
-        if (userId == null || cartId == null) {
-            session.setAttribute("redirectAfterLogin", "cart");
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
-            return;
-        }
+        Integer cartId = (Integer) session.getAttribute("cartId");
 
         String action = req.getParameter("action");
 
-        // Handling 'add' action
         if ("add".equals(action)) {
             try {
-                int itemID = Integer.parseInt(req.getParameter("itemID"));
+                int itemID = Integer.parseInt(req.getParameter("itemId"));
                 int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-                // Add item to the user's cart using cartId
-                ShoppingCartHandler.addItemToCart(cartId, itemID, quantity);
-                req.setAttribute("message", "Item successfully added to cart.");
+                if (userId == null || cartId == null) {
+                    // User not logged in, store item info in session
+                    session.setAttribute("pendingItemId", itemID);
+                    session.setAttribute("pendingQuantity", quantity);
+
+                    // Set redirectAfterLogin to navigate back to the cart after login
+                    session.setAttribute("redirectAfterLogin", "cart");
+
+                    // Redirect to login page
+                    resp.sendRedirect(req.getContextPath() + "/login.jsp");
+                } else {
+                    // User is logged in, add item to cart
+                    ShoppingCartHandler.addItemToCart(cartId, itemID, quantity);
+                    resp.sendRedirect(req.getContextPath() + "/cart");
+                }
             } catch (NumberFormatException e) {
                 req.setAttribute("error", "Invalid item or quantity. Please try again.");
+                req.getRequestDispatcher("/WEB-INF/jsp/itemDetails.jsp").forward(req, resp);
             }
         }
+    }
 
-        // Handling 'remove' action
+
+    // Handling 'remove' action
         /*else if ("remove".equals(action)) {
             try {
                 int itemID = Integer.parseInt(req.getParameter("itemID"));
@@ -73,9 +80,10 @@ public class CartServlet extends HttpServlet {
             }
         }*/
 
-        // Redirect to cart page to show updated cart
-        resp.sendRedirect(req.getContextPath() + "/cart");
-    }
+    // Redirect to cart page to show updated cart
+    //  resp.sendRedirect(req.getContextPath() + "/cart");
 
 }
+
+
 
