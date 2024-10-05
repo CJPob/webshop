@@ -55,18 +55,22 @@ public class ShoppingCartDB extends ShoppingCart {
                     updateStmt.setInt(1, currentQuantity + quantity); // Increase the quantity
                     updateStmt.setInt(2, cartId);
                     updateStmt.setInt(3, itemId);
-                    int result = updateStmt.executeUpdate();
-                    return result > 0;
+                    updateStmt.executeUpdate();
                 }
             } else {
                 try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
                     insertStmt.setInt(1, cartId);
                     insertStmt.setInt(2, itemId);
                     insertStmt.setInt(3, quantity);
-                    int result = insertStmt.executeUpdate();
-                    return result > 0;
+                    insertStmt.executeUpdate();
                 }
             }
+
+            // Recalculate and update the sumTotal for the shopping cart
+            updateCartTotal(cartId);
+
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -136,4 +140,111 @@ public class ShoppingCartDB extends ShoppingCart {
 
         return itemList;
     }
+
+    public static void emptyCart(int cartId) {
+        String deleteCartItemsSQL = "DELETE FROM t_cart_items WHERE cartID = ?";
+        String updateCartSumSQL = "UPDATE t_shoppingcart SET sumTotal = 0 WHERE cartID = ?";
+
+        Connection conn = null;
+        PreparedStatement deleteStmt = null;
+        PreparedStatement updateStmt = null;
+
+        try {
+            // Establish database connection
+            conn = DBManager.getConnection();
+
+            // Disable auto-commit for transaction management
+            conn.setAutoCommit(false);
+
+            // Step 1: Delete cart items from t_cart_items
+            deleteStmt = conn.prepareStatement(deleteCartItemsSQL);
+            deleteStmt.setInt(1, cartId);  // Set the cartId parameter
+            int rowsAffected = deleteStmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Cart items removed successfully.");
+            } else {
+                System.out.println("Cart is already empty or cartID not found.");
+            }
+
+            // Step 2: Update the sumTotal in t_shoppingcart to 0
+            updateStmt = conn.prepareStatement(updateCartSumSQL);
+            updateStmt.setInt(1, cartId);  // Set the cartId parameter
+            int updateCount = updateStmt.executeUpdate();
+
+            if (updateCount > 0) {
+                System.out.println("Cart sumTotal set to 0 successfully.");
+            } else {
+                System.out.println("Failed to update sumTotal or cartID not found.");
+            }
+
+            // Commit the transaction
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();  // Rollback the transaction in case of error
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        } finally {
+            // Close resources
+            try {
+                if (deleteStmt != null) deleteStmt.close();
+                if (updateStmt != null) updateStmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void updateCartTotal(int cartId) {
+        String calculateTotalSQL = "SELECT SUM(i.price * ci.quantity) AS total " +
+                "FROM t_cart_items ci " +
+                "JOIN t_item i ON ci.itemID = i.id " +
+                "WHERE ci.cartID = ?";
+
+        String updateSumTotalSQL = "UPDATE t_shoppingcart SET sumTotal = ? WHERE cartID = ?";
+
+        Connection conn = null;
+        PreparedStatement calculateStmt = null;
+        PreparedStatement updateStmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBManager.getConnection();
+
+            // Step 1: Calculate the total price of items in the cart
+            calculateStmt = conn.prepareStatement(calculateTotalSQL);
+            calculateStmt.setInt(1, cartId);
+            rs = calculateStmt.executeQuery();
+
+            if (rs.next()) {
+                double total = rs.getDouble("total");
+
+                // Step 2: Update the sumTotal in t_shoppingcart
+                updateStmt = conn.prepareStatement(updateSumTotalSQL);
+                updateStmt.setDouble(1, total); // Set the new total
+                updateStmt.setInt(2, cartId);   // Set the cartId
+                updateStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (calculateStmt != null) calculateStmt.close();
+                if (updateStmt != null) updateStmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

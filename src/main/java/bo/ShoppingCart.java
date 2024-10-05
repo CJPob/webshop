@@ -12,23 +12,6 @@ public class ShoppingCart {
     private int userID;
     private Collection<ItemInfo> items;
     private int sumTotal;
-    private Status status;
-
-    public enum Status {
-        IN_PROGRESS("In Progress"),
-        ORDERED("Ordered");
-
-        private final String status;
-
-        Status(String status) {
-            this.status = status;
-        }
-
-        @Override
-        public String toString() {
-            return status;
-        }
-    }
 
     public static boolean createNewCart(ShoppingCart shoppingCart) {
         return ShoppingCartDB.newCart(shoppingCart);
@@ -36,6 +19,10 @@ public class ShoppingCart {
 
     public static boolean addItem(int cartId, int itemId, int quantity) {
         return ShoppingCartDB.insertItemIntoCart(cartId, itemId, quantity);
+    }
+
+    public static void clearCart(int cartId) {
+        ShoppingCartDB.emptyCart(cartId);
     }
 
     public static Collection<ItemInfo> displayMyCart(String username) {

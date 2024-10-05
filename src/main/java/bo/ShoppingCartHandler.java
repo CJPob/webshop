@@ -16,13 +16,15 @@ public class ShoppingCartHandler {
         return ShoppingCart.addItem(cartId, itemId, quantity);
     }
 
+    public static void emptyCartItems(int cartId) {
+        ShoppingCart.clearCart(cartId);
+    }
+
     /*public static boolean removeItemFromCart(int cartId, int itemId, int quantity) {
 
     }*/
 
-
     public static Collection<ItemInfo> showMyCart(String username) {
-        // Delegate the call to ShoppingCart to get the user's cart items
         return ShoppingCart.displayMyCart(username);
     }
 

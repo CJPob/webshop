@@ -40,7 +40,7 @@
 
     <main>
         <div class="submenu">
-            <button class="continue-btn admin-orders-btn" onclick="window.location.href='orders.jsp'">Orders</button>
+            <button class="continue-btn admin-orders-btn" onclick="window.location.href='order'">Orders</button>
             <button class="continue-btn admin-inventory-btn" onclick="window.location.href
                     ='${pageContext.request.contextPath}/item?filter=all'">Warehouse</button>
             <%-- Display user management button for admins only --%>

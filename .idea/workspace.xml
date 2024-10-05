@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/CartServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/LoginServlet.java" afterDir="false" />
-    </list>
+    <list default="true" id="89efd605-cae6-4d39-b52f-3253653b728b" name="Changes" comment="fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jsp File" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -80,7 +76,7 @@
     "Tomcat Server.Tomcat 10.1.30.executor": "Run",
     "Tomcat Server.Unnamed.executor": "Run",
     "Tomcat Server.create_item.jsp.executor": "Run",
-    "git-widget-placeholder": "cart-fix",
+    "git-widget-placeholder": "Rebase",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/42310/kthjava/ServletJSPWebApp000",
