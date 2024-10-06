@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/f6a3dad0-247c-40f7-8614-283b2fbe9d26)
+
+
 ## A Java enterprise webshop application.
 
 **User Interaction (JSP):**
