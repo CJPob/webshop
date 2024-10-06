@@ -1,11 +1,9 @@
 package bo;
 
-import db.UserDB;
 import ui.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * The UserHandler class manages business logic related to users, providing methods for user retrieval, signup, login,
@@ -18,7 +16,7 @@ public class UserHandler {
         Collection<User> users = User.searchUser(username);
         ArrayList<UserInfo> userInfos = new ArrayList<>();
         for (User u : users) {
-            userInfos.add(new UserInfo(u.getId(), u.getName(), u.getUsername(), u.getUserRole()));  // Converting User to UserInfo
+            userInfos.add(new UserInfo(u.getId(), u.getName(), u.getUsername(), u.getUserRole()));
         }
         return userInfos;
     }
@@ -26,9 +24,8 @@ public class UserHandler {
     public static ArrayList<UserInfo> getAllUsers() {
         Collection<User> users = User.searchAllUsers();
         ArrayList<UserInfo> userInfos = new ArrayList<>();
-
         for (User user : users) {
-            userInfos.add(new UserInfo(user.getId(), user.getUsername(), user.getName(), user.getUserRole()));
+            userInfos.add(new UserInfo(user.getId(), user.getName(), user.getUsername(), user.getUserRole()));
         }
         return userInfos;
     }
@@ -41,7 +38,7 @@ public class UserHandler {
         return User.login(username, password);
     }
 
-    public static boolean updateUserRole(String username, UserRole newRole) {
-        return UserDB.updateUserRole(username, newRole);
+    public static boolean setNewUserRole(String username, UserRole newRole) {
+        return User.updateUserRole(username, newRole);
     }
 }

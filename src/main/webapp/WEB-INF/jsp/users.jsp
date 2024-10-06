@@ -44,8 +44,9 @@
         <table id="userstable">
             <thead>
             <tr>
-                <th>Username</th>
+            <tr>
                 <th>Name</th>
+                <th>Username</th>
                 <th>Current Role</th>
                 <th>Change Role</th>
             </tr>
@@ -56,8 +57,8 @@
                 for (UserInfo user : users) {
             %>
             <tr>
-                <td><%= user.getUsername() %></td>
                 <td><%= user.getName() %></td>
+                <td><%= user.getUsername() %></td>
                 <td><%= user.getUserRole() %></td>
                 <td>
                     <form action="${pageContext.request.contextPath}/user" method="POST">

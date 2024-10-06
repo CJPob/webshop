@@ -34,7 +34,7 @@ public class User {
     }
 
     public static boolean updateUserRole(String username, UserRole newRole) {
-        return UserDB.updateUserRole(username, newRole);
+        return UserDB.updateUserRoleDB(username, newRole);
     }
 
     protected User(int id, String name, String username, String password, UserRole userRole) {

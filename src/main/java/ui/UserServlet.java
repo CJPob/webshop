@@ -72,7 +72,7 @@ public class UserServlet extends HttpServlet {
         String username = req.getParameter("username");
         String newRole = req.getParameter("newRole");
 
-        boolean updateSuccess = UserHandler.updateUserRole(username, UserRole.valueOf(newRole));
+        boolean updateSuccess = UserHandler.setNewUserRole(username, UserRole.valueOf(newRole));
 
         if (updateSuccess) {
             req.setAttribute("message", "Role updated successfully for " + username);

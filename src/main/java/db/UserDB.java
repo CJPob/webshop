@@ -147,29 +147,42 @@ public class UserDB extends bo.User {
     public static String getUserRoleByUserId(int userId) {
         try (Connection con = DBManager.getConnection();
              PreparedStatement ps = con.prepareStatement("SELECT userRole FROM T_USER WHERE id = ?")) {
-                ps.setInt(1, userId);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return rs.getString("userRole");
-                }
-                rs.close();
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("userRole");
+            }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static boolean updateUserRole(String username, UserRole newRole) {
-        String query = "UPDATE T_USER SET userRole = ? WHERE username = ?";
+    public static boolean updateUserRoleDB(String username, UserRole newRole) {
+        int userId = getUserIdByUsername(username);
+        if (userId == -1) {
+            System.out.println("User not found.");
+            return false; // User does not exist.
+        }
+
+        String query = "UPDATE T_USER SET userRole = ? WHERE id = ?";
         try (Connection con = DBManager.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, newRole.name());
-            ps.setString(2, username);
+            ps.setInt(2, userId);
             int affectedRows = ps.executeUpdate();
-            return affectedRows > 0;
+            if (affectedRows > 0) {
+                System.out.println("User role updated successfully.");
+                return true;
+            } else {
+                System.out.println("No changes made to user role.");
+                return false; // No rows affected.
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 }
+
