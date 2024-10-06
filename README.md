@@ -24,7 +24,7 @@ The tables are normalized and the relationship is visualized in the image
 
 
 **DBManager and Hikari Connection Pool:** 
-DBManager is implemented as a singleton to ensure that only one instance manages the connection pool. It efficiently handles multiple database transactions by providing each transaction with a connection from the HikariCP pool, supporting high concurrency and ensuring transaction isolation and thread safety across the application
+DBManager is implemented as a singleton to ensure that only one instance manages the connection pool. It efficiently handles multiple database transactions by providing each transaction with a connection from the HikariCP pool, supporting concurrency and ensuring transaction isolation and thread safety across the application
 
 **Enviroments:**
 IDE - IntelliJ IDEA Ultimate
