@@ -27,4 +27,9 @@ Enviroments:
 IDE - IntelliJ IDEA Ultimate
 Java - Oracle OpenJDK 21
 Server - Tomcat 10.1.30
-Database - MySQL
+Database - MySQL    
+
+
+
+![image](https://github.com/user-attachments/assets/51407784-bb69-44bc-9c4c-29f9ee806994)
+
