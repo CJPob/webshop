@@ -23,9 +23,8 @@ The tables are normalized and the relationship is visualized in the image
 ![db_tables](https://github.com/user-attachments/assets/9d09d622-d474-47a1-90e5-1ca6bfbae0ce)
 
 
-
-Enviroments
-Java: Oracle OpenJDK 21
-Server: Tomcat 10.1.30
-IDE: IntelliJ IDEA Ultimate
-Database: MySQL
+Enviroments:
+IDE - IntelliJ IDEA Ultimate
+Java - Oracle OpenJDK 21
+Server - Tomcat 10.1.30
+Database - MySQL
