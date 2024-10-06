@@ -37,7 +37,7 @@ public class OrderServlet extends HttpServlet {
         Collection<OrderInfo> allOrders = OrderHandler.getAllOrders();
         request.setAttribute("orders", allOrders);
 
-        request.getRequestDispatcher("/WEB-INF/jsp/sendorder.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/orders.jsp").forward(request, response);
     }
 
     @Override
@@ -55,18 +55,18 @@ public class OrderServlet extends HttpServlet {
             boolean success = OrderHandler.placeOrder(userId, cartId);
 
             if (success) {
-                req.setAttribute("message", "Order placed successfully!");
                 ShoppingCartHandler.emptyCartItems(cartId);
                 session.removeAttribute("cartItems");
+                session.setAttribute("message", "Order placed successfully!");
             } else {
-                req.setAttribute("error", "Failed to place order.");
+                session.setAttribute("error", "Failed to place order.");
             }
+            resp.sendRedirect(req.getContextPath() + "/cart");
 
         } else if ("sendOrder".equals(action)) {
-            if ("Customer".equalsIgnoreCase(userRole)) {
-                req.setAttribute("error", "You do not have permission to send an order.");
-                req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
-                return;
+            if (!"Staff".equalsIgnoreCase(userRole) && !"Admin".equalsIgnoreCase(userRole)) {
+                session.setAttribute("error", "You do not have permission to send an order.");
+                resp.sendRedirect(req.getContextPath() + "/order");
             }
 
             String orderIdParam = req.getParameter("orderId");
@@ -78,20 +78,19 @@ public class OrderServlet extends HttpServlet {
                     boolean success = OrderHandler.sendOrder(orderId);
 
                     if (success) {
-                        req.setAttribute("message", "Order sent successfully!");
+                        session.setAttribute("message", "Order sent successfully!");
                     } else {
-                        req.setAttribute("error", "Failed to send order. Not enough stock.");
+                        session.setAttribute("error", "Failed to send order. Not enough stock.");
                     }
 
                 } catch (NumberFormatException e) {
-                    req.setAttribute("error", "Invalid order ID. Please enter a valid number.");
+                    session.setAttribute("error", "Invalid order ID. Please enter a valid number.");
                 }
-
             } else {
-                req.setAttribute("error", "Missing order ID. Cannot send order.");
+                session.setAttribute("error", "Missing order ID. Cannot send order.");
             }
+            resp.sendRedirect(req.getContextPath() + "/order");
         }
-
-        req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
     }
 }
+
