@@ -20,7 +20,7 @@ Once the data is processed, the handlers return results to the servlets, which t
 
 The tables are normalized and the relationship is visualized in the image
 
-![db_tables](https://github.com/user-attachments/assets/9d09d622-d474-47a1-90e5-1ca6bfbae0ce)
+![db_tables](https://github.com/user-attachments/assets/b941f3d2-9c94-4de4-be0f-d48cf536d2c1)
 
 
 Enviroments:
