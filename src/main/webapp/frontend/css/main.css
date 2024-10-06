@@ -240,18 +240,16 @@ footer {
     background-color: #e6f7ff;
 }
 
-.admin-seeusers-btn {
-    margin-bottom: 40px;
-}
-
-.admin-orders-btn {
-    margin-top: 40px;
+.admin-seeusers-btn,
+.admin-orders-btn,
+.admin-inventory-btn {
+    margin: 20px;  !important;
 }
 
 /* Items grid styles */
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Adjust as needed */
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
     padding: 20px;
 }
@@ -290,7 +288,7 @@ footer {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    height: 100%; /* Ensure it takes the full height of its parent */
+    height: 100%;
     box-sizing: border-box;
 }
 
@@ -321,7 +319,7 @@ footer {
 
 
 /* shopping cart table, inventory table, user list table, user details table */
-#shoppingcart, #inventorytable, #userstable, #userdetails {
+#shoppingcart, #inventorytable, #userstable, #userdetails #orderstable {
     width: 80%;
     border-collapse: collapse;
     margin: 40px 20px;
@@ -329,29 +327,33 @@ footer {
 
 #shoppingcart th, #shoppingcart td, #inventorytable th,
 #inventorytable td, #userstable th, #userstable td,
-#userdetails th, #userdetails td {
+#userdetails th, #userdetails td,
+#orderstable th, #orderstable td{
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-#shoppingcart th, #inventorytable th, #userstable th, #userdetails th {
+#shoppingcart th, #inventorytable th, #userstable th,
+#userdetails th, #orderstable th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
 #shoppingcart tr:hover, #inventorytable tr:hover,
-#userstable tr:hover, #userdetails tr:hover {
+#userstable tr:hover, #userdetails tr:hover,
+#orderstable tr:hover {
     background-color: #f9f9f9;
 }
 
 #shoppingcart td, #inventorytable td,
-#userstable td, #userdetails td {
+#userstable td, #userdetails td, #orderstable td {
     vertical-align: middle;
 }
 
 #shoppingcart td:last-child, #inventorytable td:last-child,
-#userstable td:last-child, #userdetails td:last-child {
+#userstable td:last-child, #userdetails td:last-child,
+#orderstable td:last-child {
     font-weight: bold;
 }
 

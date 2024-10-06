@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="ui.OrderInfo" %>
+<%@ page import="ui.ItemInfo" %>
 <!DOCTYPE html>
 
 <html>
@@ -38,15 +41,59 @@
         </nav>
     </header>
 
-
+<%-- CJPob --%>
     <main>
-        <h1> SEE CURRENT ORDERS // PLOCKA OCH UPPDATERA LAGERSALDO </h1>
-        <h1>    </h1>
-        <h1> //   ENDAST BEHÖRIG PERSONAL   </h1>
-
+        <table id="orderstable">
+            <thead>
+            <tr>
+                <th colspan="5">Orders</th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <form action="<%= request.getContextPath() %>/order" method="POST" style="text-align: center;">
+                        <input type="hidden" name="action" value="sendOrder">
+                        <label for="orderId" style="margin-right: 10px;">Enter Order ID to send:</label>
+                        <input type="number" id="orderId" name="orderId" required style="margin-right: 10px;">
+                        <button type="submit">Send Order</button>
+                    </form>
+                </th>
+            </tr>
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Item ID</th>
+                <th>Quantity</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                Collection<OrderInfo> allOrders = (Collection<OrderInfo>) request.getAttribute("orders");
+                if (allOrders != null && !allOrders.isEmpty()) {
+                    for (OrderInfo order : allOrders) {
+                        for (ItemInfo item : order.getItems()) {
+            %>
+            <tr>
+                <td><%= order.getOrderId() %></td>
+                <td><%= order.getUserId() %></td>
+                <td><%= item.getId() %></td>
+                <td><%= item.getQuantity() %></td>
+                <td><%= order.getStatus() %></td>
+            </tr>
+            <%
+                    } // End of item loop
+                } // End of order loop
+            } else {
+            %>
+            <tr>
+                <td colspan="5">No orders available.</td>
+            </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
     </main>
-
-
 
     <footer>
         <ul>
