@@ -36,6 +36,7 @@ Database - MySQL
 
 
 **Architecture: 3-tier**
-![Skärmbild 2024-10-06 184811](https://github.com/user-attachments/assets/ce112a60-9112-49bd-b81e-fea9e08f875f)
+![image](https://github.com/user-attachments/assets/7df57954-8ff0-487e-83d6-90e7c8eade9c)
+
 
 
